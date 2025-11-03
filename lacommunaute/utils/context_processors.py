@@ -1,5 +1,10 @@
+import logging
+from urllib.parse import urlencode
+
 from django.conf import settings
 
+
+logger = logging.getLogger(__name__)
 
 def expose_settings(request):
     """
@@ -16,3 +21,23 @@ def expose_settings(request):
         "EMPLOIS_PRESCRIBER_SEARCH": settings.EMPLOIS_PRESCRIBER_SEARCH,
         "EMPLOIS_COMPANY_SEARCH": settings.EMPLOIS_COMPANY_SEARCH,
     }
+
+
+def matomo(request):
+    if not request.resolver_match:
+        return {}
+
+    url = request.resolver_match.route
+    kwargs = request.resolver_match.kwargs
+    if url.startswith("forum/<str:forum_slug>-<int:forum_pk>/"):
+        url = url.replace("<str:forum_slug>-<int:forum_pk>", f"{kwargs['forum_slug']}-{kwargs['forum_pk']}")
+    elif url.startswith("forum/<str:slug>-<int:pk>/"):
+        url = url.replace("<str:slug>-<int:pk>", f"{kwargs['slug']}-{kwargs['pk']}")
+    elif {"slug", "pk"} <= set(kwargs) or {"forum_slug", "forum_pk"} <= set(kwargs):
+        logger.warning("URL {url} should be parametrized for matomo in the context processor.")
+
+    # Only keep Matomo-related params for now.
+    params = {k: v for k, v in request.GET.lists() if k.startswith(("utm_", "mtm_", "piwik_"))}
+    if params:
+        url = f"{url}?{urlencode(sorted(params.items()), doseq=True)}"
+    return {"matomo_custom_url": url}
