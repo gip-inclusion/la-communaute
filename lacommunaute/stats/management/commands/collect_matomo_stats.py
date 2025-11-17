@@ -42,6 +42,6 @@ class Command(BaseCommand):
 
         to_date = date.today() - relativedelta(days=1)
 
-        collect_stats_from_matomo_api(from_date=from_date, to_date=to_date, period=period)
+        collect_stats_from_matomo_api(period, from_date, to_date)
 
         self.stdout.write(self.style.SUCCESS("That's all, folks!"))

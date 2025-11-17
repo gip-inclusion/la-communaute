@@ -175,7 +175,7 @@ def get_matomo_forums_data(period, search_date, label, ids=[]):
     return [{"forum_id": k, **v} for k, v in stats.items()]
 
 
-def collect_stats_from_matomo_api(period="day", from_date=date(2022, 12, 5), to_date=date.today()):
+def collect_stats_from_matomo_api(period, from_date, to_date):
     """
     function to get stats from matomo api, day by day from 2022-10-31 to today
     """
