@@ -393,7 +393,7 @@ class UtilsGetMatomoEventsDataTest(TestCase):
 
     def test_get_matomo_events_data_without_subtable(self):
         with patch("lacommunaute.utils.matomo.get_matomo_data") as mock_get_matomo_data:
-            mock_get_matomo_data.return_value = [{"nb_uniq_visitors": self.nb_uniq_visitors}]
+            mock_get_matomo_data.return_value = [{"nb_uniq_visitors": self.nb_uniq_visitors, "label": "engagement"}]
             self.assertEqual(
                 get_matomo_events_data(period="day", search_date=self.today),
                 self.uniq_active_visitors_res,
@@ -401,7 +401,9 @@ class UtilsGetMatomoEventsDataTest(TestCase):
 
     def test_get_matomo_events_data_with_empty_subtable(self):
         with patch("lacommunaute.utils.matomo.get_matomo_data") as mock_get_matomo_data:
-            mock_get_matomo_data.return_value = [{"nb_uniq_visitors": self.nb_uniq_visitors, "subtable": []}]
+            mock_get_matomo_data.return_value = [
+                {"nb_uniq_visitors": self.nb_uniq_visitors, "subtable": [], "label": "engagement"}
+            ]
             self.assertEqual(
                 get_matomo_events_data(period="day", search_date=self.today),
                 self.uniq_active_visitors_res,
@@ -414,6 +416,7 @@ class UtilsGetMatomoEventsDataTest(TestCase):
             mock_get_matomo_data.return_value = [
                 {
                     "nb_uniq_visitors": self.nb_uniq_visitors,
+                    "label": "engagement",
                     "subtable": [{"label": "view"}],
                 }
             ]
@@ -431,6 +434,7 @@ class UtilsGetMatomoEventsDataTest(TestCase):
             mock_get_matomo_data.return_value = [
                 {
                     "nb_uniq_visitors": self.nb_uniq_visitors,
+                    "label": "engagement",
                     "subtable": [
                         {
                             "label": "view",
@@ -444,8 +448,7 @@ class UtilsGetMatomoEventsDataTest(TestCase):
                 expected_res,
             )
 
-    def test_get_matomo_events_data_with_label(self):
-        label = faker.word()
+    def test_get_matomo_events_data_filter_with_label(self):
         nb_active_visitors = faker.random_int()
         expected_res = self.uniq_active_visitors_res
         expected_res[1]["value"] = self.nb_uniq_visitors - nb_active_visitors
@@ -453,8 +456,8 @@ class UtilsGetMatomoEventsDataTest(TestCase):
         with patch("lacommunaute.utils.matomo.get_matomo_data") as mock_get_matomo_data:
             mock_get_matomo_data.return_value = [
                 {
-                    "label": label,
                     "nb_uniq_visitors": self.nb_uniq_visitors,
+                    "label": "engagement",
                     "subtable": [
                         {
                             "label": "view",
@@ -463,8 +466,8 @@ class UtilsGetMatomoEventsDataTest(TestCase):
                     ],
                 },
                 {
-                    "label": "not_" + label,
                     "nb_uniq_visitors": self.nb_uniq_visitors + 1,
+                    "label": "bad_label",
                     "subtable": [
                         {
                             "label": "view",
@@ -474,7 +477,7 @@ class UtilsGetMatomoEventsDataTest(TestCase):
                 },
             ]
             self.assertEqual(
-                get_matomo_events_data(period="day", search_date=self.today, label=label),
+                get_matomo_events_data(period="day", search_date=self.today),
                 expected_res,
             )
 
