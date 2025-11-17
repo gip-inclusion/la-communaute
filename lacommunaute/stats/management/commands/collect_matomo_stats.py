@@ -23,7 +23,7 @@ class Command(BaseCommand):
     help = "Collecter les stats matomo, jusqu'à la veille de l'execution"
 
     def add_arguments(self, parser):
-        parser.add_argument("--period", type=str, help="['day','week','month']", default="day")
+        parser.add_argument("--period", type=str, help="['day','month']", default="day")
 
     def handle(self, *args, **options):
         period = options["period"]
@@ -33,8 +33,6 @@ class Command(BaseCommand):
         if from_date:
             if period == "day":
                 from_date = from_date.date + relativedelta(days=1)
-            elif period == "week":
-                from_date = from_date.date + relativedelta(days=7)
             else:
                 from_date = from_date.date + relativedelta(months=1)
         else:
