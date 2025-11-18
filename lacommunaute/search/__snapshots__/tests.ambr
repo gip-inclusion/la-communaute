@@ -170,7 +170,7 @@
                               <div class="row align-items-center mb-3">
                                   <div class="col">Je recherche un emploi inclusif ?</div>
                                   <div class="col-12 col-md-auto mt-3 mt-md-0 d-flex align-items-center justify-content-center">
-                                      <a class="btn btn-outline-primary btn-ico btn-block matomo-event" data-matomo-action="emplois" data-matomo-category="engagement" data-matomo-option="search-prescriber" href="http://test.com/company/search?proconnect_login=true&amp;username=123" rel="nofollow">
+                                      <a class="btn btn-outline-primary btn-ico btn-block matomo-event" data-matomo-action="emplois" data-matomo-category="engagement" data-matomo-option="search-prescriber" href="/nexus/auto-login?next_url=http%3A%2F%2Ftest.com%2Fcompany%2Fsearch" rel="nofollow">
                                           <i class="ri-chat-new-line ri-lg"></i>
                                           <span>Trouver une offre d'emploi</span>
                                       </a>
@@ -179,7 +179,7 @@
                               <div class="row align-items-center">
                                   <div class="col">Je recherche un prescripteur habilité ?</div>
                                   <div class="col-12 col-md-auto mt-3 mt-md-0 d-flex align-items-center justify-content-center">
-                                      <a class="btn btn-outline-primary btn-ico btn-block matomo-event" data-matomo-action="emplois" data-matomo-category="engagement" data-matomo-option="search-company" href="http://test.com/prescriber/search?proconnect_login=true&amp;username=123" rel="nofollow">
+                                      <a class="btn btn-outline-primary btn-ico btn-block matomo-event" data-matomo-action="emplois" data-matomo-category="engagement" data-matomo-option="search-company" href="/nexus/auto-login?next_url=http%3A%2F%2Ftest.com%2Fprescriber%2Fsearch" rel="nofollow">
                                           <i class="ri-chat-new-line ri-lg"></i>
                                           <span>Trouver un prescripteur habilité</span>
                                       </a>
