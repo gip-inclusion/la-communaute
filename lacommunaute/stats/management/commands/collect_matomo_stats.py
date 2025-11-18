@@ -16,30 +16,28 @@ matomo_stats_names = [
 
 
 def get_initial_from_date(period):
-    return Stat.objects.filter(period=period, name__in=matomo_stats_names).order_by("-date").first()
+    last_stat = Stat.objects.filter(period=period, name__in=matomo_stats_names).order_by("-date").first()
+    if last_stat is None:
+        return date(2022, 12, 1)
+
+    from_date = last_stat.date
+    if period == "day":
+        return from_date + relativedelta(days=1)
+    return from_date + relativedelta(months=1)
 
 
 class Command(BaseCommand):
     help = "Collecter les stats matomo, jusqu'à la veille de l'execution"
 
-    def add_arguments(self, parser):
-        parser.add_argument("--period", type=str, help="['day','month']", default="day")
-
     def handle(self, *args, **options):
-        period = options["period"]
+        for period in ["day", "month"]:
+            from_date = get_initial_from_date(period)
 
-        from_date = get_initial_from_date(period)
-
-        if from_date:
             if period == "day":
-                from_date = from_date.date + relativedelta(days=1)
+                to_date = date.today() - relativedelta(days=1)
             else:
-                from_date = from_date.date + relativedelta(months=1)
-        else:
-            from_date = date(2022, 12, 1)
+                to_date = date.today().replace(day=1) - relativedelta(days=1)
 
-        to_date = date.today() - relativedelta(days=1)
-
-        collect_stats_from_matomo_api(period, from_date, to_date)
+            collect_stats_from_matomo_api(period, from_date, to_date)
 
         self.stdout.write(self.style.SUCCESS("That's all, folks!"))
