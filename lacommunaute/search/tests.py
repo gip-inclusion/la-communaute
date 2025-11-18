@@ -190,7 +190,7 @@ def test_unapproved_post_is_exclude(client, db, search_url):
     "user,snapshot_name",
     [
         (None, "anonymous"),
-        (lambda: UserFactory(username="123"), "proconnected"),
+        (lambda: UserFactory(), "proconnected"),
     ],
 )
 def test_extra_context(client, db, user, snapshot_name, search_url, snapshot):
