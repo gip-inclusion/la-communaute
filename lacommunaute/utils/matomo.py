@@ -4,6 +4,7 @@ from datetime import date
 import httpx
 from dateutil.relativedelta import relativedelta
 from django.conf import settings
+from django.utils import timezone
 
 from lacommunaute.forum.models import Forum
 from lacommunaute.stats.models import ForumStat, Stat
@@ -174,21 +175,28 @@ def get_matomo_forums_data(period, search_date, label, ids=[]):
     return [{"forum_id": k, **v} for k, v in stats.items()]
 
 
-def collect_stats_from_matomo_api(period, from_date, to_date):
+def collect_stats_from_matomo_api(period, from_date):
     """
     function to get stats from matomo api, day by day from 2022-10-31 to today
     """
     keys = {"day": "nb_uniq_visitors", "month": "sum_daily_nb_uniq_visitors"}
     stats = []
-    while from_date <= to_date:
+    limit = timezone.localdate()
+    while True:
+        if period == "day":
+            to_date = from_date + relativedelta(days=1)
+        else:
+            to_date = from_date + relativedelta(months=1)
+
+        # Don't fetch current day or month
+        if to_date > limit:
+            break
+
         stats += get_matomo_visits_data(period, from_date)
         stats += get_matomo_events_data(period, from_date, nb_uniq_visitors_key=keys[period])
         print(f"Stats collected for {period} {from_date} ({len(stats)} stats collected)")
 
-        if period == "day":
-            from_date += relativedelta(days=1)
-        else:
-            from_date += relativedelta(months=1)
+        from_date = to_date
 
     Stat.objects.bulk_create([Stat(**stat) for stat in stats])
 
