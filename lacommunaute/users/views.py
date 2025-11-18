@@ -51,8 +51,6 @@ class LoginView(FormView):
     form_class = LoginForm
 
     def dispatch(self, request, *args, **kwargs):
-        # TODO vincentporte : add a control to check
-        # if user uses a blocked email or a blocked domain
         if request.user.is_authenticated:
             next_url = request.GET.get("next", "/")
             return redirect(clean_next_url(next_url))
