@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## [2.24.0](https://github.com/gip-inclusion/la-communaute/compare/v2.23.0...v2.24.0) (2025-11-18)
+
+
+### Features
+
+* Improve collect_matomo_stats ([f33af46](https://github.com/gip-inclusion/la-communaute/commit/f33af46bd27b44b1c2b348f233cf5d3bee9464ef))
+
 ## [2.23.0](https://github.com/gip-inclusion/itou-communaute-django/compare/v2.22.0...v2.23.0) (2025-03-26)
 
 
