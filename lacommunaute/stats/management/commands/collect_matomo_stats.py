@@ -32,12 +32,6 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         for period in ["day", "month"]:
             from_date = get_initial_from_date(period)
-
-            if period == "day":
-                to_date = date.today() - relativedelta(days=1)
-            else:
-                to_date = date.today().replace(day=1) - relativedelta(days=1)
-
-            collect_stats_from_matomo_api(period, from_date, to_date)
+            collect_stats_from_matomo_api(period, from_date)
 
         self.stdout.write(self.style.SUCCESS("That's all, folks!"))
