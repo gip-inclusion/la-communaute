@@ -67,6 +67,8 @@ def pro_connect_authorize(request):
         "nonce": crypto.get_random_string(length=12),
         "acr_values": "eidas1",  # Force the eIDAS authentication.
     }
+    if login_hint := request.GET.get("login_hint"):
+        data["login_hint"] = login_hint
     redirect_url = (
         constants.OPENID_CONNECT_ENDPOINT_AUTHORIZE if not sign_in else constants.OPENID_CONNECT_ENDPOINT_REGISTRATIONS
     )
