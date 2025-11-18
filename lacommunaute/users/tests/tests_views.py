@@ -18,6 +18,7 @@ from django.utils.http import urlsafe_base64_encode
 from pytest_django.asserts import assertContains
 
 from lacommunaute.forum_member.models import ForumProfile
+from lacommunaute.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 from lacommunaute.notification.emails import SIB_SMTP_URL
 from lacommunaute.users.enums import IdentityProvider
 from lacommunaute.users.factories import UserFactory
@@ -157,6 +158,18 @@ class TestLoginView:
 
         payload_as_str = respx.calls[0].request.content.decode()
         assert validate_magiclink_payload(payload_as_str, uidb64, token, expected)
+
+    @pytest.mark.usefixtures("db")
+    def test_login_with_blocked_domain(self, client):
+        blocked_domain = BlockedDomainNameFactory()
+        response = client.post(reverse("users:login"), data={"email": f"toto@{blocked_domain.domain}"})
+        assertContains(response, f"Les emails utilisant le domaine {blocked_domain.domain} ont été bannis.", count=1)
+
+    @pytest.mark.usefixtures("db")
+    def test_login_with_blocked_email(self, client):
+        blocked_email = BlockedEmailFactory()
+        response = client.post(reverse("users:login"), data={"email": blocked_email.email})
+        assertContains(response, f"L’utilisateur associé à {blocked_email.email} a été banni.", count=1)
 
     @pytest.mark.parametrize("next_url,expected", next_url_tuples)
     def test_redirection_when_email_is_unknown(self, client, db, next_url, expected, mock_respx_post_to_sib_smtp_url):
