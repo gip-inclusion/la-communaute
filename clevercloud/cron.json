@@ -11,6 +11,5 @@
     "2 12 * * * $ROOT/clevercloud/run_management_command.sh datas_anonymisation",
     "30 13 * * 1-5 $ROOT/clevercloud/run_management_command.sh send_notifs_on_unanswered_topics",
     "15 11 * * 1 $ROOT/clevercloud/run_management_command.sh collect_matomo_forum_stats",
-    "0 12  * * 1 $ROOT/clevercloud/run_management_command.sh delete_old_email_sent_tracks",
-    "10 11 1 * * $ROOT/clevercloud/run_management_command.sh collect_matomo_stats --period month"
+    "0 12  * * 1 $ROOT/clevercloud/run_management_command.sh delete_old_email_sent_tracks"
 ]
