@@ -1,4 +1,4 @@
-from urllib.parse import urlencode
+from urllib.parse import quote, urlencode
 
 import httpx
 import jwt
@@ -100,11 +100,19 @@ class OpenID_ViewTest(OpenID_BaseTestCase):
         self.assertEqual(response.status_code, 302)
 
     def test_authorize_endpoint(self):
-        url = f"{reverse('openid_connect:authorize')}"
+        url = reverse("openid_connect:authorize")
         # Don't use assertRedirects to avoid fetching the last URL.
         response = self.client.get(url, follow=False)
         self.assertTrue(response.url.startswith(constants.OPENID_CONNECT_ENDPOINT_AUTHORIZE))
         self.assertIn(constants.OPENID_CONNECT_SESSION_KEY, self.client.session)
+
+        # with a login_hint and next url
+        email = "my.email@mailinator.net"
+        url = reverse("openid_connect:authorize", query={"next": "/path/to/view", "login_hint": email})
+        response = self.client.get(url, follow=False)
+        self.assertTrue(response.url.startswith(constants.OPENID_CONNECT_ENDPOINT_AUTHORIZE))
+        self.assertIn(f"login_hint={quote(email)}", response.url)
+        self.assertEqual(self.client.session[constants.OPENID_CONNECT_SESSION_KEY]["next_url"], "/path/to/view")
 
     ####################################
     ######### Callback tests ###########

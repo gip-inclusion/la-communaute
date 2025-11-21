@@ -175,21 +175,23 @@ class TestUtilsTemplateTags:
         assert out == expected
 
     @pytest.mark.parametrize(
-        "user,expected_query_params",
+        "user_factory,is_param_expected",
         [
-            (lambda: AnonymousUser(), ""),
-            (lambda: UserFactory(identity_provider=IdentityProvider.MAGIC_LINK), ""),
-            (lambda: UserFactory(identity_provider=IdentityProvider.INCLUSION_CONNECT), ""),
-            (
-                lambda: UserFactory(username="abcd1234", identity_provider=IdentityProvider.PRO_CONNECT),
-                "?proconnect_login=true&amp;username=abcd1234",
-            ),
+            (lambda: AnonymousUser(), False),
+            (lambda: UserFactory(identity_provider=IdentityProvider.MAGIC_LINK), False),
+            (lambda: UserFactory(identity_provider=IdentityProvider.INCLUSION_CONNECT), False),
+            (lambda: UserFactory(identity_provider=IdentityProvider.PRO_CONNECT), True),
         ],
     )
-    def test_autologin_proconnect(self, db, user, expected_query_params):
+    def test_autologin_proconnect(self, db, user_factory, is_param_expected):
+        user = user_factory()
         template = Template("{% load url_query_tags %}{% autologin_proconnect url user %}")
-        out = template.render(Context({"url": "/test/", "user": user()}))
-        assert out == f"/test/{expected_query_params}"
+        url = "/test/"
+        out = template.render(Context({"url": url, "user": user}))
+        if is_param_expected:
+            assert out == reverse("nexus:auto_login", query={"next_url": url})
+        else:
+            assert out == url
 
 
 class UtilsTemplateTagsTestCase(TestCase):

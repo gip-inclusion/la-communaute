@@ -1,3 +1,4 @@
+import json
 import os
 
 import csp.constants
@@ -104,7 +105,7 @@ DJANGO_MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lacommunaute.utils.middleware.ParkingPageMiddleware",
-    "lacommunaute.openid_connect.middleware.ProConnectLoginMiddleware",
+    "lacommunaute.nexus.middleware.AutoLoginMiddleware",
     "lacommunaute.notification.middleware.NotificationMiddleware",
     "lacommunaute.users.middleware.MarkAsSeenLoggedUserMiddleware",
 ]
@@ -530,3 +531,9 @@ NEXUS_METABASE_DB_PORT = os.getenv("NEXUS_METABASE_DB_PORT")
 NEXUS_METABASE_DB_DATABASE = os.getenv("NEXUS_METABASE_DB_DATABASE")
 NEXUS_METABASE_DB_USER = os.getenv("NEXUS_METABASE_DB_USER")
 NEXUS_METABASE_DB_PASSWORD = os.getenv("NEXUS_METABASE_DB_PASSWORD")
+NEXUS_ALLOWED_REDIRECT_HOSTS = os.getenv(
+    "NEXUS_ALLOWED_REDIRECT_HOSTS", "dora.inclusion.gouv.fr,emplois.inclusion.beta.gouv.fr"
+).split(",")
+
+nexus_key = os.getenv("NEXUS_AUTO_LOGIN_KEY")
+NEXUS_AUTO_LOGIN_KEY = json.loads(nexus_key) if nexus_key else None
