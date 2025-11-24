@@ -1,23 +1,60 @@
+import logging
+
+from django.contrib.auth import logout
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.utils.deprecation import MiddlewareMixin
-from django.utils.http import urlencode
+
+from lacommunaute.nexus.utils import decode_jwt
+from lacommunaute.users.models import User
+
+
+logger = logging.getLogger(__name__)
 
 
 class ProConnectLoginMiddleware(MiddlewareMixin):
     def process_request(self, request):
-        if "proconnect_login" not in request.GET:
+        if "auto_login" not in request.GET:
             return
 
         query_params = request.GET.copy()
-        query_params.pop("proconnect_login")
-        new_url = (
-            f"{request.path}?{urlencode({k: v for k, v in query_params.items() if v})}"
-            if query_params
-            else request.path
-        )
+        auto_login = query_params.pop("auto_login")
+        email = None
 
-        if not request.user.is_authenticated:
-            return HttpResponseRedirect(reverse("openid_connect:authorize") + f"?next={new_url}")
+        new_url = f"{request.path}?{query_params.urlencode()}" if query_params else request.path
 
-        return HttpResponseRedirect(new_url)
+        if len(auto_login) != 1:
+            logger.info("ProConnect auto login: Multiple tokens found -> ignored")
+            return HttpResponseRedirect(new_url)
+        else:
+            [token] = auto_login
+
+        try:
+            decoded_data = decode_jwt(token)
+            email = decoded_data.get("email")
+        except ValueError:
+            logger.info("Invalid auto login token")
+
+        new_url = f"{request.path}?{query_params.urlencode()}" if query_params else request.path
+
+        if email is None:
+            logger.info("ProConnect auto login: Missing email in token -> ignored")
+            return HttpResponseRedirect(new_url)
+
+        if request.user.is_authenticated:
+            if request.user.email == email:
+                logger.info("ProConnect auto login: user is already logged in")
+                return HttpResponseRedirect(new_url)
+            else:
+                logger.info("ProConnect auto login: wrong user is logged in -> logging them out")
+                # We should probably also logout the user from ProConnect but it requires to redirect to ProConnect
+                # and the flow becomes a lotmore complicated
+                logout(request)
+
+        try:
+            user = User.objects.get(email=email)
+            logger.info("ProConnect auto login: %s was found and forwarded to ProConnect", user)
+        except User.DoesNotExist:
+            logger.info("ProConnect auto login: no user found, forward to ProConnect to create account")
+
+        return HttpResponseRedirect(reverse("openid_connect:authorize", query={"next": new_url, "login_hint": email}))

@@ -1,50 +1,114 @@
+import logging
+
 import pytest
 from django.urls import reverse
-from pytest_django.asserts import assertRedirects, assertTemplateUsed
+from pytest_django.asserts import assertRedirects
 
+from lacommunaute.nexus.utils import generate_jwt
+from lacommunaute.users.enums import IdentityProvider
 from lacommunaute.users.factories import UserFactory
 
 
-@pytest.mark.parametrize(
-    "params,expected",
-    [
-        ("?proconnect_login=true", ""),
-        ("?proconnect_login=true&param=1", "?param=1"),
-        ("?param=1&proconnect_login=true", "?param=1"),
-    ],
-)
-def test_redirect_for_authenticated_user(client, db, params, expected):
+params_tuples = [
+    ({}, ""),
+    ({"filter": "76", "username": "123"}, "?filter=76&username=123"),
+]
+
+
+@pytest.mark.parametrize("params,expected_params", params_tuples)
+def test_middleware_for_authenticated_user(db, client, params, expected_params, caplog):
+    user = UserFactory()
+    client.force_login(user)
+    params["auto_login"] = generate_jwt(user)
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(response, f"/search/{expected_params}", fetch_redirect_response=False)
+
+
+@pytest.mark.parametrize("params,expected_params", params_tuples)
+def test_middleware_for_wrong_authenticated_user(db, client, params, expected_params, caplog):
+    caplog.set_level(logging.INFO)
+    user = UserFactory()
+    params["auto_login"] = generate_jwt(user)
+    # Another user is logged in
     client.force_login(UserFactory())
-    response = client.get(f"/{params}")
-    assertRedirects(response, f"/{expected}")
+
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(
+        response,
+        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        fetch_redirect_response=False,
+    )
+    assert caplog.messages == [
+        "ProConnect auto login: wrong user is logged in -> logging them out",
+        f"ProConnect auto login: {user} was found and forwarded to ProConnect",
+    ]
 
 
-@pytest.mark.parametrize(
-    "params,expected",
-    [
-        ("?proconnect_login=true", "/"),
-        ("?proconnect_login=true&param=1", "/?param=1"),
-        ("?param=1&proconnect_login=true", "/?param=1"),
-    ],
-)
-def test_redirect_for_anonymous_user(client, db, params, expected):
-    response = client.get(f"/{params}")
-    assertRedirects(response, f"{reverse('openid_connect:authorize')}?next={expected}", fetch_redirect_response=False)
+def test_middleware_multiple_tokens(db, client, caplog):
+    caplog.set_level(logging.INFO)
+    user = UserFactory()
+    params = [("auto_login", generate_jwt(user)), ("auto_login", generate_jwt(user))]
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(response, "/search/", fetch_redirect_response=False)
+    assert caplog.messages == [
+        "ProConnect auto login: Multiple tokens found -> ignored",
+    ]
 
 
-@pytest.mark.parametrize(
-    "params, logged",
-    [
-        ("", True),
-        ("?param=1", True),
-        ("?param=1&key=2", True),
-        ("", False),
-        ("?param=1", False),
-        ("?param=1&key=2", False),
-    ],
-)
-def test_wo_proconnect_login_param(client, db, logged, params):
-    if logged:
-        client.force_login(UserFactory())
-    response = client.get(f"/{params}")
-    assertTemplateUsed(response, "pages/home.html")
+@pytest.mark.parametrize("params,expected_params", params_tuples)
+def test_middleware_invalid_token(db, client, params, expected_params, caplog):
+    caplog.set_level(logging.INFO)
+
+    params["auto_login"] = "bad jwt"
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(response, f"/search/{expected_params}", fetch_redirect_response=False)
+    assert caplog.messages == [
+        "Could not decrypt jwt",
+        "Invalid auto login token",
+        "ProConnect auto login: Missing email in token -> ignored",
+    ]
+
+
+@pytest.mark.parametrize("params,expected_params", params_tuples)
+def test_middleware_with_no_existing_user(db, client, params, expected_params, caplog):
+    caplog.set_level(logging.INFO)
+
+    user = UserFactory.build()
+    jwt = generate_jwt(user)
+    params["auto_login"] = jwt
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(
+        response,
+        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        fetch_redirect_response=False,
+    )
+    assert caplog.messages == ["ProConnect auto login: no user found, forward to ProConnect to create account"]
+
+
+@pytest.mark.parametrize("params,expected_params", params_tuples)
+def test_middleware_for_unlogged_user(db, client, params, expected_params, caplog):
+    caplog.set_level(logging.INFO)
+
+    user = UserFactory()
+    params["auto_login"] = generate_jwt(user)
+
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(
+        response,
+        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        fetch_redirect_response=False,
+    )
+    assert caplog.messages == [f"ProConnect auto login: {user} was found and forwarded to ProConnect"]
+
+    # It also works if it's not a ProConnect user
+    user.identity_provider = IdentityProvider.INCLUSION_CONNECT
+    user.save()
+    caplog.clear()
+
+    response = client.get(reverse("search:index", query=params))
+    assertRedirects(
+        response,
+        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        fetch_redirect_response=False,
+    )
+    assert caplog.messages == [f"ProConnect auto login: {user} was found and forwarded to ProConnect"]
