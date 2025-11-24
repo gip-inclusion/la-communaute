@@ -12,7 +12,7 @@ from lacommunaute.users.models import User
 logger = logging.getLogger(__name__)
 
 
-class ProConnectLoginMiddleware(MiddlewareMixin):
+class AutoLoginMiddleware(MiddlewareMixin):
     def process_request(self, request):
         if "auto_login" not in request.GET:
             return
@@ -24,7 +24,7 @@ class ProConnectLoginMiddleware(MiddlewareMixin):
         new_url = f"{request.path}?{query_params.urlencode()}" if query_params else request.path
 
         if len(auto_login) != 1:
-            logger.info("ProConnect auto login: Multiple tokens found -> ignored")
+            logger.info("Nexus auto login: Multiple tokens found -> ignored")
             return HttpResponseRedirect(new_url)
         else:
             [token] = auto_login
@@ -38,23 +38,23 @@ class ProConnectLoginMiddleware(MiddlewareMixin):
         new_url = f"{request.path}?{query_params.urlencode()}" if query_params else request.path
 
         if email is None:
-            logger.info("ProConnect auto login: Missing email in token -> ignored")
+            logger.info("Nexus auto login: Missing email in token -> ignored")
             return HttpResponseRedirect(new_url)
 
         if request.user.is_authenticated:
             if request.user.email == email:
-                logger.info("ProConnect auto login: user is already logged in")
+                logger.info("Nexus auto login: user is already logged in")
                 return HttpResponseRedirect(new_url)
             else:
-                logger.info("ProConnect auto login: wrong user is logged in -> logging them out")
+                logger.info("Nexus auto login: wrong user is logged in -> logging them out")
                 # We should probably also logout the user from ProConnect but it requires to redirect to ProConnect
                 # and the flow becomes a lotmore complicated
                 logout(request)
 
         try:
             user = User.objects.get(email=email)
-            logger.info("ProConnect auto login: %s was found and forwarded to ProConnect", user)
+            logger.info("Nexus auto login: %s was found and forwarded to ProConnect", user)
         except User.DoesNotExist:
-            logger.info("ProConnect auto login: no user found, forward to ProConnect to create account")
+            logger.info("Nexus auto login: no user found, forward to ProConnect to create account")
 
         return HttpResponseRedirect(reverse("openid_connect:authorize", query={"next": new_url, "login_hint": email}))

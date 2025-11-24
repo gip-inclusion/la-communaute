@@ -105,7 +105,7 @@ DJANGO_MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lacommunaute.utils.middleware.ParkingPageMiddleware",
-    "lacommunaute.openid_connect.middleware.ProConnectLoginMiddleware",
+    "lacommunaute.nexus.middleware.AutoLoginMiddleware",
     "lacommunaute.notification.middleware.NotificationMiddleware",
     "lacommunaute.users.middleware.MarkAsSeenLoggedUserMiddleware",
 ]
