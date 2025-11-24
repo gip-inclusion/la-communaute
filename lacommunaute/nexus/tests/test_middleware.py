@@ -39,8 +39,8 @@ def test_middleware_for_wrong_authenticated_user(db, client, params, expected_pa
         fetch_redirect_response=False,
     )
     assert caplog.messages == [
-        "ProConnect auto login: wrong user is logged in -> logging them out",
-        f"ProConnect auto login: {user} was found and forwarded to ProConnect",
+        "Nexus auto login: wrong user is logged in -> logging them out",
+        f"Nexus auto login: {user} was found and forwarded to ProConnect",
     ]
 
 
@@ -51,7 +51,7 @@ def test_middleware_multiple_tokens(db, client, caplog):
     response = client.get(reverse("search:index", query=params))
     assertRedirects(response, "/search/", fetch_redirect_response=False)
     assert caplog.messages == [
-        "ProConnect auto login: Multiple tokens found -> ignored",
+        "Nexus auto login: Multiple tokens found -> ignored",
     ]
 
 
@@ -65,7 +65,7 @@ def test_middleware_invalid_token(db, client, params, expected_params, caplog):
     assert caplog.messages == [
         "Could not decrypt jwt",
         "Invalid auto login token",
-        "ProConnect auto login: Missing email in token -> ignored",
+        "Nexus auto login: Missing email in token -> ignored",
     ]
 
 
@@ -82,7 +82,7 @@ def test_middleware_with_no_existing_user(db, client, params, expected_params, c
         reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
-    assert caplog.messages == ["ProConnect auto login: no user found, forward to ProConnect to create account"]
+    assert caplog.messages == ["Nexus auto login: no user found, forward to ProConnect to create account"]
 
 
 @pytest.mark.parametrize("params,expected_params", params_tuples)
@@ -98,7 +98,7 @@ def test_middleware_for_unlogged_user(db, client, params, expected_params, caplo
         reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
-    assert caplog.messages == [f"ProConnect auto login: {user} was found and forwarded to ProConnect"]
+    assert caplog.messages == [f"Nexus auto login: {user} was found and forwarded to ProConnect"]
 
     # It also works if it's not a ProConnect user
     user.identity_provider = IdentityProvider.INCLUSION_CONNECT
@@ -111,4 +111,4 @@ def test_middleware_for_unlogged_user(db, client, params, expected_params, caplo
         reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
-    assert caplog.messages == [f"ProConnect auto login: {user} was found and forwarded to ProConnect"]
+    assert caplog.messages == [f"Nexus auto login: {user} was found and forwarded to ProConnect"]
