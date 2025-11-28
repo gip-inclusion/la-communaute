@@ -3,7 +3,9 @@ import logging
 from django.conf import settings
 from django.contrib import messages
 from django.urls import reverse
+from django.utils.decorators import method_decorator
 from django.views.generic import ListView
+from honeypot.decorators import check_honeypot
 from machina.apps.forum_conversation import views
 from machina.core.loading import get_class
 
@@ -29,6 +31,7 @@ class FormValidMixin:
         return valid
 
 
+@method_decorator(check_honeypot, name="post")
 class TopicCreateView(FormValidMixin, views.TopicCreateView):
     post_form_class = TopicForm
 

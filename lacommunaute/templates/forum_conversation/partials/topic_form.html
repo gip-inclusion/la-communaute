@@ -1,8 +1,10 @@
 {% load i18n %}
 {% load widget_tweaks %}
 {% load forum_permission_tags %}
+{% load honeypot %}
 <form method="post" action="." class="form" enctype="multipart/form-data" novalidate>
     {% csrf_token %}
+    {% render_honeypot_field %}
     {% for error in post_form.non_field_errors %}
         <div class="alert alert-danger">
             <i class="icon-exclamation-sign"></i> {{ error }}

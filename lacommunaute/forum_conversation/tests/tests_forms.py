@@ -100,7 +100,12 @@ class TestTopicForm:
 
         response = client.post(
             get_create_topic_url(forum),
-            data={"subject": "Test", "content": faker.paragraph(nb_sentences=5), "username": username},
+            data={
+                "subject": "Test",
+                "content": faker.paragraph(nb_sentences=5),
+                "username": username,
+                settings.HONEYPOT_FIELD_NAME: "",
+            },
         )
         assert response.status_code == 302
 
@@ -153,7 +158,8 @@ class TestTopicForm:
         client.force_login(user)
 
         response = client.post(
-            get_create_topic_url(forum), data={"subject": "Test", "content": faker.paragraph(nb_sentences=5)}
+            get_create_topic_url(forum),
+            data={"subject": "Test", "content": faker.paragraph(nb_sentences=5), settings.HONEYPOT_FIELD_NAME: ""},
         )
         assert response.status_code == 302
 
@@ -226,7 +232,8 @@ class TestPostForm:
         username = faker.email()
 
         response = client.post(
-            get_reply_topic_url(topic), data={"content": faker.paragraph(nb_sentences=5), "username": username}
+            get_reply_topic_url(topic),
+            data={"content": faker.paragraph(nb_sentences=5), "username": username, settings.HONEYPOT_FIELD_NAME: ""},
         )
         assert response.status_code == 200  # htmx view
 
@@ -274,7 +281,10 @@ class TestPostForm:
         user = UserFactory()
         client.force_login(user)
 
-        response = client.post(get_reply_topic_url(topic), data={"content": faker.paragraph(nb_sentences=5)})
+        response = client.post(
+            get_reply_topic_url(topic),
+            data={"content": faker.paragraph(nb_sentences=5), settings.HONEYPOT_FIELD_NAME: ""},
+        )
         assert response.status_code == 200
 
         topic.refresh_from_db()

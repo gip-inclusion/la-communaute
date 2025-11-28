@@ -63,6 +63,7 @@ class TopicCreateViewTest(TestCase):
         cls.post_data = {
             "subject": faker.text(max_nb_chars=10),
             "content": faker.paragraph(nb_sentences=5),
+            settings.HONEYPOT_FIELD_NAME: "",
             "approved": True,
         }
 
@@ -249,6 +250,7 @@ class TopicCreateViewTest(TestCase):
             "subject": faker.text(max_nb_chars=5),
             "content": faker.paragraph(nb_sentences=5),
             "tags": [Tag.objects.first().pk, Tag.objects.last().pk],
+            settings.HONEYPOT_FIELD_NAME: "",
         }
 
         response = self.client.post(
@@ -274,6 +276,7 @@ class TestTopicCreateView:
                 "subject": faker.sentence(),
                 "content": faker.paragraph(nb_sentences=5),
                 "new_tags": ", ".join(tags_list),
+                settings.HONEYPOT_FIELD_NAME: "",
             },
             follow=True,
         )
@@ -290,6 +293,7 @@ class TestTopicCreateView:
             {
                 "subject": faker.sentence(),
                 "content": faker.paragraph(nb_sentences=5),
+                settings.HONEYPOT_FIELD_NAME: "",
             },
             follow=True,
         )

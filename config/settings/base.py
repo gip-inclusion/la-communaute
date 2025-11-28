@@ -57,6 +57,7 @@ THIRD_PARTIES_APPS = [
     "django_htmx",
     "taggit",
     "csp",
+    "honeypot",
 ]
 
 # MIGRATION CONFIGURATION
@@ -468,6 +469,10 @@ CONTENT_SECURITY_POLICY = {
         "style-src-elem": style_src,
     },
 }
+
+# DJANGO-HONEYPOT
+# ---------------------------------------
+HONEYPOT_FIELD_NAME = "phonenumber"
 
 # HSTS
 # ---------------------------------------

@@ -253,14 +253,14 @@ class PostFeedCreateViewTest(TestCase):
     def test_form_is_invalid(self):
         self.client.force_login(self.user)
 
-        response = self.client.post(self.url, data={})
+        response = self.client.post(self.url, data={settings.HONEYPOT_FIELD_NAME: ""})
 
         self.assertContains(response, '<div id="div_id_content" class="form-group has-error">', status_code=200)
 
     def test_create_post_as_authenticated_user(self, *args):
         self.client.force_login(self.user)
 
-        response = self.client.post(self.url, data={"content": self.content})
+        response = self.client.post(self.url, data={"content": self.content, settings.HONEYPOT_FIELD_NAME: ""})
 
         self.assertContains(response, self.content, status_code=200)
         self.assertIsInstance(response.context["form"], PostForm)
@@ -276,7 +276,9 @@ class PostFeedCreateViewTest(TestCase):
     def test_create_post_as_blocked_not_blocked_anonymous(self, *args):
         username = faker.email()
 
-        response = self.client.post(self.url, {"content": self.content, "username": username})
+        response = self.client.post(
+            self.url, {"content": self.content, "username": username, settings.HONEYPOT_FIELD_NAME: ""}
+        )
 
         self.assertContains(response, self.content, status_code=200)
         self.topic.refresh_from_db()
@@ -288,7 +290,9 @@ class PostFeedCreateViewTest(TestCase):
 
         BlockedEmailFactory(email=username).save()
 
-        response = self.client.post(self.url, {"content": self.content, "username": username})
+        response = self.client.post(
+            self.url, {"content": self.content, "username": username, settings.HONEYPOT_FIELD_NAME: ""}
+        )
 
         self.assertContains(
             response,
@@ -314,7 +318,9 @@ class PostFeedCreateViewTest(TestCase):
 
     def test_create_post_with_nonfr_content(self):
         self.client.force_login(self.user)
-        response = self.client.post(self.url, {"content": "популярные лучшие песни слушать онлайн"})
+        response = self.client.post(
+            self.url, {"content": "популярные лучшие песни слушать онлайн", settings.HONEYPOT_FIELD_NAME: ""}
+        )
 
         self.assertContains(
             response,
@@ -342,7 +348,10 @@ class PostFeedCreateViewTest(TestCase):
         self.client.force_login(self.user)
         response = self.client.post(
             self.url,
-            {"content": "<p>Hello, <a href='https://www.example.com'>click here</a> to visit example.com</p>"},
+            {
+                "content": "<p>Hello, <a href='https://www.example.com'>click here</a> to visit example.com</p>",
+                settings.HONEYPOT_FIELD_NAME: "",
+            },
         )
 
         self.assertContains(
@@ -367,7 +376,9 @@ class PostFeedCreateViewTest(TestCase):
     def test_create_post_with_blocked_domain_name(self):
         BlockedDomainNameFactory(domain="blocked.com")
 
-        response = self.client.post(self.url, {"content": "la communauté", "username": "spam@blocked.com"})
+        response = self.client.post(
+            self.url, {"content": "la communauté", "username": "spam@blocked.com", settings.HONEYPOT_FIELD_NAME: ""}
+        )
 
         self.assertContains(
             response,
@@ -405,7 +416,10 @@ class TestPostFeedCreateView:
                 "slug": topic.slug,
             },
         )
-        data = {"content": faker.paragraph(nb_sentences=5)}
+        data = {
+            "content": faker.paragraph(nb_sentences=5),
+            settings.HONEYPOT_FIELD_NAME: "",
+        }
 
         if logged:
             client.force_login(topic.poster)

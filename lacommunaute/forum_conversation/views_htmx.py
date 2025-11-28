@@ -1,7 +1,9 @@
 import logging
 
 from django.shortcuts import get_object_or_404, render
+from django.utils.decorators import method_decorator
 from django.views import View
+from honeypot.decorators import check_honeypot
 from machina.core.loading import get_class
 
 from lacommunaute.forum_conversation.forms import PostForm
@@ -90,6 +92,7 @@ class PostListView(PermissionRequiredMixin, View):
         return self.get_topic().forum
 
 
+@method_decorator(check_honeypot, name="post")
 class PostFeedCreateView(PermissionRequiredMixin, View):
     def get_topic(self):
         if not hasattr(self, "topic"):
