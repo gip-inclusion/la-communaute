@@ -1,7 +1,29 @@
 from django.contrib import admin
+from django.db.models import Q
 from machina.apps.forum_conversation.admin import PostAdmin as BasePostAdmin, TopicAdmin as BaseTopicAdmin
 
 from lacommunaute.forum_conversation.models import CertifiedPost, Post, Topic
+
+
+class UserTypePostFilter(admin.SimpleListFilter):
+    title = "Type d'utilisateur"
+    parameter_name = "user_type"
+
+    def lookups(self, request, model_admin):
+        return (
+            ("external_user", "Utilisateur externe"),
+            ("internal_user", "Utilisateur interne"),
+        )
+
+    def queryset(self, request, queryset):
+        DOMAIN = "@inclusion.gouv.fr"
+        conditions = Q(username__icontains=DOMAIN) | Q(poster__email__icontains=DOMAIN)
+        value = self.value()
+        if value == "external_user":
+            return queryset.exclude(conditions).order_by("-updated")
+        if value == "internal_user":
+            return queryset.filter(conditions).order_by("-updated")
+        return queryset
 
 
 class PostAdmin(BasePostAdmin):
@@ -11,7 +33,27 @@ class PostAdmin(BasePostAdmin):
         # So we remove the delete_selected action to force the user to delete posts one by one.
         return []
 
-    list_filter = BasePostAdmin.list_filter + ("approved",)
+    list_display = (
+        "__str__",
+        "poster",
+        "username",
+        "truncated_content",
+        "updated",
+        "approved",
+    )
+
+    def truncated_content(self, obj):
+        def truncate(s, size):
+            return s[:size] + "..." if len(s) > size else s
+
+        return truncate(str(obj.content), 64)
+
+    list_filter = BasePostAdmin.list_filter + (
+        "approved",
+        UserTypePostFilter,
+    )
+
+    ordering = ["-updated"]
 
 
 class PostInline(admin.StackedInline):
