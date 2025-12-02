@@ -11,6 +11,7 @@ from django.template import Context, Template
 from django.template.defaultfilters import date, time
 from django.test import TestCase, override_settings
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.encoding import force_bytes
 from django.utils.http import urlencode
 from django.utils.timesince import timesince
@@ -222,15 +223,15 @@ class UtilsTemplateTagsTestCase(TestCase):
     def test_relativetimesince_fr(self):
         template = Template("{% load date_filters %}{{ date|relativetimesince_fr }}")
 
-        d = datetime.now() - timedelta(hours=1)
+        d = timezone.now() - timedelta(hours=1)
         out = template.render(Context({"date": d}))
         self.assertEqual(out, f"il y a {timesince(d)}")
 
-        d = datetime.now() - timedelta(days=2)
+        d = timezone.now() - timedelta(days=2)
         out = template.render(Context({"date": d}))
         self.assertEqual(out, f"{date(d, 'l')}, {time(d)}")
 
-        d = datetime.now() - timedelta(days=10)
+        d = timezone.now() - timedelta(days=10)
         out = template.render(Context({"date": d}))
         self.assertEqual(out, f"le {date(d)}, {time(d)}")
 
