@@ -1,6 +1,7 @@
-from datetime import date, datetime
+from datetime import date
 
 from dateutil.relativedelta import relativedelta
+from django.utils import timezone
 
 from lacommunaute.stats.models import Stat
 from lacommunaute.surveys.factories import DSPFactory
@@ -18,7 +19,7 @@ def test_collect_dsp_stats(db):
     assert stat.name == "dsp"
     assert stat.period == "day"
     assert stat.value == 1
-    assert stat.date == datetime.now().date() - relativedelta(months=3)
+    assert stat.date == timezone.localdate() - relativedelta(months=3)
 
     # two stats to collected for two dsp, one by month
     DSPFactory(months_ago=2)
@@ -28,9 +29,9 @@ def test_collect_dsp_stats(db):
 
     # one stat to collected for three dsp in the same month
     DSPFactory.create_batch(3)
-    assert collect_dsp_stats() == (datetime.now().date() - relativedelta(months=1) + relativedelta(days=1), 1)
+    assert collect_dsp_stats() == (timezone.localdate() - relativedelta(months=1) + relativedelta(days=1), 1)
     assert Stat.objects.count() == 4
 
     # no new stat to collect
-    assert collect_dsp_stats() == (datetime.now().date() + relativedelta(days=1), 0)
+    assert collect_dsp_stats() == (timezone.localdate() + relativedelta(days=1), 0)
     assert Stat.objects.count() == 4

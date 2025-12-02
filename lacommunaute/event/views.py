@@ -1,10 +1,10 @@
 import logging
-from datetime import datetime
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.exceptions import PermissionDenied
 from django.http import Http404
 from django.urls import reverse
+from django.utils import timezone
 from django.views.generic.dates import MonthArchiveView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
@@ -82,12 +82,12 @@ class EventMonthArchiveView(MonthArchiveView):
         try:
             month = super().get_month()
         except Http404:
-            month = datetime.now().strftime(self.get_month_format())
+            month = timezone.localdate().strftime(self.get_month_format())
         return month
 
     def get_year(self):
         try:
             year = super().get_year()
         except Http404:
-            year = datetime.now().strftime(self.get_year_format())
+            year = timezone.localdate().strftime(self.get_year_format())
         return year
