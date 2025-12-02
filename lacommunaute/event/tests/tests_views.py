@@ -1,4 +1,4 @@
-from datetime import datetime, timedelta
+from datetime import timedelta
 
 import pytest
 from dateutil.relativedelta import relativedelta
@@ -55,12 +55,13 @@ class EventModelFormTest(TestCase):
         self.assertEqual(form.errors["end_date"], ["La date de fin doit être après la date de début."])
 
     def test_end_time_is_after_time(self):
-        end_time = datetime.now() - timedelta(hours=1)
+        now = timezone.now()
+        end_time = now - timedelta(hours=1)
         form = EventModelForm(
             data={
-                "date": datetime.now().date(),
-                "time": datetime.now().time(),
-                "end_date": datetime.now().date(),
+                "date": timezone.localdate(now),
+                "time": now.time(),
+                "end_date": timezone.localdate(end_time),
                 "end_time": end_time.time(),
             }
         )
