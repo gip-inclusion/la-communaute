@@ -2,9 +2,9 @@ import logging
 
 import pytest
 from django.urls import reverse
+from itoutils.django.nexus.token import generate_token
 from pytest_django.asserts import assertRedirects
 
-from lacommunaute.nexus.utils import generate_jwt
 from lacommunaute.users.enums import IdentityProvider
 from lacommunaute.users.factories import UserFactory
 
@@ -19,7 +19,7 @@ params_tuples = [
 def test_middleware_for_authenticated_user(db, client, params, expected_params, caplog):
     user = UserFactory()
     client.force_login(user)
-    params["auto_login"] = generate_jwt(user)
+    params["auto_login"] = generate_token(user)
     response = client.get(reverse("search:index", query=params))
     assertRedirects(response, f"/search/{expected_params}", fetch_redirect_response=False)
 
@@ -28,7 +28,7 @@ def test_middleware_for_authenticated_user(db, client, params, expected_params, 
 def test_middleware_for_wrong_authenticated_user(db, client, params, expected_params, caplog):
     caplog.set_level(logging.INFO)
     user = UserFactory()
-    params["auto_login"] = generate_jwt(user)
+    params["auto_login"] = generate_token(user)
     # Another user is logged in
     client.force_login(UserFactory())
 
@@ -47,7 +47,7 @@ def test_middleware_for_wrong_authenticated_user(db, client, params, expected_pa
 def test_middleware_multiple_tokens(db, client, caplog):
     caplog.set_level(logging.INFO)
     user = UserFactory()
-    params = [("auto_login", generate_jwt(user)), ("auto_login", generate_jwt(user))]
+    params = [("auto_login", generate_token(user)), ("auto_login", generate_token(user))]
     response = client.get(reverse("search:index", query=params))
     assertRedirects(response, "/search/", fetch_redirect_response=False)
     assert caplog.messages == [
@@ -74,7 +74,7 @@ def test_middleware_with_no_existing_user(db, client, params, expected_params, c
     caplog.set_level(logging.INFO)
 
     user = UserFactory.build()
-    jwt = generate_jwt(user)
+    jwt = generate_token(user)
     params["auto_login"] = jwt
     response = client.get(reverse("search:index", query=params))
     assertRedirects(
@@ -90,7 +90,7 @@ def test_middleware_for_unlogged_user(db, client, params, expected_params, caplo
     caplog.set_level(logging.INFO)
 
     user = UserFactory()
-    params["auto_login"] = generate_jwt(user)
+    params["auto_login"] = generate_token(user)
 
     response = client.get(reverse("search:index", query=params))
     assertRedirects(

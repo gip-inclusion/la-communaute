@@ -2,9 +2,8 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.utils.http import url_has_allowed_host_and_scheme
+from itoutils.django.nexus.token import generate_token
 from itoutils.urls import add_url_params
-
-from lacommunaute.nexus.utils import generate_jwt
 
 
 @login_required
@@ -15,6 +14,6 @@ def auto_login(request):
         raise Http404
 
     if url_has_allowed_host_and_scheme(next_url, settings.NEXUS_ALLOWED_REDIRECT_HOSTS, require_https=True):
-        return HttpResponseRedirect(add_url_params(next_url, {"auto_login": generate_jwt(request.user)}))
+        return HttpResponseRedirect(add_url_params(next_url, {"auto_login": generate_token(request.user)}))
 
     raise Http404
