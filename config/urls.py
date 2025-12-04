@@ -43,7 +43,7 @@ urlpatterns = [
     path("surveys/", include(surveys_urls)),
     path("partenaires/", include(partner_urls)),
     path("statistiques/", include(stats_urls)),
-    path("nexus/", include("lacommunaute.nexus.urls")),
+    path("nexus/", include("itoutils.django.nexus.urls", namespace="nexus")),
     # machina legacy
     path("", include(conversation_urlpatterns_factory.urlpatterns)),
     path("moderation/", include(moderation_urlpatterns_factory.urlpatterns)),
