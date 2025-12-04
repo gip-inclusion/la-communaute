@@ -3,8 +3,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.utils.http import url_has_allowed_host_and_scheme
 from itoutils.django.urls import add_url_params
-
-from lacommunaute.nexus.utils import generate_jwt
+from itoutils.nexus.utils import generate_jwt
 
 
 @login_required

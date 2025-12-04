@@ -3,9 +3,9 @@ from django.conf import settings
 from django.test import override_settings
 from django.urls import reverse
 from itoutils.django.urls import add_url_params
+from itoutils.nexus import utils
 from pytest_django.asserts import assertRedirects
 
-from lacommunaute.nexus import utils
 from lacommunaute.users.factories import UserFactory
 from lacommunaute.utils.testing import reload_module
 

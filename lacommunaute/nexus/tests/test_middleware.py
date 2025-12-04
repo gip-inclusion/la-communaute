@@ -2,9 +2,9 @@ import logging
 
 import pytest
 from django.urls import reverse
+from itoutils.nexus.utils import generate_jwt
 from pytest_django.asserts import assertRedirects
 
-from lacommunaute.nexus.utils import generate_jwt
 from lacommunaute.users.enums import IdentityProvider
 from lacommunaute.users.factories import UserFactory
 
