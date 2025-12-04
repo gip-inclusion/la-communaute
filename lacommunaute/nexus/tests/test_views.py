@@ -5,15 +5,13 @@ from django.urls import reverse
 from itoutils.urls import add_url_params
 from pytest_django.asserts import assertRedirects
 
-from lacommunaute.nexus import utils
 from lacommunaute.users.factories import UserFactory
-from lacommunaute.utils.testing import reload_module
 
 
 class TestAutoLogin:
     @pytest.fixture(autouse=True)
     def setup_method(self, mocker):
-        mocker.patch("lacommunaute.nexus.views.generate_jwt", return_value="JWT")
+        mocker.patch("lacommunaute.nexus.views.generate_token", return_value="JWT")
 
     def test_login_required(self, db, client):
         next_url = f"https://{settings.NEXUS_ALLOWED_REDIRECT_HOSTS[0]}"
@@ -44,7 +42,6 @@ class TestAutoLogin:
         assert response.status_code == 404
 
     @override_settings(NEXUS_AUTO_LOGIN_KEY=None)
-    @reload_module(utils)
     def test_no_settings(self, db, client):
         client.force_login(UserFactory())
         next_url = f"https://{settings.NEXUS_ALLOWED_REDIRECT_HOSTS[0]}"
