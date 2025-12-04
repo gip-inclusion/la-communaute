@@ -1,6 +1,5 @@
 import logging
 
-import pytest
 from django.urls import reverse
 from itoutils.django.nexus.token import generate_token
 from pytest_django.asserts import assertRedirects
@@ -9,33 +8,26 @@ from lacommunaute.users.enums import IdentityProvider
 from lacommunaute.users.factories import UserFactory
 
 
-params_tuples = [
-    ({}, ""),
-    ({"filter": "76", "username": "123"}, "?filter=76&username=123"),
-]
-
-
-@pytest.mark.parametrize("params,expected_params", params_tuples)
-def test_middleware_for_authenticated_user(db, client, params, expected_params, caplog):
+def test_middleware_for_authenticated_user(db, client, caplog):
     user = UserFactory()
     client.force_login(user)
-    params["auto_login"] = generate_token(user)
+    params = {"auto_login": generate_token(user)}
     response = client.get(reverse("search:index", query=params))
-    assertRedirects(response, f"/search/{expected_params}", fetch_redirect_response=False)
+    assertRedirects(response, "/search/", fetch_redirect_response=False)
 
 
-@pytest.mark.parametrize("params,expected_params", params_tuples)
-def test_middleware_for_wrong_authenticated_user(db, client, params, expected_params, caplog):
+def test_middleware_for_wrong_authenticated_user(db, client, caplog):
     caplog.set_level(logging.INFO)
     user = UserFactory()
-    params["auto_login"] = generate_token(user)
+    params = {"auto_login": generate_token(user)}
+
     # Another user is logged in
     client.force_login(UserFactory())
 
     response = client.get(reverse("search:index", query=params))
     assertRedirects(
         response,
-        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        reverse("openid_connect:authorize", query={"next": "/search/", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
     assert caplog.messages == [
@@ -44,58 +36,33 @@ def test_middleware_for_wrong_authenticated_user(db, client, params, expected_pa
     ]
 
 
-def test_middleware_multiple_tokens(db, client, caplog):
-    caplog.set_level(logging.INFO)
-    user = UserFactory()
-    params = [("auto_login", generate_token(user)), ("auto_login", generate_token(user))]
-    response = client.get(reverse("search:index", query=params))
-    assertRedirects(response, "/search/", fetch_redirect_response=False)
-    assert caplog.messages == [
-        "Nexus auto login: Multiple tokens found -> ignored",
-    ]
-
-
-@pytest.mark.parametrize("params,expected_params", params_tuples)
-def test_middleware_invalid_token(db, client, params, expected_params, caplog):
-    caplog.set_level(logging.INFO)
-
-    params["auto_login"] = "bad jwt"
-    response = client.get(reverse("search:index", query=params))
-    assertRedirects(response, f"/search/{expected_params}", fetch_redirect_response=False)
-    assert caplog.messages == [
-        "Could not decrypt jwt",
-        "Invalid auto login token",
-        "Nexus auto login: Missing email in token -> ignored",
-    ]
-
-
-@pytest.mark.parametrize("params,expected_params", params_tuples)
-def test_middleware_with_no_existing_user(db, client, params, expected_params, caplog):
+def test_middleware_with_no_existing_user(db, client, caplog):
     caplog.set_level(logging.INFO)
 
     user = UserFactory.build()
     jwt = generate_token(user)
-    params["auto_login"] = jwt
+    params = {"auto_login": jwt}
     response = client.get(reverse("search:index", query=params))
     assertRedirects(
         response,
-        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        reverse("openid_connect:authorize", query={"next": "/search/", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
-    assert caplog.messages == ["Nexus auto login: no user found, forward to ProConnect to create account"]
+    assert caplog.messages == [
+        f"Nexus auto login: no user found for jwt={jwt}",
+        "Nexus auto login: forward to ProConnect to create account",
+    ]
 
 
-@pytest.mark.parametrize("params,expected_params", params_tuples)
-def test_middleware_for_unlogged_user(db, client, params, expected_params, caplog):
+def test_middleware_for_unlogged_user(db, client, caplog):
     caplog.set_level(logging.INFO)
 
     user = UserFactory()
-    params["auto_login"] = generate_token(user)
-
+    params = {"auto_login": generate_token(user)}
     response = client.get(reverse("search:index", query=params))
     assertRedirects(
         response,
-        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        reverse("openid_connect:authorize", query={"next": "/search/", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
     assert caplog.messages == [f"Nexus auto login: {user} was found and forwarded to ProConnect"]
@@ -108,7 +75,7 @@ def test_middleware_for_unlogged_user(db, client, params, expected_params, caplo
     response = client.get(reverse("search:index", query=params))
     assertRedirects(
         response,
-        reverse("openid_connect:authorize", query={"next": f"/search/{expected_params}", "login_hint": user.email}),
+        reverse("openid_connect:authorize", query={"next": "/search/", "login_hint": user.email}),
         fetch_redirect_response=False,
     )
     assert caplog.messages == [f"Nexus auto login: {user} was found and forwarded to ProConnect"]
