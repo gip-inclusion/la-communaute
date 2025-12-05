@@ -2,18 +2,18 @@ import pytest
 from django.conf import settings
 from django.test import override_settings
 from django.urls import reverse
+from itoutils.django.urls import add_url_params
+from itoutils.nexus import utils
 from pytest_django.asserts import assertRedirects
 
-from lacommunaute.nexus import utils
 from lacommunaute.users.factories import UserFactory
 from lacommunaute.utils.testing import reload_module
-from lacommunaute.utils.urls import add_url_params
 
 
 class TestAutoLogin:
     @pytest.fixture(autouse=True)
     def setup_method(self, mocker):
-        mocker.patch("lacommunaute.nexus.views.generate_jwt", return_value="JWT")
+        mocker.patch("itoutils.nexus.views.generate_jwt", return_value="JWT")
 
     def test_login_required(self, db, client):
         next_url = f"https://{settings.NEXUS_ALLOWED_REDIRECT_HOSTS[0]}"
