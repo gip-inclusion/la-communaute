@@ -66,11 +66,18 @@ def sync_groups_and_perms(**kwargs):
     for group_name, raw_permissions in group_perms().items():
         with transaction.atomic():
             group, created = Group.objects.select_for_update(of=["self"]).get_or_create(name=group_name)
-            group.permissions.clear()
+            if created:
+                logger.info(f"Created group “{group_name}”")
+            existing_permissions = set(group.permissions.all())
             all_codenames = itertools.chain.from_iterable(
                 to_perm_codenames(model, perms) for model, perms in raw_permissions.items()
             )
-            permissions = Permission.objects.filter(codename__in=all_codenames)
-            group.permissions.add(*permissions)
-            if created:
-                logger.info(f"Created group “{group_name}”")
+            spec_permissions = set(Permission.objects.filter(codename__in=all_codenames))
+            perms_to_add = spec_permissions - existing_permissions
+            perms_to_remove = existing_permissions - spec_permissions
+            for permission in perms_to_add:
+                group.permissions.add(permission)
+                logger.info(f"Added permission {permission.codename} to group “{group_name}”")
+            for permission in perms_to_remove:
+                group.permissions.remove(permission)
+                logger.info(f"Removed permission {permission.codename} from group “{group_name}”")
