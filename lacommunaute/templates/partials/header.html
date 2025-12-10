@@ -85,9 +85,6 @@
                                                 <li>
                                                     <a class="dropdown-item text-primary" href="{% url 'forum_moderation:queue' %}"><i class="ri-alarm-warning-line ri-xl text-warning"></i> Moderation Queue</a>
                                                 </li>
-                                                <li>
-                                                    <a class="dropdown-item text-primary" href="{% url 'admin:index' %}">Accéder à l'admin</a>
-                                                </li>
                                             {% endif %}
                                             {% if user.is_staff %}
                                                 <li>
@@ -98,6 +95,9 @@
                                                 </li>
                                                 <li>
                                                     <a class="dropdown-item text-primary" href="{% url 'pages:landing_pages' %}">Liste des landing pages</a>
+                                                </li>
+                                                <li>
+                                                    <a class="dropdown-item text-primary" href="{% url 'admin:index' %}">Accéder à l'admin</a>
                                                 </li>
                                             {% endif %}
                                             <li>
