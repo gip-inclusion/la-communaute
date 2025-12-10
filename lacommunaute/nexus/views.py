@@ -2,9 +2,9 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http import Http404, HttpResponseRedirect
 from django.utils.http import url_has_allowed_host_and_scheme
+from itoutils.urls import add_url_params
 
 from lacommunaute.nexus.utils import generate_jwt
-from lacommunaute.utils.urls import add_url_params
 
 
 @login_required
