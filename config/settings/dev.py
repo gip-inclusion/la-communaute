@@ -47,8 +47,8 @@ DEBUG_TOOLBAR_CONFIG = {
 # See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
 MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/"  # noqa: F405
 
-CONTENT_SECURITY_POLICY["DIRECTIVES"]["default-src"] = ["*"]  # noqa undefined-local-with-import-star-usage
-CONTENT_SECURITY_POLICY["DIRECTIVES"]["img-src"].append("localhost:9000")  # noqa undefined-local-with-import-star-usage
+SECURE_CSP["default-src"] = ["*"]  # noqa undefined-local-with-import-star-usage
+SECURE_CSP["img-src"].append("localhost:9000")  # noqa undefined-local-with-import-star-usage
 
 COMMU_PROTOCOL = "http"
 COMMU_FQDN = "127.0.0.1:8000"

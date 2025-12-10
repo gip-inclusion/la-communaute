@@ -1,8 +1,8 @@
 import json
 import os
 
-import csp.constants
 from botocore.config import Config
+from django.utils.csp import CSP
 from dotenv import load_dotenv
 from machina import MACHINA_MAIN_STATIC_DIR, MACHINA_MAIN_TEMPLATE_DIR
 
@@ -56,7 +56,6 @@ THIRD_PARTIES_APPS = [
     "django_social_share",
     "django_htmx",
     "taggit",
-    "csp",
 ]
 
 # MIGRATION CONFIGURATION
@@ -103,6 +102,7 @@ DJANGO_MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.csp.ContentSecurityPolicyMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lacommunaute.utils.middleware.ParkingPageMiddleware",
     "lacommunaute.nexus.middleware.AutoLoginMiddleware",
@@ -111,7 +111,6 @@ DJANGO_MIDDLEWARE = [
 ]
 
 THIRD_PARTIES_MIDDLEWARE = [
-    "csp.middleware.CSPMiddleware",
     "django_permissions_policy.PermissionsPolicyMiddleware",
     "django_htmx.middleware.HtmxMiddleware",
 ]
@@ -140,6 +139,7 @@ TEMPLATES = [
                 "django.template.context_processors.debug",
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
+                "django.template.context_processors.csp",
                 "django.template.context_processors.media",
                 "django.contrib.messages.context_processors.messages",
                 "machina.core.context_processors.metadata",
@@ -399,18 +399,18 @@ TAGGIT_STRIP_UNICODE_WHEN_SLUGIFY = True
 # CSP
 # ---------------------------------------
 connect_src = [
-    csp.constants.SELF,
+    CSP.SELF,
     "*.sentry.io",
     API_GEOPF_BASE_URL,
 ]
 img_src = [
-    csp.constants.SELF,
+    CSP.SELF,
     "data:",
     "cellar-c2.services.clever-cloud.com",
 ]
 script_src = [
-    csp.constants.SELF,
-    csp.constants.NONCE,
+    CSP.SELF,
+    CSP.NONCE,
     "https://cdn.jsdelivr.net/npm/chart.js@4.0.1",
     "https://cdn.jsdelivr.net/npm/jquery@3.6.1/dist/jquery.min.js",
     "https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js",
@@ -422,9 +422,9 @@ script_src = [
     "https://www.youtube.com/s/player/",
 ]
 style_src = [
-    csp.constants.SELF,
+    CSP.SELF,
     "https://fonts.googleapis.com",
-    csp.constants.UNSAFE_INLINE,  # needed for htmx.js, embed.js & tartecitron.js
+    CSP.UNSAFE_INLINE,  # needed for htmx.js, embed.js & tartecitron.js
 ]
 
 if MATOMO_BASE_URL:
@@ -438,28 +438,26 @@ if MATOMO_BASE_URL:
         MATOMO_BASE_URL,
     ]
 
-CONTENT_SECURITY_POLICY = {
-    "DIRECTIVES": {
-        "default-src": [
-            csp.constants.SELF,
-        ],
-        "connect-src": connect_src,
-        "img-src": img_src,
-        "frame-src": [
-            csp.constants.SELF,
-            "https://tally.so",
-            "https://www.youtube.com/embed/",
-        ],
-        "font-src": [
-            csp.constants.SELF,
-            "https://fonts.gstatic.com/",
-            "data:",
-        ],
-        "script-src": script_src,
-        "script-src-elem": script_src,
-        "style-src": style_src,
-        "style-src-elem": style_src,
-    },
+SECURE_CSP = {
+    "default-src": [
+        CSP.SELF,
+    ],
+    "connect-src": connect_src,
+    "img-src": img_src,
+    "frame-src": [
+        CSP.SELF,
+        "https://tally.so",
+        "https://www.youtube.com/embed/",
+    ],
+    "font-src": [
+        CSP.SELF,
+        "https://fonts.gstatic.com/",
+        "data:",
+    ],
+    "script-src": script_src,
+    "script-src-elem": script_src,
+    "style-src": style_src,
+    "style-src-elem": style_src,
 }
 
 # HSTS
