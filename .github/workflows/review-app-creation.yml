@@ -57,7 +57,6 @@ jobs:
         tar -xvf $CLEVER_TAR_FILE
         $CLEVER_CLI login --token $CLEVER_TOKEN --secret $CLEVER_SECRET
         $CLEVER_CLI create $REVIEW_APP_NAME -t python --org $REVIEW_APPS_ORGANIZATION_NAME --region par --alias $REVIEW_APP_NAME
-        $CLEVER_CLI link $REVIEW_APP_NAME --org $REVIEW_APPS_ORGANIZATION_NAME
         $CLEVER_CLI domain add $DEPLOY_URL --alias $REVIEW_APP_NAME
 
     - name: 🗃 Create database addon
@@ -67,7 +66,6 @@ jobs:
 
     - name: 🤝 Link addons & add environment variables
       run: |
-        $CLEVER_CLI link $REVIEW_APP_NAME --org $REVIEW_APPS_ORGANIZATION_NAME
         $CLEVER_CLI env set COMMU_FQDN "${{ env.DEPLOY_URL }}"
         $CLEVER_CLI env set ENVIRONMENT "REVIEW-APP"
         $CLEVER_CLI service link-addon $S3_ADDON
@@ -75,7 +73,6 @@ jobs:
 
     - name: 🚀 Deploy to Clever Cloud
       run: |
-        $CLEVER_CLI link $REVIEW_APP_NAME --org $REVIEW_APPS_ORGANIZATION_NAME
         $CLEVER_CLI deploy --branch $BRANCH --force
 
     - name: 🍻 Add link to pull request
