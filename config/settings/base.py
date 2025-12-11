@@ -324,13 +324,10 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "formatters": {
-        "simple": {
-            "format": "{levelname} {asctime} {pathname} : {message}",
-            "style": "{",
-        },
+        "json": {"()": "itoutils.django.logging.DataDogJSONFormatter"},
     },
     "handlers": {
-        "console": {"class": "logging.StreamHandler", "formatter": "simple"},
+        "console": {"class": "logging.StreamHandler", "formatter": "json"},
     },
     "loggers": {
         "django": {
