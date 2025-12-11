@@ -1,5 +1,5 @@
 # serializer version: 1
-# name: TestPostUpdateView.test_button_visibility_for_user[False-<lambda>0][form-actions-buttons]
+# name: TestPostUpdateView.test_button_visibility_for_user[False-StaffUserFactory][form-actions-buttons]
   '''
   <div class="form-actions form-row">
                               <div class="form-group col-auto">
@@ -14,7 +14,7 @@
                           </div>
   '''
 # ---
-# name: TestPostUpdateView.test_button_visibility_for_user[True-<lambda>0][form-actions-buttons]
+# name: TestPostUpdateView.test_button_visibility_for_user[True-StaffUserFactory][form-actions-buttons]
   '''
   <div class="form-actions form-row">
                               <div class="form-group col-auto">
@@ -29,7 +29,7 @@
                           </div>
   '''
 # ---
-# name: TestPostUpdateView.test_button_visibility_for_user[True-<lambda>1][form-actions-buttons]
+# name: TestPostUpdateView.test_button_visibility_for_user[True-UserFactory][form-actions-buttons]
   '''
   <div class="form-actions form-row">
                               <div class="form-group col-auto">
@@ -194,7 +194,7 @@
                   </div>
   '''
 # ---
-# name: TestTopicUpdateView.test_button_visibility_for_user[False-<lambda>0][form-actions-buttons]
+# name: TestTopicUpdateView.test_button_visibility_for_user[False-StaffUserFactory][form-actions-buttons]
   '''
   <div class="form-actions form-row">
           <div class="form-group col-auto">
@@ -211,7 +211,7 @@
       </div>
   '''
 # ---
-# name: TestTopicUpdateView.test_button_visibility_for_user[True-<lambda>0][form-actions-buttons]
+# name: TestTopicUpdateView.test_button_visibility_for_user[True-StaffUserFactory][form-actions-buttons]
   '''
   <div class="form-actions form-row">
           <div class="form-group col-auto">
@@ -228,7 +228,7 @@
       </div>
   '''
 # ---
-# name: TestTopicUpdateView.test_button_visibility_for_user[True-<lambda>1][form-actions-buttons]
+# name: TestTopicUpdateView.test_button_visibility_for_user[True-UserFactory][form-actions-buttons]
   '''
   <div class="form-actions form-row">
           <div class="form-group col-auto">

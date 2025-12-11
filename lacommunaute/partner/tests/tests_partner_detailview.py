@@ -10,8 +10,8 @@ from lacommunaute.utils.testing import parse_response_to_soup
     "user_factory,snapshot_name",
     [
         (lambda: None, "partner_detailview as anonymous"),
-        (lambda: UserFactory(), "partner_detailview"),
-        (lambda: StaffUserFactory(), "partner_detailview as superuser"),
+        (UserFactory, "partner_detailview"),
+        (StaffUserFactory, "partner_detailview as superuser"),
     ],
 )
 def test_partner_detailview(client, db, snapshot, user_factory, snapshot_name):
