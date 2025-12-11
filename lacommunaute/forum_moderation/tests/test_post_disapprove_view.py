@@ -5,13 +5,11 @@ from lacommunaute.forum_conversation.models import Post
 from lacommunaute.forum_moderation.enums import BlockedPostReason
 from lacommunaute.forum_moderation.factories import BlockedEmailFactory
 from lacommunaute.forum_moderation.models import BlockedEmail, BlockedPost
-from lacommunaute.users.factories import UserFactory
 
 
-def test_post_disapprove_view(client, db):
+def test_post_disapprove_view(db, admin_client):
     disapproved_post = AnonymousPostFactory(topic=TopicFactory(approved=False))
-    client.force_login(UserFactory(is_superuser=True))
-    response = client.post(
+    response = admin_client.post(
         reverse("forum_moderation_extension:disapprove_queued_post", kwargs={"pk": disapproved_post.pk})
     )
     assert response.status_code == 302
@@ -25,11 +23,10 @@ def test_post_disapprove_view(client, db):
     assert blocked_post.block_reason == BlockedPostReason.MODERATOR_DISAPPROVAL
 
 
-def test_post_disapprove_view_with_existing_blocked_email(client, db):
+def test_post_disapprove_view_with_existing_blocked_email(db, admin_client):
     disapproved_post = AnonymousPostFactory(topic=TopicFactory(approved=False))
     BlockedEmailFactory(email=disapproved_post.username)
-    client.force_login(UserFactory(is_superuser=True))
-    response = client.post(
+    response = admin_client.post(
         reverse("forum_moderation_extension:disapprove_queued_post", kwargs={"pk": disapproved_post.pk})
     )
     assert response.status_code == 302

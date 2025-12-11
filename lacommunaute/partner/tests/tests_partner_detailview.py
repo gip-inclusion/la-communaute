@@ -2,21 +2,21 @@ import pytest
 
 from lacommunaute.forum.factories import ForumFactory
 from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 from lacommunaute.utils.testing import parse_response_to_soup
 
 
 @pytest.mark.parametrize(
-    "user,snapshot_name",
+    "user_factory,snapshot_name",
     [
         (lambda: None, "partner_detailview as anonymous"),
         (lambda: UserFactory(), "partner_detailview"),
-        (lambda: UserFactory(is_superuser=True), "partner_detailview as superuser"),
+        (lambda: StaffUserFactory(), "partner_detailview as superuser"),
     ],
 )
-def test_partner_detailview(client, db, snapshot, user, snapshot_name):
+def test_partner_detailview(client, db, snapshot, user_factory, snapshot_name):
     partner = PartnerFactory(for_snapshot=True, with_logo=True)
-    user = user()
+    user = user_factory()
     if user:
         client.force_login(user)
     response = client.get(partner.get_absolute_url())

@@ -19,7 +19,7 @@ from lacommunaute.forum_conversation.factories import CertifiedPostFactory, Post
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import Topic
 from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 from lacommunaute.utils.testing import parse_response_to_soup, reset_model_sequence_fixture
 
 
@@ -614,7 +614,7 @@ class TestDocumentationCategoryForumContent:
         # require superuser permission
         assert len(content.select("#add-documentation-to-category-control")) == 0
 
-        client.force_login(UserFactory(is_in_staff_group=True))
+        client.force_login(StaffUserFactory())
         response = client.get(documentation_forum.parent.get_absolute_url())
         content = parse_response_to_soup(response)
 

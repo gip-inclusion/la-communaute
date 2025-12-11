@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 
 
 class LandingPagesListViewTest(TestCase):
@@ -14,7 +14,7 @@ class LandingPagesListViewTest(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 403)
 
-        self.client.force_login(UserFactory(is_in_staff_group=True))
+        self.client.force_login(StaffUserFactory())
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, "pages/landing_pages.html")

@@ -60,22 +60,20 @@ def test_user_access(client, db):
         (lambda: CategoryForumFactory(with_child=True).get_children().first(), True),
     ],
 )
-def test_context_data(client, db, forum, should_be_subcategoryupdateform):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_context_data(db, admin_client, forum, should_be_subcategoryupdateform):
     forum = forum()
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-    response = client.get(url)
+    response = admin_client.get(url)
     assertContains(response, f"Mettre à jour le forum {forum.name}", html=True)
     assertContains(response, reverse("forum_extension:forum", kwargs={"pk": forum.pk, "slug": forum.slug}))
     assert isinstance(response.context["form"], SubCategoryForumUpdateForm) == should_be_subcategoryupdateform
 
 
-def test_update_forum_image(client, db, fake_image):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_update_forum_image(db, admin_client, fake_image):
     forum = CategoryForumFactory(with_child=True).get_children().first()
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
 
-    response = client.post(
+    response = admin_client.post(
         url,
         data={
             "name": "new name",
@@ -93,13 +91,12 @@ def test_update_forum_image(client, db, fake_image):
     assert forum.image.name == fake_image.name
 
 
-def test_update_subcategory_forum_parent(client, db):
+def test_update_subcategory_forum_parent(db, admin_client):
     forum = CategoryForumFactory(with_child=True).get_children().first()
     new_parent = CategoryForumFactory()
-    client.force_login(UserFactory(is_in_staff_group=True))
 
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-    response = client.post(
+    response = admin_client.post(
         url,
         data={
             "name": forum.name,
@@ -114,12 +111,11 @@ def test_update_subcategory_forum_parent(client, db):
     assert forum.parent == new_parent
 
 
-def test_certified_forum(client, db):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_certified_forum(db, admin_client):
     forum = CategoryForumFactory(with_child=True).get_children().first()
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
 
-    response = client.post(
+    response = admin_client.post(
         url,
         data={
             "name": "new name",
@@ -134,13 +130,12 @@ def test_certified_forum(client, db):
     assert forum.certified is True
 
 
-def test_selected_tags_are_preloaded(client, db, reset_tag_sequence, snapshot):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_selected_tags_are_preloaded(db, admin_client, reset_tag_sequence, snapshot):
     forum = ForumFactory(with_tags=["iae", "siae", "prescripteur"])
     Tag.objects.create(name="undesired_tag")
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
 
-    response = client.get(url)
+    response = admin_client.get(url)
     assert response.status_code == 200
 
     content_tags = parse_response_to_soup(
@@ -149,15 +144,14 @@ def test_selected_tags_are_preloaded(client, db, reset_tag_sequence, snapshot):
     assert str(content_tags) == snapshot(name="selected_tags_preloaded")
 
 
-def test_added_tags_are_saved(client, db):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_added_tags_are_saved(db, admin_client):
     forum = ForumFactory()
 
     Tag.objects.bulk_create([Tag(name=tag, slug=tag) for tag in [faker.word() for _ in range(3)]])
     tags_list = [faker.word() for i in range(2)]
 
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-    response = client.post(
+    response = admin_client.post(
         url,
         data={
             "name": forum.name,
@@ -174,11 +168,10 @@ def test_added_tags_are_saved(client, db):
     assert all(tag in [tag.name for tag in forum.tags.all()] for tag in [Tag.objects.first().name] + tags_list)
 
 
-def test_update_forum_without_tag(client, db):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_update_forum_without_tag(db, admin_client):
     forum = ForumFactory()
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-    response = client.post(
+    response = admin_client.post(
         url,
         data={
             "name": forum.name,
@@ -201,14 +194,13 @@ def test_update_forum_without_tag(client, db):
         (lambda: PartnerFactory(), lambda: PartnerFactory()),
     ],
 )
-def test_select_partner(client, db, initial_partner, post_partner):
+def test_select_partner(db, admin_client, initial_partner, post_partner):
     initial_partner = initial_partner()
     post_partner = post_partner()
     forum = ForumFactory(partner=initial_partner)
-    client.force_login(UserFactory(is_in_staff_group=True))
 
     url = reverse("forum_extension:edit_forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-    response = client.post(
+    response = admin_client.post(
         url,
         data={
             "name": forum.name,
