@@ -467,7 +467,7 @@ class TopicUpdateViewTest(TestCase):
 
 
 class TestTopicUpdateView:
-    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory()])
+    @pytest.mark.parametrize("user_factory", [StaffUserFactory, UserFactory])
     @pytest.mark.parametrize("is_poster", [True, False])
     def test_button_visibility_for_user(self, db, client, user_factory, is_poster, snapshot):
         user = user_factory()
@@ -501,7 +501,7 @@ class TestTopicUpdateView:
             )
             assert str(content) == snapshot(name="form-actions-buttons")
 
-    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory(), lambda: None])
+    @pytest.mark.parametrize("user_factory", [StaffUserFactory, UserFactory, lambda: None])
     @pytest.mark.parametrize("name", [None, "dummy", "unapprove"])
     def test_topic_update(self, db, client, user_factory, name):
         data = {"content": "content", name: True} if name else {"content": "content"}
@@ -726,7 +726,7 @@ class PostUpdateViewTest(TestCase):
 
 
 class TestPostUpdateView:
-    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory()])
+    @pytest.mark.parametrize("user_factory", [StaffUserFactory, UserFactory])
     @pytest.mark.parametrize("is_poster", [True, False])
     def test_button_visibility_for_user(self, client, db, user_factory, is_poster, snapshot):
         user = user_factory()
@@ -762,7 +762,7 @@ class TestPostUpdateView:
             )
             assert str(content) == snapshot(name="form-actions-buttons")
 
-    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory(), lambda: None])
+    @pytest.mark.parametrize("user_factory", [StaffUserFactory, UserFactory, lambda: None])
     @pytest.mark.parametrize("name", [None, "dummy", "unapprove"])
     def test_post_update(self, db, client, user_factory, name):
         topic = TopicFactory(with_post=True)

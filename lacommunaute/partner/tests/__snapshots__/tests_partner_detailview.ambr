@@ -65,7 +65,7 @@
           </main>
   '''
 # ---
-# name: test_partner_detailview[<lambda>-partner_detailview as superuser][partner_detailview as superuser]
+# name: test_partner_detailview[StaffUserFactory-partner_detailview as superuser][partner_detailview as superuser]
   '''
   <main class="s-main" id="main" role="main">
               
@@ -133,7 +133,7 @@
           </main>
   '''
 # ---
-# name: test_partner_detailview[<lambda>-partner_detailview][partner_detailview]
+# name: test_partner_detailview[UserFactory-partner_detailview][partner_detailview]
   '''
   <main class="s-main" id="main" role="main">
               
