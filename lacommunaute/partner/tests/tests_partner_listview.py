@@ -3,7 +3,7 @@ from django.urls import reverse
 from factory import Iterator
 
 from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 from lacommunaute.utils.testing import parse_response_to_soup
 
 
@@ -30,12 +30,11 @@ def test_pagination(client, db, snapshot, url):
 
 
 @pytest.mark.parametrize(
-    "user,link_is_visible",
-    [(None, False), (lambda: UserFactory(), False), (lambda: UserFactory(is_in_staff_group=True), True)],
+    "user_factory,link_is_visible", [(None, False), (UserFactory, False), (StaffUserFactory, True)]
 )
-def test_link_to_createview(client, db, url, user, link_is_visible):
-    if user:
-        client.force_login(user())
+def test_link_to_createview(client, db, url, user_factory, link_is_visible):
+    if user_factory:
+        client.force_login(user_factory())
     response = client.get(url)
     assert response.status_code == 200
     assert bool(reverse("partner:create") in response.content.decode()) == link_is_visible

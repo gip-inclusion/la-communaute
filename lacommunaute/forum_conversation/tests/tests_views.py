@@ -28,7 +28,7 @@ from lacommunaute.forum_moderation.factories import BlockedDomainNameFactory, Bl
 from lacommunaute.forum_upvote.factories import UpVoteFactory
 from lacommunaute.notification.factories import NotificationFactory
 from lacommunaute.users.enums import EmailLastSeenKind
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 from lacommunaute.users.models import EmailLastSeen
 from lacommunaute.utils.testing import parse_response_to_soup
 
@@ -467,10 +467,10 @@ class TopicUpdateViewTest(TestCase):
 
 
 class TestTopicUpdateView:
-    @pytest.mark.parametrize("user", [lambda: UserFactory(is_in_staff_group=True), lambda: UserFactory()])
+    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory()])
     @pytest.mark.parametrize("is_poster", [True, False])
-    def test_button_visibility_for_user(self, db, client, user, is_poster, snapshot):
-        user = user()
+    def test_button_visibility_for_user(self, db, client, user_factory, is_poster, snapshot):
+        user = user_factory()
         topic = TopicFactory(with_post=True, poster=user) if is_poster else TopicFactory(with_post=True)
 
         client.force_login(user)
@@ -501,12 +501,12 @@ class TestTopicUpdateView:
             )
             assert str(content) == snapshot(name="form-actions-buttons")
 
-    @pytest.mark.parametrize("user", [lambda: UserFactory(is_in_staff_group=True), lambda: UserFactory(), None])
+    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory(), lambda: None])
     @pytest.mark.parametrize("name", [None, "dummy", "unapprove"])
-    def test_topic_update(self, db, client, user, name):
+    def test_topic_update(self, db, client, user_factory, name):
         data = {"content": "content", name: True} if name else {"content": "content"}
+        user = user_factory()
         if user:
-            user = user()
             client.force_login(user)
 
         topic = TopicFactory(with_post=True, poster=user) if user else AnonymousTopicFactory(with_post=True)
@@ -726,10 +726,10 @@ class PostUpdateViewTest(TestCase):
 
 
 class TestPostUpdateView:
-    @pytest.mark.parametrize("user", [lambda: UserFactory(is_in_staff_group=True), lambda: UserFactory()])
+    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory()])
     @pytest.mark.parametrize("is_poster", [True, False])
-    def test_button_visibility_for_user(self, client, db, user, is_poster, snapshot):
-        user = user()
+    def test_button_visibility_for_user(self, client, db, user_factory, is_poster, snapshot):
+        user = user_factory()
         client.force_login(user)
 
         topic = TopicFactory(with_post=True)
@@ -762,13 +762,13 @@ class TestPostUpdateView:
             )
             assert str(content) == snapshot(name="form-actions-buttons")
 
-    @pytest.mark.parametrize("user", [lambda: UserFactory(is_in_staff_group=True), lambda: UserFactory(), None])
+    @pytest.mark.parametrize("user_factory", [lambda: StaffUserFactory(), lambda: UserFactory(), lambda: None])
     @pytest.mark.parametrize("name", [None, "dummy", "unapprove"])
-    def test_post_update(self, db, client, user, name):
+    def test_post_update(self, db, client, user_factory, name):
         topic = TopicFactory(with_post=True)
         data = {"content": "content", name: True} if name else {"content": "content"}
+        user = user_factory()
         if user:
-            user = user()
             client.force_login(user)
 
         post = PostFactory(topic=topic, poster=user) if user else AnonymousPostFactory(topic=topic)

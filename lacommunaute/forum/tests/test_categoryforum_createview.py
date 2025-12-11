@@ -22,20 +22,18 @@ def test_user_access(client, db):
     assert response.status_code == 200
 
 
-def test_form_title_and_context_data(client, db):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_form_title_and_context_data(db, admin_client):
     url = reverse("forum_extension:create_category")
-    response = client.get(url)
+    response = admin_client.get(url)
     assertContains(response, "Créer une nouvelle catégorie documentaire")
     assertContains(response, reverse("forum_extension:documentation"))
     assert isinstance(response.context["form"], ForumForm)
     assert not isinstance(response.context["form"], SubCategoryForumUpdateForm)
 
 
-def test_success_url(client, db):
-    client.force_login(UserFactory(is_in_staff_group=True))
+def test_success_url(db, admin_client):
     url = reverse("forum_extension:create_category")
-    response = client.post(url, data={"name": "Test", "description": "Test", "short_description": "Test"})
+    response = admin_client.post(url, data={"name": "Test", "description": "Test", "short_description": "Test"})
     assert response.status_code == 302
     assert response.url == reverse("forum_extension:documentation")
 

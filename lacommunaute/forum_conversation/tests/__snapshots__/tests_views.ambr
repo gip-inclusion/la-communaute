@@ -8,7 +8,7 @@
                               
                               
                                   <div class="form-group col-auto">
-                                      <input class="btn btn-outline-warning" name="unapprove" type="submit" value="Unapprove"/>
+                                      <a class="btn btn-outline-danger" href="/forum/[forum-slug-pk]/topic/[topic-slug-pk]/[PK of Post]/post/delete/" role="button" value="Supprimer">Supprimer</a>
                                   </div>
                               
                           </div>
@@ -204,7 +204,7 @@
               
               
                   <div class="form-group col-auto">
-                      <input class="btn btn-outline-warning" name="unapprove" type="submit" value="Unapprove"/>
+                      <a aria-label="Supprimer" class="btn btn-outline-danger" href="/forum/[forum-slug-pk]/topic/[topic-slug-pk]/[PK of Post]/post/delete/" role="button">Supprimer</a>
                   </div>
               
           
