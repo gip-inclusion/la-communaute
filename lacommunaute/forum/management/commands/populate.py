@@ -7,7 +7,7 @@ from lacommunaute.event.factories import EventFactory
 from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
 from lacommunaute.forum_conversation.factories import AnonymousTopicFactory, PostFactory, TopicFactory
 from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 
 
 class Command(BaseCommand):
@@ -23,7 +23,7 @@ class Command(BaseCommand):
             is_staff=True,
         )
         sys.stdout.write("superuser created\n")
-        UserFactory(email="staff@inclusion.gouv.fr", username="staff", is_in_staff_group=True)
+        StaffUserFactory(email="staff@inclusion.gouv.fr", username="staff")
 
         sys.stdout.write("staff created\n")
 

@@ -23,7 +23,7 @@ from lacommunaute.notification.tasks import (
     send_notifs_on_unanswered_topics,
 )
 from lacommunaute.notification.utils import get_serialized_messages
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 
 
 faker = Faker()
@@ -211,10 +211,8 @@ class TestSendNotifsOnUnansweredTopics:
         assert email_sent_track.response == json.dumps({"message": "OK"})
         assert email_sent_track.datas == payload_for_staff_user_to_notify_on_unanswered_topics
 
-    @pytest.mark.parametrize(
-        "data", [lambda: UserFactory(is_in_staff_group=True), lambda: TopicFactory(with_post=True)]
-    )
-    def test_send_notifs_on_unanswered_topics_with_no_topic(self, db, data, mock_respx_post_to_sib_smtp_url):
-        data = data()
+    @pytest.mark.parametrize("data_factory", [StaffUserFactory, lambda: TopicFactory(with_post=True)])
+    def test_send_notifs_on_unanswered_topics_with_no_topic(self, db, data_factory, mock_respx_post_to_sib_smtp_url):
+        data_factory()
         send_notifs_on_unanswered_topics()
         assert EmailSentTrack.objects.count() == 0

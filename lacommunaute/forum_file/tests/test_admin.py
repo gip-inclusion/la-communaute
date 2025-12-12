@@ -11,7 +11,7 @@ from moto import mock_aws
 from PIL import Image
 
 from lacommunaute.forum_file.models import PublicFile
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 
 
 fake = faker.Faker()
@@ -19,11 +19,6 @@ fake = faker.Faker()
 # https://docs.getmoto.org/en/latest/docs/services/s3.html
 # Note that this only works if the environment variable is set before the mock is initialized.
 os.environ["MOTO_S3_CUSTOM_ENDPOINTS"] = settings.AWS_S3_ENDPOINT_URL
-
-
-@pytest.fixture(name="superuser")
-def superuser_fixture():
-    return UserFactory(is_superuser=True, is_staff=True)
 
 
 @pytest.fixture(name="image_content")
@@ -35,9 +30,10 @@ def image_content_fixture():
 
 
 @mock_aws
-def test_file_is_saved_with_logged_user(client, db, superuser, image_content):
+def test_file_is_saved_with_logged_user(client, db, image_content):
     conn = boto3.client("s3", endpoint_url=settings.AWS_S3_ENDPOINT_URL, region_name="us-east-1")
     conn.create_bucket(Bucket=settings.AWS_STORAGE_BUCKET_NAME_PUBLIC)
+    superuser = StaffUserFactory()
     client.force_login(superuser)
     not_the_logged_in_user = UserFactory()
 

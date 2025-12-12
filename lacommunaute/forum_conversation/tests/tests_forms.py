@@ -15,7 +15,7 @@ from lacommunaute.forum_conversation.factories import (
 )
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import Topic
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory, UserFactory
 
 
 faker = Faker(settings.LANGUAGE_CODE)
@@ -131,7 +131,7 @@ class TestTopicForm:
     def test_update_anonymous_topic_as_superuser(self, db, client, forum):
         topic = AnonymousTopicFactory(forum=forum, with_post=True)
         username = topic.first_post.username
-        superuser = UserFactory(is_superuser=True)
+        superuser = StaffUserFactory()
         client.force_login(superuser)
 
         data = {
@@ -182,7 +182,7 @@ class TestTopicForm:
     def test_update_authenticated_topic_as_superuser(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True)
         user = topic.poster
-        superuser = UserFactory(is_superuser=True)
+        superuser = StaffUserFactory()
         client.force_login(superuser)
 
         data = {
@@ -256,7 +256,7 @@ class TestPostForm:
     def test_update_anonymous_reply_as_superuser(self, db, client, forum):
         post = AnonymousPostFactory(topic=TopicFactory(forum=forum, with_post=True))
         username = post.username
-        superuser = UserFactory(is_superuser=True)
+        superuser = StaffUserFactory()
         client.force_login(superuser)
 
         data = {"content": faker.paragraph(nb_sentences=5), **superuser_hidden_fields}
@@ -304,7 +304,7 @@ class TestPostForm:
     def test_update_authenticated_reply_as_superuser(self, db, client, forum):
         post = PostFactory(topic=TopicFactory(forum=forum, with_post=True))
         user = post.poster
-        superuser = UserFactory(is_superuser=True)
+        superuser = StaffUserFactory()
         client.force_login(superuser)
 
         data = {"content": faker.paragraph(nb_sentences=5), **superuser_hidden_fields}

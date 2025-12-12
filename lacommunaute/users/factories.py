@@ -3,7 +3,6 @@ from datetime import UTC
 
 import factory
 from dateutil.relativedelta import relativedelta
-from django.conf import settings
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import Group
 from django.utils import timezone
@@ -45,13 +44,10 @@ class UserFactory(factory.django.DjangoModelFactory):
             return
         obj.user_permissions.add(*extracted)
 
-    @factory.post_generation
-    def is_in_staff_group(obj, create, extracted, **kwargs):
-        if not create or not extracted:
-            return
-        obj.groups.add(Group.objects.get(name=settings.STAFF_GROUP_NAME))
-        obj.is_staff = True
-        obj.save()
+
+class StaffUserFactory(UserFactory):
+    is_staff = True
+    is_superuser = True
 
 
 class EmailLastSeenFactory(factory.django.DjangoModelFactory):

@@ -65,7 +65,7 @@
           </main>
   '''
 # ---
-# name: test_partner_detailview[<lambda>-partner_detailview as superuser][partner_detailview as superuser]
+# name: test_partner_detailview[StaffUserFactory-partner_detailview as superuser][partner_detailview as superuser]
   '''
   <main class="s-main" id="main" role="main">
               
@@ -97,6 +97,8 @@
                           
                           <h1 class="mb-0">Best Partner Ever</h1>
                       </div>
+                      
+                          <a href="/partenaires/best-partner-ever-[PK of Partner]/update/"><small>Mettre à jour</small></a>
                       
                       <h2 class="mt-3">short description for SEO</h2>
                   </div>
@@ -131,7 +133,7 @@
           </main>
   '''
 # ---
-# name: test_partner_detailview[<lambda>-partner_detailview][partner_detailview]
+# name: test_partner_detailview[UserFactory-partner_detailview][partner_detailview]
   '''
   <main class="s-main" id="main" role="main">
               

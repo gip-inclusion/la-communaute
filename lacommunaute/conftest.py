@@ -1,7 +1,7 @@
 import pytest
 from django.core.management import call_command
 
-from lacommunaute.users.factories import UserFactory
+from lacommunaute.users.factories import StaffUserFactory
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -12,5 +12,5 @@ def run_compress(django_db_setup, django_db_blocker):
 
 @pytest.fixture
 def admin_client(client):
-    client.force_login(UserFactory(is_in_staff_group=True, is_superuser=True))
+    client.force_login(StaffUserFactory())
     return client
