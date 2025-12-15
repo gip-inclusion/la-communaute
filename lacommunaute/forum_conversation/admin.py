@@ -1,8 +1,9 @@
-from django.contrib import admin
+from django.contrib import admin, messages
 from django.db.models import Q
 from machina.apps.forum_conversation.admin import PostAdmin as BasePostAdmin, TopicAdmin as BaseTopicAdmin
 
 from lacommunaute.forum_conversation.models import CertifiedPost, Post, Topic
+from lacommunaute.forum_moderation.models import BlockedDomainName, BlockedEmail
 
 
 class UserTypePostFilter(admin.SimpleListFilter):
@@ -27,26 +28,24 @@ class UserTypePostFilter(admin.SimpleListFilter):
 
 
 class PostAdmin(BasePostAdmin):
-    def get_actions(self, request):
-        # delete_selected action does not call delete method of the model, so Related topic is not updated.
-        # When the last post of a topic is deleted, topic.posts_count remains to 1, saying ambiguous information.
-        # So we remove the delete_selected action to force the user to delete posts one by one.
-        return []
-
+    list_select_related = ("poster",)
     list_display = (
         "__str__",
-        "poster",
-        "username",
+        "email",
         "truncated_content",
         "updated",
-        "approved",
     )
+    list_editable = []
 
+    @admin.display(description="message")
     def truncated_content(self, obj):
         def truncate(s, size):
             return s[:size] + "..." if len(s) > size else s
 
         return truncate(str(obj.content), 64)
+
+    def email(self, obj):
+        return obj.username or obj.poster.email
 
     list_filter = BasePostAdmin.list_filter + (
         "approved",
@@ -54,6 +53,26 @@ class PostAdmin(BasePostAdmin):
     )
 
     ordering = ["-updated"]
+
+    @admin.action(description="Supprimer les messages et bloquer les emails")
+    def delete_message_and_block_email(self, request, queryset):
+        emails = {self.email(post) for post in queryset}
+        blocked_emails = [BlockedEmail(email=email, reason="modération message") for email in emails]
+        BlockedEmail.objects.bulk_create(blocked_emails, ignore_conflicts=True)
+
+        queryset.delete()
+        messages.success(request, "Messages supprimés et emails bloqués 👍")
+
+    @admin.action(description="Supprimer les messages et bloquer les noms de domaine")
+    def delete_message_and_block_domain_name(self, request, queryset):
+        domains = {self.email(post).split("@")[-1] for post in queryset}
+        blocked_domains = [BlockedDomainName(domain=domain, reason="modération message") for domain in domains]
+        BlockedDomainName.objects.bulk_create(blocked_domains, ignore_conflicts=True)
+
+        queryset.delete()
+        messages.success(request, "Messages supprimés et noms de domaine bloqués 👍")
+
+    actions = [delete_message_and_block_email, delete_message_and_block_domain_name]
 
 
 class PostInline(admin.StackedInline):
