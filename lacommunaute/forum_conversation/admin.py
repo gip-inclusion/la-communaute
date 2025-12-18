@@ -60,7 +60,9 @@ class PostAdmin(BasePostAdmin):
         blocked_emails = [BlockedEmail(email=email, reason="modération message") for email in emails]
         BlockedEmail.objects.bulk_create(blocked_emails, ignore_conflicts=True)
 
+        topic_pks = [post.topic_id for post in queryset]
         queryset.delete()
+        Topic.objects.filter(posts__isnull=True, pk__in=topic_pks).delete()
         messages.success(request, "Messages supprimés et emails bloqués 👍")
 
     @admin.action(description="Supprimer les messages et bloquer les noms de domaine")
@@ -69,7 +71,9 @@ class PostAdmin(BasePostAdmin):
         blocked_domains = [BlockedDomainName(domain=domain, reason="modération message") for domain in domains]
         BlockedDomainName.objects.bulk_create(blocked_domains, ignore_conflicts=True)
 
+        topic_pks = [post.topic_id for post in queryset]
         queryset.delete()
+        Topic.objects.filter(posts__isnull=True, pk__in=topic_pks).delete()
         messages.success(request, "Messages supprimés et noms de domaine bloqués 👍")
 
     actions = [delete_message_and_block_email, delete_message_and_block_domain_name]
