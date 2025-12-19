@@ -81,4 +81,4 @@ jobs:
           CELLAR_ADDON_HOST: cellar-c2.services.clever-cloud.com
           CELLAR_ADDON_PROTOCOL: https
         run: |
-          pytest lacommunaute/utils/tests/tests_live_cellar.py --create-db
+          pytest tests/utils/test_live_cellar.py --create-db
