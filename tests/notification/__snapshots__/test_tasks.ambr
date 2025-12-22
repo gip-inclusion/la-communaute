@@ -1,0 +1,148 @@
+# serializer version: 1
+# name: TestSendMessagesNotifications.test_queries
+  dict({
+    'num_queries': 3,
+    'queries': list([
+      dict({
+        'origin': list([
+          'NotificationQuerySet.group_by_recipient[notification/models.py]',
+          'get_grouped_notifications[notification/tasks.py]',
+          'send_messages_notifications[notification/tasks.py]',
+        ]),
+        'sql': '''
+          SELECT "notification_notification"."id",
+                 "notification_notification"."created",
+                 "notification_notification"."updated",
+                 "notification_notification"."recipient",
+                 "notification_notification"."post_id",
+                 "notification_notification"."kind",
+                 "notification_notification"."delay",
+                 "notification_notification"."sent_at",
+                 "notification_notification"."visited_at",
+                 "notification_notification"."uuid",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 T5."id",
+                 T5."created",
+                 T5."updated",
+                 T5."topic_id",
+                 T5."poster_id",
+                 T5."anonymous_key",
+                 T5."subject",
+                 T5."content",
+                 T5."approved",
+                 T5."enable_signature",
+                 T5."update_reason",
+                 T5."updated_by_id",
+                 T5."updates_count",
+                 T5."username",
+                 T5."_content_rendered",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "notification_notification"
+          INNER JOIN "forum_conversation_post" ON ("notification_notification"."post_id" = "forum_conversation_post"."id")
+          INNER JOIN "forum_conversation_topic" ON ("forum_conversation_post"."topic_id" = "forum_conversation_topic"."id")
+          INNER JOIN "forum_forum" ON ("forum_conversation_topic"."forum_id" = "forum_forum"."id")
+          LEFT OUTER JOIN "forum_conversation_post" T5 ON ("forum_conversation_topic"."first_post_id" = T5."id")
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_post"."poster_id" = "users_user"."id")
+          WHERE ("notification_notification"."delay" = %s
+                 AND "notification_notification"."post_id" IS NOT NULL
+                 AND "notification_notification"."sent_at" IS NULL)
+          ORDER BY "notification_notification"."recipient" ASC,
+                   "notification_notification"."kind" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'EmailSentTrack.save[<site-packages>/django/db/models/base.py]',
+          'send_email[notification/emails.py]',
+          'send_messages_notifications[notification/tasks.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "notification_emailsenttrack" ("created",
+                                                     "updated",
+                                                     "status_code",
+                                                     "response",
+                                                     "datas",
+                                                     "kind")
+          VALUES (%s, %s, %s, %s, %s, %s) RETURNING "notification_emailsenttrack"."id"
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'send_messages_notifications[notification/tasks.py]',
+        ]),
+        'sql': '''
+          UPDATE "notification_notification"
+          SET "sent_at" = %s
+          WHERE ("notification_notification"."delay" = %s
+                 AND "notification_notification"."post_id" IS NOT NULL
+                 AND "notification_notification"."sent_at" IS NULL)
+        ''',
+      }),
+    ]),
+  })
+# ---

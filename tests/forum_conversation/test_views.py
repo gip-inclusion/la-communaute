@@ -7,6 +7,7 @@ from django.test import RequestFactory, TestCase
 from django.urls import reverse
 from django.utils.http import urlencode
 from faker import Faker
+from itoutils.django.testing import assertSnapshotQueries
 from machina.core.db.models import get_model
 from machina.core.loading import get_class
 from pytest_django.asserts import assertContains
@@ -811,6 +812,7 @@ class PostDeleteViewTest(TestCase):
         self.assertTrue(view.success_message, msgs._queued_messages[0].message)
 
 
+@pytest.mark.usefixtures("unittest_compatibility")
 class TopicViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -898,14 +900,14 @@ class TopicViewTest(TestCase):
         notification.refresh_from_db()
         self.assertEqual(str(notification.created), str(notification.sent_at))
 
-    def test_numqueries(self):
+    def test_queries(self):
         PostFactory.create_batch(10, topic=self.topic, poster=self.poster)
         UpVoteFactory(content_object=self.topic.last_post, voter=UserFactory())
         CertifiedPostFactory(topic=self.topic, post=self.topic.last_post, user=UserFactory())
         self.client.force_login(self.poster)
 
         # note vincentporte : to be optimized
-        with self.assertNumQueries(38):
+        with assertSnapshotQueries(self.snapshot):
             response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
 

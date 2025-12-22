@@ -279,6 +279,284 @@
               </title>
   '''
 # ---
+# name: test_queries
+  dict({
+    'num_queries': 10,
+    'queries': list([
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'ForumQuerySet.first[<site-packages>/django/db/models/query.py]',
+          'ForumQuerySet.get_main_forum[forum/models.py]',
+          'HomeView.get_context_data[pages/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE ("forum_forum"."level" = %s
+                 AND "forum_forum"."lft" = %s)
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'ForNode[pages/home.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[pages/home.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          INNER JOIN "forum_forum" T2 ON ("forum_forum"."parent_id" = T2."id")
+          WHERE T2."type" = %s
+          ORDER BY "forum_forum"."updated" DESC
+          LIMIT 4
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'IfNode[pages/home.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[pages/home.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider",
+                 "forum_member_forumprofile"."id",
+                 "forum_member_forumprofile"."user_id",
+                 "forum_member_forumprofile"."avatar",
+                 "forum_member_forumprofile"."signature",
+                 "forum_member_forumprofile"."posts_count",
+                 "forum_member_forumprofile"."linkedin",
+                 "forum_member_forumprofile"."cv",
+                 "forum_member_forumprofile"."search",
+                 "forum_member_forumprofile"."region",
+                 "forum_member_forumprofile"."internship_duration",
+                 "forum_member_forumprofile"."updated_at",
+                 "forum_member_forumprofile"."_signature_rendered",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 T6."id",
+                 T6."password",
+                 T6."last_login",
+                 T6."is_superuser",
+                 T6."username",
+                 T6."first_name",
+                 T6."last_name",
+                 T6."email",
+                 T6."is_staff",
+                 T6."is_active",
+                 T6."date_joined",
+                 T6."identity_provider"
+          FROM "forum_conversation_topic"
+          INNER JOIN "forum_forum" ON ("forum_conversation_topic"."forum_id" = "forum_forum"."id")
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_topic"."poster_id" = "users_user"."id")
+          LEFT OUTER JOIN "forum_member_forumprofile" ON ("users_user"."id" = "forum_member_forumprofile"."user_id")
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_conversation_topic"."first_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" T6 ON ("forum_conversation_post"."poster_id" = T6."id")
+          WHERE (NOT (NOT "forum_conversation_topic"."approved")
+                 AND NOT ("forum_conversation_topic"."status" = %s)
+                 AND NOT ("forum_conversation_topic"."type" = %s)
+                 AND "forum_conversation_topic"."posts_count" = %s)
+          ORDER BY "forum_conversation_topic"."last_post_on" DESC
+          LIMIT 4
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForNode[pages/home.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[pages/home.html]',
+        ]),
+        'sql': '''
+          SELECT "event_event"."id",
+                 "event_event"."created",
+                 "event_event"."updated",
+                 "event_event"."name",
+                 "event_event"."date",
+                 "event_event"."time",
+                 "event_event"."end_date",
+                 "event_event"."end_time",
+                 "event_event"."color",
+                 "event_event"."description",
+                 "event_event"."location",
+                 "event_event"."poster_id"
+          FROM "event_event"
+          WHERE "event_event"."date" >= %s
+          ORDER BY "event_event"."date" ASC
+          LIMIT 4
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          SELECT %s AS "a"
+          FROM "django_session"
+          WHERE "django_session"."session_key" = %s
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'Session.save[<site-packages>/django/db/models/base.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "django_session" ("session_key",
+                                        "session_data",
+                                        "expire_date")
+          VALUES (%s, %s, %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+    ]),
+  })
+# ---
 # name: test_updated_forum_short_description[truncated_encoded_short_description]
   '''
   <div class="s-section__col col-12 col-md-8" id="updated_forums">

@@ -2,6 +2,7 @@ import hashlib
 
 import pytest
 from django.conf import settings
+from itoutils.django.testing import assertSnapshotQueries
 
 from lacommunaute.forum_conversation.factories import AnonymousTopicFactory, TopicFactory
 from lacommunaute.users.factories import EmailLastSeenFactory, UserFactory
@@ -67,17 +68,12 @@ def test_soft_delete_post(db):
         assert post.username in undesired_usernames
 
 
-def test_soft_delete_numqueries(db, django_assert_num_queries):
+def test_soft_delete_queries(db, snapshot):
     AnonymousTopicFactory.create_batch(3, with_post=True)
 
     users = UserFactory.create_batch(3)
     for user in users:
         EmailLastSeenFactory(email=user.email, soft_deletable=True)
 
-    with django_assert_num_queries(
-        2  # savepoint, release
-        + 2  # select/update email last seen
-        + 2  # select/update user
-        + 2  # select/update post
-    ):
+    with assertSnapshotQueries(snapshot):
         soft_delete_users(EmailLastSeen.objects.all())

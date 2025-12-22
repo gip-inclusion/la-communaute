@@ -11,6 +11,158 @@
           </nav>
   '''
 # ---
+# name: TestForumStatView.test_queries
+  dict({
+    'num_queries': 7,
+    'queries': list([
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'ForNode[stats/documents.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[stats/documents.html]',
+          'DocumentStatsView.get[stats/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 SUM("stats_forumstat"."visits") AS "sum_visits",
+                 SUM("stats_forumstat"."time_spent") AS "sum_time_spent",
+          
+            (SELECT AVG(U0."rating") AS "avg_rating"
+             FROM "forum_forumrating" U0
+             WHERE U0."forum_id" = ("forum_forum"."id")
+             GROUP BY U0."forum_id") AS "avg_rating",
+          
+            (SELECT COUNT(U0."rating") AS "count_rating"
+             FROM "forum_forumrating" U0
+             WHERE U0."forum_id" = ("forum_forum"."id")
+             GROUP BY U0."forum_id") AS "count_rating",
+                 T3."id",
+                 T3."created",
+                 T3."updated",
+                 T3."parent_id",
+                 T3."name",
+                 T3."slug",
+                 T3."description",
+                 T3."link",
+                 T3."link_redirects",
+                 T3."type",
+                 T3."direct_posts_count",
+                 T3."direct_topics_count",
+                 T3."link_redirects_count",
+                 T3."last_post_id",
+                 T3."last_post_on",
+                 T3."display_sub_forum_list",
+                 T3."short_description",
+                 T3."image",
+                 T3."certified",
+                 T3."partner_id",
+                 T3."_description_rendered",
+                 T3."lft",
+                 T3."rght",
+                 T3."tree_id",
+                 T3."level",
+                 "partner_partner"."id",
+                 "partner_partner"."created",
+                 "partner_partner"."updated",
+                 "partner_partner"."name",
+                 "partner_partner"."slug",
+                 "partner_partner"."short_description",
+                 "partner_partner"."description",
+                 "partner_partner"."logo",
+                 "partner_partner"."url",
+                 "partner_partner"."_description_rendered"
+          FROM "forum_forum"
+          INNER JOIN "stats_forumstat" ON ("forum_forum"."id" = "stats_forumstat"."forum_id")
+          INNER JOIN "forum_forum" T3 ON ("forum_forum"."parent_id" = T3."id")
+          LEFT OUTER JOIN "partner_partner" ON ("forum_forum"."partner_id" = "partner_partner"."id")
+          WHERE ("stats_forumstat"."period" = %s
+                 AND T3."type" = %s)
+          GROUP BY "forum_forum"."id",
+                   T3."id",
+                   "partner_partner"."id"
+          ORDER BY 27 DESC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          SELECT %s AS "a"
+          FROM "django_session"
+          WHERE "django_session"."session_key" = %s
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'Session.save[<site-packages>/django/db/models/base.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "django_session" ("session_key",
+                                        "session_data",
+                                        "expire_date")
+          VALUES (%s, %s, %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+    ]),
+  })
+# ---
 # name: TestForumStatView.test_sort_key[None-sort_by_sum_time_spent][sort_by_sum_time_spent]
   '''
   <main class="s-main" id="main" role="main">

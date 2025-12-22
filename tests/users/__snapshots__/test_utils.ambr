@@ -1,0 +1,178 @@
+# serializer version: 1
+# name: test_soft_delete_queries
+  dict({
+    'num_queries': 8,
+    'queries': list([
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'soft_delete_users[users/utils.py]',
+        ]),
+        'sql': '''
+          SELECT "users_emaillastseen"."id",
+                 "users_emaillastseen"."email",
+                 "users_emaillastseen"."email_hash",
+                 "users_emaillastseen"."last_seen_at",
+                 "users_emaillastseen"."last_seen_kind",
+                 "users_emaillastseen"."missyou_send_at",
+                 "users_emaillastseen"."deleted_at"
+          FROM "users_emaillastseen"
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'soft_delete_users[users/utils.py]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."email" IN (%s,
+                                         %s,
+                                         %s,
+                                         %s,
+                                         %s,
+                                         %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'soft_delete_users[users/utils.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered"
+          FROM "forum_conversation_post"
+          WHERE "forum_conversation_post"."username" IN (%s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s)
+          ORDER BY "forum_conversation_post"."created" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'soft_delete_users[users/utils.py]',
+        ]),
+        'sql': '''
+          UPDATE "users_user"
+          SET "email" = (CASE
+                             WHEN ("users_user"."id" = %s) THEN %s
+                             WHEN ("users_user"."id" = %s) THEN %s
+                             WHEN ("users_user"."id" = %s) THEN %s
+                             ELSE NULL
+                         END)::varchar(254),
+              "first_name" = (CASE
+                                  WHEN ("users_user"."id" = %s) THEN %s
+                                  WHEN ("users_user"."id" = %s) THEN %s
+                                  WHEN ("users_user"."id" = %s) THEN %s
+                                  ELSE NULL
+                              END)::varchar(150),
+              "last_name" = (CASE
+                                 WHEN ("users_user"."id" = %s) THEN %s
+                                 WHEN ("users_user"."id" = %s) THEN %s
+                                 WHEN ("users_user"."id" = %s) THEN %s
+                                 ELSE NULL
+                             END)::varchar(150)
+          WHERE "users_user"."id" IN (%s,
+                                      %s,
+                                      %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'soft_delete_users[users/utils.py]',
+        ]),
+        'sql': '''
+          UPDATE "forum_conversation_post"
+          SET "username" = (CASE
+                                WHEN ("forum_conversation_post"."id" = %s) THEN %s
+                                WHEN ("forum_conversation_post"."id" = %s) THEN %s
+                                WHEN ("forum_conversation_post"."id" = %s) THEN %s
+                                ELSE NULL
+                            END)::varchar(254)
+          WHERE "forum_conversation_post"."id" IN (%s,
+                                                   %s,
+                                                   %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'soft_delete_users[users/utils.py]',
+        ]),
+        'sql': '''
+          UPDATE "users_emaillastseen"
+          SET "email" = (CASE
+                             WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                             WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                             WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                             WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                             WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                             WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                             ELSE NULL
+                         END)::varchar(254),
+              "email_hash" = (CASE
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  ELSE NULL
+                              END)::varchar(255),
+              "deleted_at" = (CASE
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  WHEN ("users_emaillastseen"."id" = %s) THEN %s
+                                  ELSE NULL
+                              END)::timestamp WITH TIME ZONE
+          WHERE "users_emaillastseen"."id" IN (%s,
+                                               %s,
+                                               %s,
+                                               %s,
+                                               %s,
+                                               %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+    ]),
+  })
+# ---

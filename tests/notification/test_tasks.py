@@ -7,6 +7,7 @@ from django.conf import settings
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
+from itoutils.django.testing import assertSnapshotQueries
 
 from lacommunaute.forum_conversation.factories import (
     TopicFactory,
@@ -97,14 +98,14 @@ class TestSendMessagesNotifications:
             == "Vous avez 11 messages à découvrir sur la communauté de l'inclusion"
         )
 
-    def test_num_queries(self, db, django_assert_num_queries, mock_respx_post_to_sib_smtp_url):
+    def test_queries(self, db, snapshot, mock_respx_post_to_sib_smtp_url):
         NotificationFactory.create_batch(
             10,
             recipient=UserFactory().email,
             set_post=True,
         )
 
-        with django_assert_num_queries(3):
+        with assertSnapshotQueries(snapshot):
             send_messages_notifications(NotificationDelay.DAY)
 
 
