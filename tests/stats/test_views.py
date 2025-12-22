@@ -9,6 +9,7 @@ from django.utils.dateformat import format
 from django.utils.timezone import localdate
 from faker import Faker
 from freezegun import freeze_time
+from itoutils.django.testing import assertSnapshotQueries
 from pytest_django.asserts import assertContains
 
 from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
@@ -299,8 +300,6 @@ class TestForumStatView:
             )
         ) == snapshot(name=snapshot_name)
 
-    def test_num_queries(self, client, db, document_stats_setup, django_assert_num_queries):
-        django_session_num_of_queries = 6
-        expected_queries_in_view = 1
-        with django_assert_num_queries(expected_queries_in_view + django_session_num_of_queries):
+    def test_queries(self, client, db, document_stats_setup, snapshot):
+        with assertSnapshotQueries(snapshot):
             client.get(reverse("stats:document_stats"))

@@ -54,3 +54,8 @@ NEXUS_METABASE_DB_USER = DATABASES["default"]["USER"]
 NEXUS_METABASE_DB_PASSWORD = DATABASES["default"]["PASSWORD"]
 NEXUS_AUTO_LOGIN_KEY = {"k": "aTR4ZnR1WlpYYmphbFdtaXVlVjB3alljNjhrWXpfYSE", "kty": "oct"}
 NEXUS_ALLOWED_REDIRECT_HOSTS = ["domain.fr", "domain.com"]
+
+
+ASSERT_SNAPSHOT_QUERIES_EXTRA_PACKAGES_ALLOWLIST = [
+    ("machina/apps/forum_permission/viewmixins.py", "check_permissions"),
+]

@@ -14,3 +14,8 @@ def run_compress(django_db_setup, django_db_blocker):
 def admin_client(client):
     client.force_login(StaffUserFactory())
     return client
+
+
+@pytest.fixture(scope="function")
+def unittest_compatibility(request, snapshot):
+    request.instance.snapshot = snapshot

@@ -4,6 +4,7 @@ import pytest
 from dateutil.relativedelta import relativedelta
 from django.urls import reverse
 from django.utils import timezone
+from itoutils.django.testing import assertSnapshotQueries
 from pytest_django.asserts import assertContains, assertNotContains
 
 from lacommunaute.event.factories import EventFactory
@@ -61,17 +62,8 @@ def test_unsanswered_topics(db, client, nb_topics, nb_expected, snapshot):
     assert ('id="unanswered_topics"' in str(response.content)) == (nb_expected > 0)
 
 
-def test_numqueries(db, client, django_assert_num_queries):
-    savepoint_queries = 4
-    session_queries = 2
-    with django_assert_num_queries(
-        savepoint_queries
-        + session_queries
-        + 1  # get first public forum
-        + 1  # get most recent updated forums in documentation
-        + 1  # get unanswered topics
-        + 1  # get upcoming events
-    ):
+def test_queries(db, client, snapshot):
+    with assertSnapshotQueries(snapshot):
         client.get(reverse("pages:home"))
 
 

@@ -1,4 +1,1278 @@
 # serializer version: 1
+# name: ForumViewTest.test_filtered_queryset_on_tag
+  dict({
+    'num_queries': 20,
+    'queries': list([
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_userforumpermission"."id",
+                 "forum_permission_userforumpermission"."permission_id",
+                 "forum_permission_userforumpermission"."has_perm",
+                 "forum_permission_userforumpermission"."forum_id",
+                 "forum_permission_userforumpermission"."user_id",
+                 "forum_permission_userforumpermission"."anonymous_user",
+                 "forum_permission_userforumpermission"."authenticated_user",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename"
+          FROM "forum_permission_userforumpermission"
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_userforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE (("forum_permission_userforumpermission"."forum_id" IS NULL
+                  OR "forum_permission_userforumpermission"."forum_id" IN (%s))
+                 AND "forum_permission_userforumpermission"."anonymous_user")
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'QuerySet.first[<site-packages>/django/db/models/query.py]',
+          'ForumView.get_tag[forum_conversation/view_mixins.py]',
+          'ForumView.filter_queryset[forum_conversation/view_mixins.py]',
+          'ForumView.get_queryset[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "taggit_tag"."id",
+                 "taggit_tag"."name",
+                 "taggit_tag"."slug"
+          FROM "taggit_tag"
+          WHERE "taggit_tag"."slug" = %s
+          ORDER BY "taggit_tag"."id" ASC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Paginator.count[<site-packages>/django/core/paginator.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT COUNT(*) AS "__count"
+          FROM "forum_conversation_topic"
+          INNER JOIN "taggit_taggeditem" ON ("forum_conversation_topic"."id" = ("taggit_taggeditem"."object_id")::bigint
+                                             AND ("taggit_taggeditem"."content_type_id" = %s))
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND NOT (NOT "forum_conversation_topic"."approved")
+                 AND "forum_conversation_topic"."type" IN (%s,
+                                                           %s,
+                                                           %s)
+                 AND "taggit_taggeditem"."tag_id" = %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_userforumpermission"."id",
+                 "forum_permission_userforumpermission"."permission_id",
+                 "forum_permission_userforumpermission"."has_perm",
+                 "forum_permission_userforumpermission"."forum_id",
+                 "forum_permission_userforumpermission"."user_id",
+                 "forum_permission_userforumpermission"."anonymous_user",
+                 "forum_permission_userforumpermission"."authenticated_user",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename"
+          FROM "forum_permission_userforumpermission"
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_userforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE (("forum_permission_userforumpermission"."forum_id" IS NULL
+                  OR "forum_permission_userforumpermission"."forum_id" IN (%s))
+                 AND "forum_permission_forumpermission"."codename" IN (%s,
+                                                                       %s)
+                 AND "forum_permission_userforumpermission"."anonymous_user")
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" IN (%s)
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 T5."id",
+                 T5."password",
+                 T5."last_login",
+                 T5."is_superuser",
+                 T5."username",
+                 T5."first_name",
+                 T5."last_name",
+                 T5."email",
+                 T5."is_staff",
+                 T5."is_active",
+                 T5."date_joined",
+                 T5."identity_provider"
+          FROM "forum_conversation_topic"
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_topic"."poster_id" = "users_user"."id")
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_conversation_topic"."last_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" T5 ON ("forum_conversation_post"."poster_id" = T5."id")
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND "forum_conversation_topic"."type" = %s)
+          ORDER BY "forum_conversation_topic"."type" DESC,
+                   "forum_conversation_topic"."last_post_on" DESC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider",
+                 "forum_member_forumprofile"."id",
+                 "forum_member_forumprofile"."user_id",
+                 "forum_member_forumprofile"."avatar",
+                 "forum_member_forumprofile"."signature",
+                 "forum_member_forumprofile"."posts_count",
+                 "forum_member_forumprofile"."linkedin",
+                 "forum_member_forumprofile"."cv",
+                 "forum_member_forumprofile"."search",
+                 "forum_member_forumprofile"."region",
+                 "forum_member_forumprofile"."internship_duration",
+                 "forum_member_forumprofile"."updated_at",
+                 "forum_member_forumprofile"."_signature_rendered",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 T8."id",
+                 T8."password",
+                 T8."last_login",
+                 T8."is_superuser",
+                 T8."username",
+                 T8."first_name",
+                 T8."last_name",
+                 T8."email",
+                 T8."is_staff",
+                 T8."is_active",
+                 T8."date_joined",
+                 T8."identity_provider",
+                 "forum_conversation_certifiedpost"."id",
+                 "forum_conversation_certifiedpost"."created",
+                 "forum_conversation_certifiedpost"."updated",
+                 "forum_conversation_certifiedpost"."topic_id",
+                 "forum_conversation_certifiedpost"."post_id",
+                 "forum_conversation_certifiedpost"."user_id",
+                 T10."id",
+                 T10."created",
+                 T10."updated",
+                 T10."topic_id",
+                 T10."poster_id",
+                 T10."anonymous_key",
+                 T10."subject",
+                 T10."content",
+                 T10."approved",
+                 T10."enable_signature",
+                 T10."update_reason",
+                 T10."updated_by_id",
+                 T10."updates_count",
+                 T10."username",
+                 T10."_content_rendered",
+                 T11."id",
+                 T11."password",
+                 T11."last_login",
+                 T11."is_superuser",
+                 T11."username",
+                 T11."first_name",
+                 T11."last_name",
+                 T11."email",
+                 T11."is_staff",
+                 T11."is_active",
+                 T11."date_joined",
+                 T11."identity_provider"
+          FROM "forum_conversation_topic"
+          INNER JOIN "forum_forum" ON ("forum_conversation_topic"."forum_id" = "forum_forum"."id")
+          INNER JOIN "taggit_taggeditem" ON ("forum_conversation_topic"."id" = ("taggit_taggeditem"."object_id")::bigint
+                                             AND ("taggit_taggeditem"."content_type_id" = %s))
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_topic"."poster_id" = "users_user"."id")
+          LEFT OUTER JOIN "forum_member_forumprofile" ON ("users_user"."id" = "forum_member_forumprofile"."user_id")
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_conversation_topic"."first_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" T8 ON ("forum_conversation_post"."poster_id" = T8."id")
+          LEFT OUTER JOIN "forum_conversation_certifiedpost" ON ("forum_conversation_topic"."id" = "forum_conversation_certifiedpost"."topic_id")
+          LEFT OUTER JOIN "forum_conversation_post" T10 ON ("forum_conversation_certifiedpost"."post_id" = T10."id")
+          LEFT OUTER JOIN "users_user" T11 ON (T10."poster_id" = T11."id")
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND NOT (NOT "forum_conversation_topic"."approved")
+                 AND "forum_conversation_topic"."type" IN (%s,
+                                                           %s,
+                                                           %s)
+                 AND "taggit_taggeditem"."tag_id" = %s)
+          ORDER BY "forum_conversation_topic"."last_post_on" DESC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_polls_topicpoll"."id",
+                 "forum_polls_topicpoll"."created",
+                 "forum_polls_topicpoll"."updated",
+                 "forum_polls_topicpoll"."topic_id",
+                 "forum_polls_topicpoll"."question",
+                 "forum_polls_topicpoll"."duration",
+                 "forum_polls_topicpoll"."max_options",
+                 "forum_polls_topicpoll"."user_changes",
+                 "forum_polls_topicpoll"."hide_results"
+          FROM "forum_polls_topicpoll"
+          WHERE "forum_polls_topicpoll"."topic_id" IN (%s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_attachments_attachment"."id",
+                 "forum_attachments_attachment"."post_id",
+                 "forum_attachments_attachment"."file",
+                 "forum_attachments_attachment"."comment"
+          FROM "forum_attachments_attachment"
+          WHERE "forum_attachments_attachment"."post_id" IN (%s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT DISTINCT ("taggit_taggeditem"."object_id") AS "_prefetch_related_val",
+                          "taggit_tag"."id",
+                          "taggit_tag"."name",
+                          "taggit_tag"."slug"
+          FROM "taggit_tag"
+          INNER JOIN "taggit_taggeditem" ON ("taggit_tag"."id" = "taggit_taggeditem"."tag_id")
+          INNER JOIN "django_content_type" ON ("taggit_taggeditem"."content_type_id" = "django_content_type"."id")
+          WHERE ("django_content_type"."app_label" = %s
+                 AND "django_content_type"."model" = %s
+                 AND "taggit_taggeditem"."object_id" IN (%s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'QuerySet.first[<site-packages>/django/db/models/query.py]',
+          'Forum.get_session_rating[forum/models.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forumrating"."id",
+                 "forum_forumrating"."created",
+                 "forum_forumrating"."updated",
+                 "forum_forumrating"."session_id",
+                 "forum_forumrating"."forum_id",
+                 "forum_forumrating"."rating",
+                 "forum_forumrating"."user_id"
+          FROM "forum_forumrating"
+          WHERE ("forum_forumrating"."forum_id" = %s
+                 AND "forum_forumrating"."session_id" IS NULL)
+          ORDER BY "forum_forumrating"."created" DESC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          SELECT %s AS "a"
+          FROM "django_session"
+          WHERE "django_session"."session_key" = %s
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'Session.save[<site-packages>/django/db/models/base.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "django_session" ("session_key",
+                                        "session_data",
+                                        "expire_date")
+          VALUES (%s, %s, %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+    ]),
+  })
+# ---
+# name: ForumViewTest.test_queries
+  dict({
+    'num_queries': 23,
+    'queries': list([
+      dict({
+        'origin': list([
+          'SessionStore._get_session_from_db[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'MarkAsSeenLoggedUserMiddleware.process_request[users/middleware.py]',
+        ]),
+        'sql': '''
+          SELECT "django_session"."session_key",
+                 "django_session"."session_data",
+                 "django_session"."expire_date"
+          FROM "django_session"
+          WHERE ("django_session"."expire_date" > %s
+                 AND "django_session"."session_key" = %s)
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'MarkAsSeenLoggedUserMiddleware.process_request[users/middleware.py]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'EmailLastSeenQuerySet.seen[users/models.py]',
+          'MarkAsSeenLoggedUserMiddleware.process_request[users/middleware.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "users_emaillastseen" ("email",
+                                             "email_hash",
+                                             "last_seen_at",
+                                             "last_seen_kind",
+                                             "missyou_send_at",
+                                             "deleted_at")
+          VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT("email") DO
+          UPDATE
+          SET "last_seen_at" = EXCLUDED."last_seen_at",
+              "last_seen_kind" = EXCLUDED."last_seen_kind",
+              "missyou_send_at" = EXCLUDED."missyou_send_at" RETURNING "users_emaillastseen"."id"
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_userforumpermission"."id",
+                 "forum_permission_userforumpermission"."permission_id",
+                 "forum_permission_userforumpermission"."has_perm",
+                 "forum_permission_userforumpermission"."forum_id",
+                 "forum_permission_userforumpermission"."user_id",
+                 "forum_permission_userforumpermission"."anonymous_user",
+                 "forum_permission_userforumpermission"."authenticated_user",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename"
+          FROM "forum_permission_userforumpermission"
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_userforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE (("forum_permission_userforumpermission"."forum_id" IS NULL
+                  OR "forum_permission_userforumpermission"."forum_id" IN (%s))
+                 AND ("forum_permission_userforumpermission"."authenticated_user"
+                      OR "forum_permission_userforumpermission"."user_id" = %s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_groupforumpermission"."id",
+                 "forum_permission_groupforumpermission"."permission_id",
+                 "forum_permission_groupforumpermission"."has_perm",
+                 "forum_permission_groupforumpermission"."forum_id",
+                 "forum_permission_groupforumpermission"."group_id",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename",
+                 "auth_group"."id",
+                 "auth_group"."name"
+          FROM "forum_permission_groupforumpermission"
+          INNER JOIN "auth_group" ON ("forum_permission_groupforumpermission"."group_id" = "auth_group"."id")
+          INNER JOIN "users_user_groups" ON ("auth_group"."id" = "users_user_groups"."group_id")
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_groupforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE ("users_user_groups"."user_id" = %s
+                 AND ("forum_permission_groupforumpermission"."forum_id" IS NULL
+                      OR "forum_permission_groupforumpermission"."forum_id" IN (%s)))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT %s AS "a"
+          FROM "forum_upvote_upvote"
+          WHERE ("forum_upvote_upvote"."content_type_id" = %s
+                 AND "forum_upvote_upvote"."object_id" = %s
+                 AND "forum_upvote_upvote"."voter_id" = %s)
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Paginator.count[<site-packages>/django/core/paginator.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT COUNT(*) AS "__count"
+          FROM "forum_conversation_topic"
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND NOT (NOT "forum_conversation_topic"."approved")
+                 AND "forum_conversation_topic"."type" IN (%s,
+                                                           %s,
+                                                           %s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_userforumpermission"."id",
+                 "forum_permission_userforumpermission"."permission_id",
+                 "forum_permission_userforumpermission"."has_perm",
+                 "forum_permission_userforumpermission"."forum_id",
+                 "forum_permission_userforumpermission"."user_id",
+                 "forum_permission_userforumpermission"."anonymous_user",
+                 "forum_permission_userforumpermission"."authenticated_user",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename"
+          FROM "forum_permission_userforumpermission"
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_userforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE (("forum_permission_userforumpermission"."forum_id" IS NULL
+                  OR "forum_permission_userforumpermission"."forum_id" IN (%s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s))
+                 AND "forum_permission_forumpermission"."codename" IN (%s,
+                                                                       %s)
+                 AND ("forum_permission_userforumpermission"."authenticated_user"
+                      OR "forum_permission_userforumpermission"."user_id" = %s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_groupforumpermission"."id",
+                 "forum_permission_groupforumpermission"."permission_id",
+                 "forum_permission_groupforumpermission"."has_perm",
+                 "forum_permission_groupforumpermission"."forum_id",
+                 "forum_permission_groupforumpermission"."group_id",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename",
+                 "auth_group"."id",
+                 "auth_group"."name"
+          FROM "forum_permission_groupforumpermission"
+          INNER JOIN "auth_group" ON ("forum_permission_groupforumpermission"."group_id" = "auth_group"."id")
+          INNER JOIN "users_user_groups" ON ("auth_group"."id" = "users_user_groups"."group_id")
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_groupforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE ("users_user_groups"."user_id" = %s
+                 AND ("forum_permission_groupforumpermission"."forum_id" IS NULL
+                      OR "forum_permission_groupforumpermission"."forum_id" IN (%s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s,
+                                                                                %s))
+                 AND "forum_permission_forumpermission"."codename" IN (%s,
+                                                                       %s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" IN (%s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s)
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 T5."id",
+                 T5."password",
+                 T5."last_login",
+                 T5."is_superuser",
+                 T5."username",
+                 T5."first_name",
+                 T5."last_name",
+                 T5."email",
+                 T5."is_staff",
+                 T5."is_active",
+                 T5."date_joined",
+                 T5."identity_provider"
+          FROM "forum_conversation_topic"
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_topic"."poster_id" = "users_user"."id")
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_conversation_topic"."last_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" T5 ON ("forum_conversation_post"."poster_id" = T5."id")
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND "forum_conversation_topic"."type" = %s)
+          ORDER BY "forum_conversation_topic"."type" DESC,
+                   "forum_conversation_topic"."last_post_on" DESC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider",
+                 "forum_member_forumprofile"."id",
+                 "forum_member_forumprofile"."user_id",
+                 "forum_member_forumprofile"."avatar",
+                 "forum_member_forumprofile"."signature",
+                 "forum_member_forumprofile"."posts_count",
+                 "forum_member_forumprofile"."linkedin",
+                 "forum_member_forumprofile"."cv",
+                 "forum_member_forumprofile"."search",
+                 "forum_member_forumprofile"."region",
+                 "forum_member_forumprofile"."internship_duration",
+                 "forum_member_forumprofile"."updated_at",
+                 "forum_member_forumprofile"."_signature_rendered",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 T6."id",
+                 T6."password",
+                 T6."last_login",
+                 T6."is_superuser",
+                 T6."username",
+                 T6."first_name",
+                 T6."last_name",
+                 T6."email",
+                 T6."is_staff",
+                 T6."is_active",
+                 T6."date_joined",
+                 T6."identity_provider",
+                 "forum_conversation_certifiedpost"."id",
+                 "forum_conversation_certifiedpost"."created",
+                 "forum_conversation_certifiedpost"."updated",
+                 "forum_conversation_certifiedpost"."topic_id",
+                 "forum_conversation_certifiedpost"."post_id",
+                 "forum_conversation_certifiedpost"."user_id",
+                 T8."id",
+                 T8."created",
+                 T8."updated",
+                 T8."topic_id",
+                 T8."poster_id",
+                 T8."anonymous_key",
+                 T8."subject",
+                 T8."content",
+                 T8."approved",
+                 T8."enable_signature",
+                 T8."update_reason",
+                 T8."updated_by_id",
+                 T8."updates_count",
+                 T8."username",
+                 T8."_content_rendered",
+                 T9."id",
+                 T9."password",
+                 T9."last_login",
+                 T9."is_superuser",
+                 T9."username",
+                 T9."first_name",
+                 T9."last_name",
+                 T9."email",
+                 T9."is_staff",
+                 T9."is_active",
+                 T9."date_joined",
+                 T9."identity_provider"
+          FROM "forum_conversation_topic"
+          INNER JOIN "forum_forum" ON ("forum_conversation_topic"."forum_id" = "forum_forum"."id")
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_topic"."poster_id" = "users_user"."id")
+          LEFT OUTER JOIN "forum_member_forumprofile" ON ("users_user"."id" = "forum_member_forumprofile"."user_id")
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_conversation_topic"."first_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" T6 ON ("forum_conversation_post"."poster_id" = T6."id")
+          LEFT OUTER JOIN "forum_conversation_certifiedpost" ON ("forum_conversation_topic"."id" = "forum_conversation_certifiedpost"."topic_id")
+          LEFT OUTER JOIN "forum_conversation_post" T8 ON ("forum_conversation_certifiedpost"."post_id" = T8."id")
+          LEFT OUTER JOIN "users_user" T9 ON (T8."poster_id" = T9."id")
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND NOT (NOT "forum_conversation_topic"."approved")
+                 AND "forum_conversation_topic"."type" IN (%s,
+                                                           %s,
+                                                           %s))
+          ORDER BY "forum_conversation_topic"."last_post_on" DESC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_polls_topicpoll"."id",
+                 "forum_polls_topicpoll"."created",
+                 "forum_polls_topicpoll"."updated",
+                 "forum_polls_topicpoll"."topic_id",
+                 "forum_polls_topicpoll"."question",
+                 "forum_polls_topicpoll"."duration",
+                 "forum_polls_topicpoll"."max_options",
+                 "forum_polls_topicpoll"."user_changes",
+                 "forum_polls_topicpoll"."hide_results"
+          FROM "forum_polls_topicpoll"
+          WHERE "forum_polls_topicpoll"."topic_id" IN (%s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_attachments_attachment"."id",
+                 "forum_attachments_attachment"."post_id",
+                 "forum_attachments_attachment"."file",
+                 "forum_attachments_attachment"."comment"
+          FROM "forum_attachments_attachment"
+          WHERE "forum_attachments_attachment"."post_id" IN (%s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT DISTINCT ("taggit_taggeditem"."object_id") AS "_prefetch_related_val",
+                          "taggit_tag"."id",
+                          "taggit_tag"."name",
+                          "taggit_tag"."slug"
+          FROM "taggit_tag"
+          INNER JOIN "taggit_taggeditem" ON ("taggit_tag"."id" = "taggit_taggeditem"."tag_id")
+          INNER JOIN "django_content_type" ON ("taggit_taggeditem"."content_type_id" = "django_content_type"."id")
+          WHERE ("django_content_type"."app_label" = %s
+                 AND "django_content_type"."model" = %s
+                 AND "taggit_taggeditem"."object_id" IN (%s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_tracking_topicreadtrack"."topic_id" AS "topic__pk",
+                 "forum_tracking_topicreadtrack"."mark_time" AS "mark_time"
+          FROM "forum_tracking_topicreadtrack"
+          WHERE ("forum_tracking_topicreadtrack"."topic_id" IN (%s)
+                 AND "forum_tracking_topicreadtrack"."user_id" = %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_tracking_forumreadtrack"."forum_id" AS "forum__pk",
+                 "forum_tracking_forumreadtrack"."mark_time" AS "mark_time"
+          FROM "forum_tracking_forumreadtrack"
+          WHERE ("forum_tracking_forumreadtrack"."forum_id" IN (%s)
+                 AND "forum_tracking_forumreadtrack"."user_id" = %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'QuerySet.first[<site-packages>/django/db/models/query.py]',
+          'Forum.get_session_rating[forum/models.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forumrating"."id",
+                 "forum_forumrating"."created",
+                 "forum_forumrating"."updated",
+                 "forum_forumrating"."session_id",
+                 "forum_forumrating"."forum_id",
+                 "forum_forumrating"."rating",
+                 "forum_forumrating"."user_id"
+          FROM "forum_forumrating"
+          WHERE ("forum_forumrating"."forum_id" = %s
+                 AND "forum_forumrating"."session_id" = %s)
+          ORDER BY "forum_forumrating"."created" DESC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+    ]),
+  })
+# ---
 # name: TestBreadcrumb.test_category_forum[category_forum]
   '''
   <nav aria-label="Fil d'ariane" class="c-breadcrumb">
@@ -161,6 +1435,649 @@
           
       </div>
   '''
+# ---
+# name: TestDocumentationCategoryForumContent.test_numqueries_on_tags
+  dict({
+    'num_queries': 19,
+    'queries': list([
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.check_permissions[<site-packages>/machina/apps/forum_permission/viewmixins.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_userforumpermission"."id",
+                 "forum_permission_userforumpermission"."permission_id",
+                 "forum_permission_userforumpermission"."has_perm",
+                 "forum_permission_userforumpermission"."forum_id",
+                 "forum_permission_userforumpermission"."user_id",
+                 "forum_permission_userforumpermission"."anonymous_user",
+                 "forum_permission_userforumpermission"."authenticated_user",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename"
+          FROM "forum_permission_userforumpermission"
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_userforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE (("forum_permission_userforumpermission"."forum_id" IS NULL
+                  OR "forum_permission_userforumpermission"."forum_id" IN (%s))
+                 AND "forum_permission_userforumpermission"."anonymous_user")
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Paginator.count[<site-packages>/django/core/paginator.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT COUNT(*) AS "__count"
+          FROM "forum_conversation_topic"
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND NOT (NOT "forum_conversation_topic"."approved")
+                 AND "forum_conversation_topic"."type" IN (%s,
+                                                           %s,
+                                                           %s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_permission_userforumpermission"."id",
+                 "forum_permission_userforumpermission"."permission_id",
+                 "forum_permission_userforumpermission"."has_perm",
+                 "forum_permission_userforumpermission"."forum_id",
+                 "forum_permission_userforumpermission"."user_id",
+                 "forum_permission_userforumpermission"."anonymous_user",
+                 "forum_permission_userforumpermission"."authenticated_user",
+                 "forum_permission_forumpermission"."id",
+                 "forum_permission_forumpermission"."codename"
+          FROM "forum_permission_userforumpermission"
+          INNER JOIN "forum_permission_forumpermission" ON ("forum_permission_userforumpermission"."permission_id" = "forum_permission_forumpermission"."id")
+          WHERE (("forum_permission_userforumpermission"."forum_id" IS NULL
+                  OR "forum_permission_userforumpermission"."forum_id" IN (%s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s,
+                                                                           %s))
+                 AND "forum_permission_forumpermission"."codename" IN (%s,
+                                                                       %s)
+                 AND "forum_permission_userforumpermission"."anonymous_user")
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" IN (%s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s,
+                                       %s)
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "forum_forum"
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_forum"."last_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_post"."poster_id" = "users_user"."id")
+          WHERE ("forum_forum"."lft" >= %s
+                 AND "forum_forum"."lft" <= %s
+                 AND "forum_forum"."tree_id" = %s
+                 AND NOT ("forum_forum"."id" IN
+                            (SELECT U0."id"
+                             FROM "forum_forum" U0
+                             WHERE (U0."lft" >= %s
+                                    AND U0."lft" <= %s
+                                    AND U0."tree_id" = %s
+                                    AND NOT (U0."id" IN (%s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s))))))
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 T5."id",
+                 T5."password",
+                 T5."last_login",
+                 T5."is_superuser",
+                 T5."username",
+                 T5."first_name",
+                 T5."last_name",
+                 T5."email",
+                 T5."is_staff",
+                 T5."is_active",
+                 T5."date_joined",
+                 T5."identity_provider"
+          FROM "forum_conversation_topic"
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_topic"."poster_id" = "users_user"."id")
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_conversation_topic"."last_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" T5 ON ("forum_conversation_post"."poster_id" = T5."id")
+          WHERE ("forum_conversation_topic"."forum_id" = %s
+                 AND "forum_conversation_topic"."type" = %s)
+          ORDER BY "forum_conversation_topic"."type" DESC,
+                   "forum_conversation_topic"."last_post_on" DESC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'QuerySet.first[<site-packages>/django/db/models/query.py]',
+          'Forum.get_session_rating[forum/models.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forumrating"."id",
+                 "forum_forumrating"."created",
+                 "forum_forumrating"."updated",
+                 "forum_forumrating"."session_id",
+                 "forum_forumrating"."forum_id",
+                 "forum_forumrating"."rating",
+                 "forum_forumrating"."user_id"
+          FROM "forum_forumrating"
+          WHERE ("forum_forumrating"."forum_id" = %s
+                 AND "forum_forumrating"."session_id" IS NULL)
+          ORDER BY "forum_forumrating"."created" DESC
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'forum_visibility_content_tree_from_forums[utils/perms.py]',
+          'ForumView.forum_tag_context[forum/views.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level",
+                 "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered",
+                 "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "forum_forum"
+          LEFT OUTER JOIN "forum_conversation_post" ON ("forum_forum"."last_post_id" = "forum_conversation_post"."id")
+          LEFT OUTER JOIN "users_user" ON ("forum_conversation_post"."poster_id" = "users_user"."id")
+          WHERE ("forum_forum"."lft" >= %s
+                 AND "forum_forum"."lft" <= %s
+                 AND "forum_forum"."tree_id" = %s
+                 AND NOT ("forum_forum"."id" IN
+                            (SELECT U0."id"
+                             FROM "forum_forum" U0
+                             WHERE (U0."lft" >= %s
+                                    AND U0."lft" <= %s
+                                    AND U0."tree_id" = %s
+                                    AND NOT (U0."id" IN (%s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s))))))
+          ORDER BY "forum_forum"."tree_id" ASC,
+                   "forum_forum"."lft" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'forum_visibility_content_tree_from_forums[utils/perms.py]',
+          'ForumView.forum_tag_context[forum/views.py]',
+          'ForumView.get_context_data[forum/views.py]',
+        ]),
+        'sql': '''
+          SELECT DISTINCT ("taggit_taggeditem"."object_id") AS "_prefetch_related_val",
+                          "taggit_tag"."id",
+                          "taggit_tag"."name",
+                          "taggit_tag"."slug"
+          FROM "taggit_tag"
+          INNER JOIN "taggit_taggeditem" ON ("taggit_tag"."id" = "taggit_taggeditem"."tag_id")
+          INNER JOIN "django_content_type" ON ("taggit_taggeditem"."content_type_id" = "django_content_type"."id")
+          WHERE ("django_content_type"."app_label" = %s
+                 AND "django_content_type"."model" = %s
+                 AND "taggit_taggeditem"."object_id" IN (%s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s,
+                                                         %s))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'IfNode[forum/partials/subcategory_forum_list.html]',
+          'IncludeNode[forum/forum_documentation_category.html]',
+          'BlockNode[forum/forum_detail.html]',
+          'IfNode[forum/forum_detail.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum/forum_detail.html]',
+          'ExtendsNode[forum/forum_documentation_category.html]',
+        ]),
+        'sql': '''
+          SELECT DISTINCT "taggit_tag"."id",
+                          "taggit_tag"."name",
+                          "taggit_tag"."slug"
+          FROM "taggit_tag"
+          INNER JOIN "taggit_taggeditem" ON ("taggit_tag"."id" = "taggit_taggeditem"."tag_id")
+          WHERE ("taggit_taggeditem"."content_type_id" = %s
+                 AND "taggit_taggeditem"."object_id" IN
+                   (SELECT U0."id" AS "id"
+                    FROM "forum_forum" U0
+                    WHERE (U0."lft" >= %s
+                           AND U0."lft" <= %s
+                           AND U0."tree_id" = %s)))
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          SELECT %s AS "a"
+          FROM "django_session"
+          WHERE "django_session"."session_key" = %s
+          LIMIT 1
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'Session.save[<site-packages>/django/db/models/base.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "django_session" ("session_key",
+                                        "session_data",
+                                        "expire_date")
+          VALUES (%s, %s, %s)
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+    ]),
+  })
 # ---
 # name: TestDocumentationCategoryForumContent.test_show_subforum_tag[documentation_category_subforum_tag]
   '''

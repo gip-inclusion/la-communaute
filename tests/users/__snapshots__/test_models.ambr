@@ -1,0 +1,51 @@
+# serializer version: 1
+# name: TestEmailLastSeenQueryset.test_queries[<lambda>]
+  dict({
+    'num_queries': 1,
+    'queries': list([
+      dict({
+        'origin': list([
+          'EmailLastSeenQuerySet.seen[users/models.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "users_emaillastseen" ("email",
+                                             "email_hash",
+                                             "last_seen_at",
+                                             "last_seen_kind",
+                                             "missyou_send_at",
+                                             "deleted_at")
+          VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT("email") DO
+          UPDATE
+          SET "last_seen_at" = EXCLUDED."last_seen_at",
+              "last_seen_kind" = EXCLUDED."last_seen_kind",
+              "missyou_send_at" = EXCLUDED."missyou_send_at" RETURNING "users_emaillastseen"."id"
+        ''',
+      }),
+    ]),
+  })
+# ---
+# name: TestEmailLastSeenQueryset.test_queries[None]
+  dict({
+    'num_queries': 1,
+    'queries': list([
+      dict({
+        'origin': list([
+          'EmailLastSeenQuerySet.seen[users/models.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "users_emaillastseen" ("email",
+                                             "email_hash",
+                                             "last_seen_at",
+                                             "last_seen_kind",
+                                             "missyou_send_at",
+                                             "deleted_at")
+          VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT("email") DO
+          UPDATE
+          SET "last_seen_at" = EXCLUDED."last_seen_at",
+              "last_seen_kind" = EXCLUDED."last_seen_kind",
+              "missyou_send_at" = EXCLUDED."missyou_send_at" RETURNING "users_emaillastseen"."id"
+        ''',
+      }),
+    ]),
+  })
+# ---

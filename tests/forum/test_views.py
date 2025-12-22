@@ -7,6 +7,7 @@ from django.template.defaultfilters import truncatechars_html
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 from faker import Faker
+from itoutils.django.testing import assertSnapshotQueries
 from machina.core.loading import get_class
 from pytest_django.asserts import assertContains
 from taggit.models import Tag
@@ -62,6 +63,7 @@ class ForumViewQuerysetTest(TestCase):
         self.assertEqual(10, self.view.paginate_by)
 
 
+@pytest.mark.usefixtures("unittest_compatibility")
 class ForumViewTest(TestCase):
     @classmethod
     def setUpTestData(cls):
@@ -185,12 +187,12 @@ class ForumViewTest(TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertNotContains(response, f'id="collapsePost{self.topic.pk}')
 
-    def test_numqueries(self):
+    def test_queries(self):
         ContentType.objects.clear_cache()
 
         TopicFactory.create_batch(20, with_post=True)
         self.client.force_login(self.user)
-        with self.assertNumQueries(23):
+        with assertSnapshotQueries(self.snapshot):
             self.client.get(self.url)
 
     def test_certified_post_display(self):
@@ -346,7 +348,7 @@ class ForumViewTest(TestCase):
         tag = faker.word()
         topic = TopicFactory(forum=self.forum, with_tags=[tag], with_post=True)
 
-        with self.assertNumQueries(20):
+        with assertSnapshotQueries(self.snapshot):
             response = self.client.get(
                 reverse("forum_extension:forum", kwargs={"pk": self.forum.pk, "slug": self.forum.slug}), {"tag": tag}
             )
@@ -594,6 +596,7 @@ def documentation_category_forum_with_descendants_fixture():
     return category_forum, tags[0], [first_child, second_child]
 
 
+@pytest.mark.usefixtures("unittest_compatibility")
 class TestDocumentationCategoryForumContent:
     def test_documentation_category_subforum_list(
         self, client, db, snapshot, reset_forum_sequence, documentation_forum
@@ -661,7 +664,7 @@ class TestDocumentationCategoryForumContent:
         category_forum = CategoryForumFactory()
         ForumFactory.create_batch(20, parent=category_forum, with_tags=[f"tag{i}" for i in range(3)])
         # vincentporte TOBEFIXED : DUPLICATED QUERIES
-        with django_assert_num_queries(19):
+        with assertSnapshotQueries(self.snapshot):
             client.get(category_forum.get_absolute_url())
 
 

@@ -1,0 +1,1176 @@
+# serializer version: 1
+# name: test_queries
+  dict({
+    'num_queries': 38,
+    'queries': list([
+      dict({
+        'origin': list([
+          'SessionStore._get_session_from_db[<site-packages>/django/contrib/sessions/backends/db.py]',
+          'MarkAsSeenLoggedUserMiddleware.process_request[users/middleware.py]',
+        ]),
+        'sql': '''
+          SELECT "django_session"."session_key",
+                 "django_session"."session_data",
+                 "django_session"."expire_date"
+          FROM "django_session"
+          WHERE ("django_session"."expire_date" > %s
+                 AND "django_session"."session_key" = %s)
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'MarkAsSeenLoggedUserMiddleware.process_request[users/middleware.py]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'EmailLastSeenQuerySet.seen[users/models.py]',
+          'MarkAsSeenLoggedUserMiddleware.process_request[users/middleware.py]',
+        ]),
+        'sql': '''
+          INSERT INTO "users_emaillastseen" ("email",
+                                             "email_hash",
+                                             "last_seen_at",
+                                             "last_seen_kind",
+                                             "missyou_send_at",
+                                             "deleted_at")
+          VALUES (%s, %s, %s, %s, %s, %s) ON CONFLICT("email") DO
+          UPDATE
+          SET "last_seen_at" = EXCLUDED."last_seen_at",
+              "last_seen_kind" = EXCLUDED."last_seen_kind",
+              "missyou_send_at" = EXCLUDED."missyou_send_at" RETURNING "users_emaillastseen"."id"
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'Paginator.count[<site-packages>/django/core/paginator.py]',
+        ]),
+        'sql': '''
+          SELECT COUNT(*) AS "__count"
+          FROM "forum_upvote_upvote"
+          WHERE "forum_upvote_upvote"."voter_id" = %s
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
+        ]),
+        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
+      }),
+      dict({
+        'origin': list([
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_upvote_upvote"."id",
+                 "forum_upvote_upvote"."voter_id",
+                 "forum_upvote_upvote"."content_type_id",
+                 "forum_upvote_upvote"."object_id",
+                 "forum_upvote_upvote"."created_at",
+                 "django_content_type"."id",
+                 "django_content_type"."app_label",
+                 "django_content_type"."model"
+          FROM "forum_upvote_upvote"
+          INNER JOIN "django_content_type" ON ("forum_upvote_upvote"."content_type_id" = "django_content_type"."id")
+          WHERE "forum_upvote_upvote"."voter_id" = %s
+          ORDER BY "forum_upvote_upvote"."created_at" DESC
+          LIMIT 10
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_post"."id",
+                 "forum_conversation_post"."created",
+                 "forum_conversation_post"."updated",
+                 "forum_conversation_post"."topic_id",
+                 "forum_conversation_post"."poster_id",
+                 "forum_conversation_post"."anonymous_key",
+                 "forum_conversation_post"."subject",
+                 "forum_conversation_post"."content",
+                 "forum_conversation_post"."approved",
+                 "forum_conversation_post"."enable_signature",
+                 "forum_conversation_post"."update_reason",
+                 "forum_conversation_post"."updated_by_id",
+                 "forum_conversation_post"."updates_count",
+                 "forum_conversation_post"."username",
+                 "forum_conversation_post"."_content_rendered"
+          FROM "forum_conversation_post"
+          WHERE "forum_conversation_post"."id" IN (%s,
+                                                   %s,
+                                                   %s,
+                                                   %s,
+                                                   %s,
+                                                   %s,
+                                                   %s,
+                                                   %s,
+                                                   %s,
+                                                   %s)
+          ORDER BY "forum_conversation_post"."created" ASC
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_conversation_topic"."id",
+                 "forum_conversation_topic"."forum_id",
+                 "forum_conversation_topic"."poster_id",
+                 "forum_conversation_topic"."subject",
+                 "forum_conversation_topic"."slug",
+                 "forum_conversation_topic"."type",
+                 "forum_conversation_topic"."status",
+                 "forum_conversation_topic"."approved",
+                 "forum_conversation_topic"."posts_count",
+                 "forum_conversation_topic"."views_count",
+                 "forum_conversation_topic"."last_post_on",
+                 "forum_conversation_topic"."first_post_id",
+                 "forum_conversation_topic"."last_post_id",
+                 "forum_conversation_topic"."created",
+                 "forum_conversation_topic"."updated"
+          FROM "forum_conversation_topic"
+          WHERE "forum_conversation_topic"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'URLNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "forum_forum"."id",
+                 "forum_forum"."created",
+                 "forum_forum"."updated",
+                 "forum_forum"."parent_id",
+                 "forum_forum"."name",
+                 "forum_forum"."slug",
+                 "forum_forum"."description",
+                 "forum_forum"."link",
+                 "forum_forum"."link_redirects",
+                 "forum_forum"."type",
+                 "forum_forum"."direct_posts_count",
+                 "forum_forum"."direct_topics_count",
+                 "forum_forum"."link_redirects_count",
+                 "forum_forum"."last_post_id",
+                 "forum_forum"."last_post_on",
+                 "forum_forum"."display_sub_forum_list",
+                 "forum_forum"."short_description",
+                 "forum_forum"."image",
+                 "forum_forum"."certified",
+                 "forum_forum"."partner_id",
+                 "forum_forum"."_description_rendered",
+                 "forum_forum"."lft",
+                 "forum_forum"."rght",
+                 "forum_forum"."tree_id",
+                 "forum_forum"."level"
+          FROM "forum_forum"
+          WHERE "forum_forum"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+      dict({
+        'origin': list([
+          'Post.poster_display_name[forum_conversation/models.py]',
+          'WithNode[forum_conversation/partials/poster.html]',
+          'SpacelessNode[forum_conversation/partials/poster.html]',
+          'IncludeNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'ForNode[forum_upvote/upvote_list.html]',
+          'IfNode[forum_upvote/upvote_list.html]',
+          'BlockNode[layouts/base.html]',
+          'BlockNode[layouts/base.html]',
+          'ExtendsNode[forum_upvote/upvote_list.html]',
+        ]),
+        'sql': '''
+          SELECT "users_user"."id",
+                 "users_user"."password",
+                 "users_user"."last_login",
+                 "users_user"."is_superuser",
+                 "users_user"."username",
+                 "users_user"."first_name",
+                 "users_user"."last_name",
+                 "users_user"."email",
+                 "users_user"."is_staff",
+                 "users_user"."is_active",
+                 "users_user"."date_joined",
+                 "users_user"."identity_provider"
+          FROM "users_user"
+          WHERE "users_user"."id" = %s
+          LIMIT 21
+        ''',
+      }),
+    ]),
+  })
+# ---

@@ -6,6 +6,7 @@ from dateutil.relativedelta import relativedelta
 from django.conf import settings
 from django.db import IntegrityError
 from django.utils import timezone
+from itoutils.django.testing import assertSnapshotQueries
 
 from lacommunaute.users.enums import EmailLastSeenKind
 from lacommunaute.users.factories import EmailLastSeenFactory
@@ -66,14 +67,14 @@ class TestEmailLastSeenQueryset:
         assert email_last_seen.last_seen_at is not None
 
     @pytest.mark.parametrize("email_last_seen", [None, lambda: EmailLastSeenFactory()])
-    def test_numqueries(self, db, django_assert_num_queries, email_last_seen):
+    def test_queries(self, db, snapshot, email_last_seen):
         if email_last_seen:
             email_last_seen = email_last_seen()
 
         email = email_last_seen.email if email_last_seen else EMAIL
         kind = email_last_seen.last_seen_kind if email_last_seen else EmailLastSeenKind.POST
 
-        with django_assert_num_queries(1):
+        with assertSnapshotQueries(snapshot):
             EmailLastSeen.objects.seen(email=email, kind=kind)
 
     def test_missyou_send_at_is_reset(self, db):

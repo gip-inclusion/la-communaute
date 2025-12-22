@@ -1,4 +1,5 @@
 from django.urls import reverse
+from itoutils.django.testing import assertSnapshotQueries
 from pytest_django.asserts import assertContains, assertTemplateUsed
 
 from lacommunaute.forum.factories import ForumFactory
@@ -70,7 +71,7 @@ def test_upvoted_post(client, db):
     assertContains(response, post.topic.get_absolute_url(), status_code=200)
 
 
-def test_numqueries(client, db, django_assert_num_queries):
+def test_queries(client, db, snapshot):
     user = UserFactory()
     client.force_login(user)
 
@@ -78,5 +79,5 @@ def test_numqueries(client, db, django_assert_num_queries):
     PostFactory.create_batch(20, topic=TopicFactory(), upvoted_by=[user])
 
     # vincentporte : to be optimized
-    with django_assert_num_queries(38):
+    with assertSnapshotQueries(snapshot):
         client.get(url)

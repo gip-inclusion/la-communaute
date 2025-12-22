@@ -25,7 +25,7 @@ dependencies = [
     "langdetect>=1.0.9",
     "pyjwt>=2.10",
     "python-crontab>=3.2.0",
-    "itoutils[django]>=25.12.10.0",
+    "itoutils[django]>=25.12.22.0",
 ]
 
 [dependency-groups]
@@ -38,6 +38,7 @@ dev = [
     "pytest-django>=4.9",
     "debugpy>=1.8",
     "factory-boy>=3.3",
+    "itoutils[django-testing]>=25.12.22.0",
     "respx>=0.22",
     "pytest-xdist>=3.6",
     "pillow>=11.1.0",
