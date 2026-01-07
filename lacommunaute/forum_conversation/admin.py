@@ -90,6 +90,7 @@ class PostInline(admin.StackedInline):
 
 
 class TopicAdmin(BaseTopicAdmin):
+    list_display = ("__str__", "forum", "poster_email", "posts_count", "created", "updated", "approved")
     raw_id_fields = (
         "poster",
         "subscribers",
@@ -98,6 +99,26 @@ class TopicAdmin(BaseTopicAdmin):
         PostInline,
     ]
     list_filter = BaseTopicAdmin.list_filter + ("type", "approved")
+
+    @admin.action(description="Supprimer les sujets et bloquer les emails")
+    def delete_topic_and_block_author_email(self, request, queryset):
+        emails = {topic.poster_email for topic in queryset}
+        blocked_emails = [BlockedEmail(email=email, reason="modération message") for email in emails]
+        BlockedEmail.objects.bulk_create(blocked_emails, ignore_conflicts=True)
+
+        queryset.delete()
+        messages.success(request, "Sujets supprimés et emails bloqués 👍")
+
+    @admin.action(description="Supprimer les sujets et bloquer les noms de domaine")
+    def delete_topic_and_block_author_domain_name(self, request, queryset):
+        domains = {topic.poster_email.split("@")[-1] for topic in queryset}
+        blocked_domains = [BlockedDomainName(domain=domain, reason="modération message") for domain in domains]
+        BlockedDomainName.objects.bulk_create(blocked_domains, ignore_conflicts=True)
+
+        queryset.delete()
+        messages.success(request, "Sujets supprimés et noms de domaine bloqués 👍")
+
+    actions = [delete_topic_and_block_author_email, delete_topic_and_block_author_domain_name]
 
 
 class CertifiedPostAdmin(admin.ModelAdmin):
