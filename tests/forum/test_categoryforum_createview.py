@@ -3,7 +3,7 @@ from pytest_django.asserts import assertContains
 
 from lacommunaute.forum.forms import ForumForm, SubCategoryForumUpdateForm
 from lacommunaute.forum.models import Forum
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 def test_user_access(client, db):

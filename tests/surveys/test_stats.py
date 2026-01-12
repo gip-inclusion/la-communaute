@@ -4,8 +4,8 @@ from dateutil.relativedelta import relativedelta
 from django.utils import timezone
 
 from lacommunaute.stats.models import Stat
-from lacommunaute.surveys.factories import DSPFactory
 from lacommunaute.surveys.stats import collect_dsp_stats
+from tests.surveys.factories import DSPFactory
 
 
 def test_collect_dsp_stats(db):

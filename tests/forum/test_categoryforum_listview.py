@@ -1,9 +1,9 @@
 from django.urls import reverse
 from pytest_django.asserts import assertContains, assertNotContains
 
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
 from lacommunaute.forum.models import Forum
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory
+from tests.users.factories import UserFactory
 
 
 def test_context(client, db):

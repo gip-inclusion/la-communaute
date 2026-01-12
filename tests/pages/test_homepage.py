@@ -7,9 +7,9 @@ from django.utils import timezone
 from itoutils.django.testing import assertSnapshotQueries
 from pytest_django.asserts import assertContains, assertNotContains
 
-from lacommunaute.event.factories import EventFactory
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
-from lacommunaute.forum_conversation.factories import TopicFactory
+from tests.event.factories import EventFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory
+from tests.forum_conversation.factories import TopicFactory
 from tests.testing import parse_response_to_soup
 
 

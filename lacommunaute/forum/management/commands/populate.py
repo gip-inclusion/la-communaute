@@ -3,11 +3,11 @@ import sys
 from django.core.management.base import BaseCommand
 from django.db import connection
 
-from lacommunaute.event.factories import EventFactory
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
-from lacommunaute.forum_conversation.factories import AnonymousTopicFactory, PostFactory, TopicFactory
-from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.event.factories import EventFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory
+from tests.forum_conversation.factories import AnonymousTopicFactory, PostFactory, TopicFactory
+from tests.partner.factories import PartnerFactory
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 class Command(BaseCommand):

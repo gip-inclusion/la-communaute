@@ -2,9 +2,9 @@ import pytest
 from django.urls import reverse
 from factory import Iterator
 
-from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.partner.factories import PartnerFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 @pytest.fixture(name="url")

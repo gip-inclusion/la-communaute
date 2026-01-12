@@ -5,10 +5,10 @@ from django.db import connection
 from django.urls import reverse
 from pytest_django.asserts import assertContains, assertNotContains
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.factories import PostFactory, TopicFactory
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.factories import PostFactory, TopicFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 @pytest.fixture(name="search_url")

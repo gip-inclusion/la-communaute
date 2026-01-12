@@ -1,7 +1,7 @@
 from django.test import TestCase
 
 from lacommunaute.forum_member.shortcuts import get_forum_member_display_name
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 class GetForumMemberDisplayNameShortcutTest(TestCase):

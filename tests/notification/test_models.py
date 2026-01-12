@@ -6,11 +6,11 @@ from django.db.models import F
 from django.test import TestCase
 from django.utils import timezone
 
-from lacommunaute.forum_conversation.factories import TopicFactory
 from lacommunaute.notification.enums import EmailSentTrackKind
-from lacommunaute.notification.factories import EmailSentTrackFactory, NotificationFactory
 from lacommunaute.notification.models import EmailSentTrack, Notification
-from lacommunaute.users.factories import UserFactory
+from tests.forum_conversation.factories import TopicFactory
+from tests.notification.factories import EmailSentTrackFactory, NotificationFactory
+from tests.users.factories import UserFactory
 
 
 class TestEmailSentTrackQuerySet:

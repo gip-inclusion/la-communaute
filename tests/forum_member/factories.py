@@ -1,7 +1,7 @@
 import factory
 
 from lacommunaute.forum_member.models import ForumProfile
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 class ForumProfileFactory(factory.django.DjangoModelFactory):

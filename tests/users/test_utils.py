@@ -4,10 +4,10 @@ import pytest
 from django.conf import settings
 from itoutils.django.testing import assertSnapshotQueries
 
-from lacommunaute.forum_conversation.factories import AnonymousTopicFactory, TopicFactory
-from lacommunaute.users.factories import EmailLastSeenFactory, UserFactory
 from lacommunaute.users.models import EmailLastSeen
 from lacommunaute.users.utils import soft_delete_users
+from tests.forum_conversation.factories import AnonymousTopicFactory, TopicFactory
+from tests.users.factories import EmailLastSeenFactory, UserFactory
 
 
 @pytest.fixture(name="soft_deletable_email_last_seen")

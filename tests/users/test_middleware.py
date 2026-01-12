@@ -1,8 +1,8 @@
 import pytest
 
 from lacommunaute.users.enums import EmailLastSeenKind
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.users.models import EmailLastSeen
+from tests.users.factories import UserFactory
 
 
 @pytest.mark.parametrize("logged", [True, False])

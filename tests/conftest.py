@@ -1,7 +1,7 @@
 import pytest
 from django.core.management import call_command
 
-from lacommunaute.users.factories import StaffUserFactory
+from tests.users.factories import StaffUserFactory
 
 
 @pytest.fixture(scope="session", autouse=True)

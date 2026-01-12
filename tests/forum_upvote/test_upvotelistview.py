@@ -2,9 +2,9 @@ from django.urls import reverse
 from itoutils.django.testing import assertSnapshotQueries
 from pytest_django.asserts import assertContains, assertTemplateUsed
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.factories import PostFactory, TopicFactory
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.factories import PostFactory, TopicFactory
+from tests.users.factories import UserFactory
 
 
 url = reverse("forum_upvote:mine")

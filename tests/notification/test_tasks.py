@@ -9,13 +9,9 @@ from django.urls import reverse
 from faker import Faker
 from itoutils.django.testing import assertSnapshotQueries
 
-from lacommunaute.forum_conversation.factories import (
-    TopicFactory,
-)
 from lacommunaute.forum_member.shortcuts import get_forum_member_display_name
 from lacommunaute.notification.emails import SIB_CONTACTS_URL, SIB_SMTP_URL
 from lacommunaute.notification.enums import EmailSentTrackKind, NotificationDelay
-from lacommunaute.notification.factories import NotificationFactory
 from lacommunaute.notification.models import EmailSentTrack
 from lacommunaute.notification.tasks import (
     add_user_to_list_when_register,
@@ -24,7 +20,11 @@ from lacommunaute.notification.tasks import (
     send_notifs_on_unanswered_topics,
 )
 from lacommunaute.notification.utils import get_serialized_messages
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.forum_conversation.factories import (
+    TopicFactory,
+)
+from tests.notification.factories import NotificationFactory
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 faker = Faker()

@@ -1,9 +1,9 @@
 import pytest
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.forum.factories import ForumFactory
+from tests.partner.factories import PartnerFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 @pytest.mark.parametrize(

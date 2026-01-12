@@ -1,7 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 class LandingPagesListViewTest(TestCase):

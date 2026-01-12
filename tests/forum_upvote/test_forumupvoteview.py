@@ -2,9 +2,9 @@ from django.urls import reverse
 from machina.core.db.models import get_model
 from pytest_django.asserts import assertContains
 
-from lacommunaute.forum.factories import ForumFactory
 from lacommunaute.forum_upvote.models import UpVote
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import ForumFactory
+from tests.users.factories import UserFactory
 
 
 ForumReadTrack = get_model("forum_tracking", "ForumReadTrack")

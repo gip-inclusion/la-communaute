@@ -12,16 +12,16 @@ from machina.core.loading import get_class
 from pytest_django.asserts import assertContains
 from taggit.models import Tag
 
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
 from lacommunaute.forum.models import Forum
 from lacommunaute.forum.views import ForumView
 from lacommunaute.forum_conversation.enums import Filters
-from lacommunaute.forum_conversation.factories import CertifiedPostFactory, PostFactory, TopicFactory
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import Topic
-from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
+from tests.forum_conversation.factories import CertifiedPostFactory, PostFactory, TopicFactory
+from tests.partner.factories import PartnerFactory
 from tests.testing import parse_response_to_soup, reset_model_sequence_fixture
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 faker = Faker()

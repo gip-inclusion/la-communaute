@@ -1,7 +1,7 @@
 import pytest
 from django.urls import reverse
 
-from lacommunaute.forum_conversation.factories import TopicFactory
+from tests.forum_conversation.factories import TopicFactory
 from tests.testing import parse_response_to_soup
 
 

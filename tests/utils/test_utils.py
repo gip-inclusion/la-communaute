@@ -18,13 +18,9 @@ from django.utils.timesince import timesince
 from faker import Faker
 from machina.core.loading import get_class
 
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
-from lacommunaute.forum_conversation.factories import TopicFactory
-from lacommunaute.forum_conversation.forum_attachments.factories import AttachmentFactory
 from lacommunaute.forum_file.models import PublicFile
 from lacommunaute.stats.models import ForumStat
 from lacommunaute.users.enums import IdentityProvider
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.utils.date import get_last_sunday
 from lacommunaute.utils.math import percent
 from lacommunaute.utils.matomo import (
@@ -35,7 +31,11 @@ from lacommunaute.utils.matomo import (
     get_matomo_visits_data,
 )
 from lacommunaute.utils.urls import urlize
+from tests.forum.factories import CategoryForumFactory, ForumFactory
+from tests.forum_conversation.factories import TopicFactory
+from tests.forum_conversation.forum_attachments.factories import AttachmentFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 faker = Faker()

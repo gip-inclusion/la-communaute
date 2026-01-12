@@ -1,7 +1,7 @@
 import pytest
 from django.db import IntegrityError
 
-from lacommunaute.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
+from tests.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 
 
 def test_blocked_email_uniqueness(db):

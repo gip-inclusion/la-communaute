@@ -3,7 +3,7 @@ from django.urls import reverse
 from machina.core.loading import get_class
 from pytest_django.asserts import assertContains
 
-from lacommunaute.forum_conversation.factories import TopicFactory
+from tests.forum_conversation.factories import TopicFactory
 
 
 assign_perm = get_class("forum_permission.shortcuts", "assign_perm")

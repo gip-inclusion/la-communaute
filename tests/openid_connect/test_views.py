@@ -11,9 +11,9 @@ from django.urls import reverse
 from lacommunaute.openid_connect import constants
 from lacommunaute.openid_connect.models import OpenID_State
 from lacommunaute.openid_connect.views import OpenID_Session
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.users.models import User
 from tests.testing import reload_module
+from tests.users.factories import UserFactory
 
 
 OIDC_USERINFO = {

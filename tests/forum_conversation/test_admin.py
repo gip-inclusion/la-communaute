@@ -2,14 +2,14 @@ from django.contrib.admin import helpers
 from django.urls import reverse
 from pytest_django.asserts import assertContains, assertQuerySetEqual
 
-from lacommunaute.forum_conversation.factories import (
+from lacommunaute.forum_conversation.models import Post, Topic
+from lacommunaute.forum_moderation.models import BlockedDomainName, BlockedEmail
+from tests.forum_conversation.factories import (
     AnonymousPostFactory,
     AnonymousTopicFactory,
     PostFactory,
     TopicFactory,
 )
-from lacommunaute.forum_conversation.models import Post, Topic
-from lacommunaute.forum_moderation.models import BlockedDomainName, BlockedEmail
 
 
 def test_delete_message_and_block_email(db, admin_client):

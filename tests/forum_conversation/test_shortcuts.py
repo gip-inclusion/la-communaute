@@ -1,11 +1,11 @@
 from django.contrib.auth.models import AnonymousUser
 from django.test import TestCase
 
-from lacommunaute.forum_conversation.factories import PostFactory, TopicFactory
 from lacommunaute.forum_conversation.shortcuts import (
     get_posts_of_a_topic_except_first_one,
 )
-from lacommunaute.forum_upvote.factories import UpVoteFactory
+from tests.forum_conversation.factories import PostFactory, TopicFactory
+from tests.forum_upvote.factories import UpVoteFactory
 
 
 class GetPostsofaTopicExceptFirstOneTest(TestCase):

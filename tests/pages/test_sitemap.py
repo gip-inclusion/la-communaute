@@ -2,9 +2,9 @@ import pytest  # noqa F401
 from django.contrib.flatpages.models import FlatPage
 from django.urls import reverse
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.factories import TopicFactory
-from lacommunaute.partner.factories import PartnerFactory
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.factories import TopicFactory
+from tests.partner.factories import PartnerFactory
 
 
 def test_sitemap(client, db):

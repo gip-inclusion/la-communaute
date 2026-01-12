@@ -8,7 +8,7 @@ from faker import Faker
 
 from lacommunaute.notification.emails import SIB_CONTACTS_URL, SIB_SMTP_URL, bulk_send_user_to_list, send_email
 from lacommunaute.notification.models import EmailSentTrack
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 faker = Faker()

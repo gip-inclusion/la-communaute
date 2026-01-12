@@ -9,11 +9,11 @@ from PIL import Image
 from pytest_django.asserts import assertContains
 from taggit.models import Tag
 
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
 from lacommunaute.forum.forms import SubCategoryForumUpdateForm
-from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory
+from tests.partner.factories import PartnerFactory
 from tests.testing import parse_response_to_soup, reset_model_sequence_fixture
+from tests.users.factories import UserFactory
 
 
 faker = Faker(settings.LANGUAGE_CODE)

@@ -11,7 +11,7 @@ from moto import mock_aws
 from PIL import Image
 
 from lacommunaute.forum_file.models import PublicFile
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 fake = faker.Faker()

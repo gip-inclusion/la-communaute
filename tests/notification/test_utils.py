@@ -2,23 +2,23 @@ import pytest
 from django.test import TestCase
 from faker import Faker
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.factories import (
-    AnonymousPostFactory,
-    AnonymousTopicFactory,
-    PostFactory,
-    TopicFactory,
-)
 from lacommunaute.notification.enums import EmailSentTrackKind, NotificationDelay, delay_of_notifications
-from lacommunaute.notification.factories import EmailSentTrackFactory, NotificationFactory
 from lacommunaute.notification.models import EmailSentTrack, Notification
 from lacommunaute.notification.utils import (
     collect_new_users_for_onboarding,
     get_serialized_messages,
     last_notification,
 )
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.users.models import User
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.factories import (
+    AnonymousPostFactory,
+    AnonymousTopicFactory,
+    PostFactory,
+    TopicFactory,
+)
+from tests.notification.factories import EmailSentTrackFactory, NotificationFactory
+from tests.users.factories import UserFactory
 
 
 faker = Faker()

@@ -5,19 +5,19 @@ from django.db import IntegrityError
 from django.test import TestCase
 from django.urls import reverse
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.factories import (
+from lacommunaute.forum_conversation.models import Post, Topic
+from lacommunaute.forum_member.shortcuts import get_forum_member_display_name
+from lacommunaute.users.enums import EmailLastSeenKind
+from lacommunaute.users.models import EmailLastSeen
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.factories import (
     AnonymousPostFactory,
     AnonymousTopicFactory,
     CertifiedPostFactory,
     PostFactory,
     TopicFactory,
 )
-from lacommunaute.forum_conversation.models import Post, Topic
-from lacommunaute.forum_member.shortcuts import get_forum_member_display_name
-from lacommunaute.users.enums import EmailLastSeenKind
-from lacommunaute.users.factories import UserFactory
-from lacommunaute.users.models import EmailLastSeen
+from tests.users.factories import UserFactory
 
 
 @pytest.fixture(name="forum")

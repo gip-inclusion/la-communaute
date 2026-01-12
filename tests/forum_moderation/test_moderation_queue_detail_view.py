@@ -1,7 +1,7 @@
 from django.urls import reverse
 from pytest_django.asserts import assertContains
 
-from lacommunaute.forum_conversation.factories import AnonymousPostFactory, TopicFactory
+from tests.forum_conversation.factories import AnonymousPostFactory, TopicFactory
 
 
 def test_detail_view_for_anonymous_post(db, admin_client):
