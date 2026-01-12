@@ -18,15 +18,15 @@ from django.utils.http import urlsafe_base64_encode
 from pytest_django.asserts import assertContains
 
 from lacommunaute.forum_member.models import ForumProfile
-from lacommunaute.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 from lacommunaute.notification.emails import SIB_SMTP_URL
 from lacommunaute.users.enums import IdentityProvider
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.users.models import User
 from lacommunaute.users.views import send_magic_link
 from lacommunaute.utils.enums import Environment
 from lacommunaute.utils.urls import clean_next_url
+from tests.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 next_url_tuples = [("/", "/"), ("/topics/", "/topics/"), ("http://www.unallowed_host.com", "/")]

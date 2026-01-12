@@ -5,8 +5,8 @@ import pytest
 from botocore.config import Config
 from django.conf import settings
 
-from lacommunaute.forum.factories import ForumFactory
 from lacommunaute.forum.models import Forum
+from tests.forum.factories import ForumFactory
 
 
 # CleverCloud S3 implementation does not support recent data integrity features from AWS.

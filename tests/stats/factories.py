@@ -3,9 +3,9 @@ import datetime
 import factory
 import factory.django
 
-from lacommunaute.forum.factories import ForumFactory
 from lacommunaute.stats.enums import Period
 from lacommunaute.stats.models import ForumStat, Stat
+from tests.forum.factories import ForumFactory
 
 
 class StatFactory(factory.django.DjangoModelFactory):

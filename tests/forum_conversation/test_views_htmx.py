@@ -6,18 +6,18 @@ from faker import Faker
 from machina.core.db.models import get_model
 from machina.core.loading import get_class
 
-from lacommunaute.forum_conversation.factories import CertifiedPostFactory, PostFactory, TopicFactory
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import CertifiedPost, Topic
 from lacommunaute.forum_conversation.views_htmx import PostListView
 from lacommunaute.forum_moderation.enums import BlockedPostReason
-from lacommunaute.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 from lacommunaute.forum_moderation.models import BlockedPost
-from lacommunaute.forum_upvote.factories import UpVoteFactory
-from lacommunaute.notification.factories import NotificationFactory
 from lacommunaute.users.enums import EmailLastSeenKind
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.users.models import EmailLastSeen
+from tests.forum_conversation.factories import CertifiedPostFactory, PostFactory, TopicFactory
+from tests.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
+from tests.forum_upvote.factories import UpVoteFactory
+from tests.notification.factories import NotificationFactory
+from tests.users.factories import UserFactory
 
 
 faker = Faker(settings.LANGUAGE_CODE)

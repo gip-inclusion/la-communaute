@@ -9,11 +9,11 @@ from django.utils import timezone, translation
 from django.utils.formats import date_format
 from faker import Faker
 
-from lacommunaute.event.factories import EventFactory
 from lacommunaute.event.forms import EventModelForm
 from lacommunaute.event.models import Event
-from lacommunaute.users.factories import UserFactory
+from tests.event.factories import EventFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 faker = Faker()

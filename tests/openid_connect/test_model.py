@@ -8,9 +8,9 @@ from lacommunaute.forum_member.models import ForumProfile
 from lacommunaute.openid_connect import constants
 from lacommunaute.openid_connect.models import OIDConnectUserData, OpenID_State
 from lacommunaute.users.enums import IdentityProvider
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.users.models import User
 from tests.testing import reload_module
+from tests.users.factories import UserFactory
 
 
 OIDC_USERINFO = {

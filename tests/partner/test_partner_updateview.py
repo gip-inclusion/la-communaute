@@ -1,8 +1,8 @@
 import pytest
 from django.urls import reverse
 
-from lacommunaute.partner.factories import PartnerFactory
-from lacommunaute.users.factories import StaffUserFactory, UserFactory
+from tests.partner.factories import PartnerFactory
+from tests.users.factories import StaffUserFactory, UserFactory
 
 
 @pytest.fixture(name="partner")

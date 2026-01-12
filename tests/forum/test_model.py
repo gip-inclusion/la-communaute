@@ -2,10 +2,10 @@ import pytest
 from django.conf import settings
 from django.test import TestCase
 
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
 from lacommunaute.forum.models import Forum
-from lacommunaute.forum_conversation.factories import TopicFactory
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
+from tests.forum_conversation.factories import TopicFactory
+from tests.users.factories import UserFactory
 
 
 @pytest.fixture(name="forum")

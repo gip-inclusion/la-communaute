@@ -3,11 +3,11 @@ from django.conf import settings
 from faker import Faker
 from machina.test.factories.conversation import PostFactory as BasePostFactory, TopicFactory as BaseTopicFactory
 
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.forum_polls.factories import TopicPollVoteFactory
 from lacommunaute.forum_conversation.models import CertifiedPost, Topic
 from lacommunaute.forum_upvote.models import UpVote
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.forum_polls.factories import TopicPollVoteFactory
+from tests.users.factories import UserFactory
 
 
 faker = Faker(settings.LANGUAGE_CODE)

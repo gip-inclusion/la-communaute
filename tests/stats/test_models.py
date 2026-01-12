@@ -6,8 +6,8 @@ from django.utils import timezone
 from django.utils.timezone import localdate
 
 from lacommunaute.stats.enums import Period
-from lacommunaute.stats.factories import ForumStatFactory, StatFactory
 from lacommunaute.stats.models import ForumStat, Stat
+from tests.stats.factories import ForumStatFactory, StatFactory
 
 
 class StatModelTest(TestCase):

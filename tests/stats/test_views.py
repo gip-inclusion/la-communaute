@@ -12,11 +12,11 @@ from freezegun import freeze_time
 from itoutils.django.testing import assertSnapshotQueries
 from pytest_django.asserts import assertContains
 
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
 from lacommunaute.stats.enums import Period
-from lacommunaute.stats.factories import ForumStatFactory, StatFactory
-from lacommunaute.surveys.factories import DSPFactory
 from lacommunaute.utils.math import percent
+from tests.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
+from tests.stats.factories import ForumStatFactory, StatFactory
+from tests.surveys.factories import DSPFactory
 from tests.testing import parse_response_to_soup
 
 

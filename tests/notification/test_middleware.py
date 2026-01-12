@@ -1,8 +1,8 @@
 import pytest
 
-from lacommunaute.notification.factories import NotificationFactory
 from lacommunaute.notification.models import Notification
 from lacommunaute.users.models import EmailLastSeen
+from tests.notification.factories import NotificationFactory
 
 
 @pytest.mark.parametrize(

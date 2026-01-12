@@ -1,10 +1,10 @@
 import pytest
 from django.urls import reverse
 
-from lacommunaute.forum.factories import ForumFactory
 from lacommunaute.forum.models import ForumRating
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import ForumFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 @pytest.fixture(name="forum")

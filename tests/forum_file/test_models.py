@@ -5,7 +5,7 @@ from django.conf import settings
 from django.db.models.fields.files import ImageField
 
 from lacommunaute.forum_file.models import PublicFile
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 fake = faker.Faker()

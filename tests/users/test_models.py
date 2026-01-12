@@ -9,8 +9,8 @@ from django.utils import timezone
 from itoutils.django.testing import assertSnapshotQueries
 
 from lacommunaute.users.enums import EmailLastSeenKind
-from lacommunaute.users.factories import EmailLastSeenFactory
 from lacommunaute.users.models import EmailLastSeen, User
+from tests.users.factories import EmailLastSeenFactory
 
 
 EMAIL = "alex@honnold.com"

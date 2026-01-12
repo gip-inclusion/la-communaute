@@ -2,12 +2,12 @@ import pytest
 from django.test import override_settings
 from django.urls import reverse
 
-from lacommunaute.event.factories import EventFactory
-from lacommunaute.forum.factories import ForumFactory
-from lacommunaute.forum_conversation.factories import TopicFactory
-from lacommunaute.users.factories import UserFactory
 from lacommunaute.utils.enums import Environment
+from tests.event.factories import EventFactory
+from tests.forum.factories import ForumFactory
+from tests.forum_conversation.factories import TopicFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 @pytest.mark.parametrize(

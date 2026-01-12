@@ -4,7 +4,7 @@ from django.urls import reverse
 from itoutils.urls import add_url_params
 from pytest_django.asserts import assertRedirects
 
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 class TestAutoLogin:

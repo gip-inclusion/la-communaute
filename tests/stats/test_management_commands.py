@@ -5,10 +5,10 @@ import pytest
 from django.core.management import call_command
 from freezegun import freeze_time
 
-from lacommunaute.stats.factories import StatFactory
 from lacommunaute.stats.management.commands.collect_matomo_stats import get_initial_from_date, matomo_stats_names
 from lacommunaute.stats.models import Stat
-from lacommunaute.surveys.factories import DSPFactory
+from tests.stats.factories import StatFactory
+from tests.surveys.factories import DSPFactory
 
 
 def test_collect_django_stats(db, capsys):

@@ -5,7 +5,7 @@ from itoutils.django.nexus.token import generate_token
 from pytest_django.asserts import assertRedirects
 
 from lacommunaute.users.enums import IdentityProvider
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 def test_middleware_for_authenticated_user(db, client, caplog):

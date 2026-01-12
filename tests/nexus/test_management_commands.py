@@ -3,7 +3,7 @@ from django.utils import timezone
 from freezegun import freeze_time
 
 from lacommunaute.nexus.management.commands.populate_metabase_nexus import create_table, get_connection
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 @freeze_time()

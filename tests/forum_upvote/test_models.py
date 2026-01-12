@@ -1,8 +1,8 @@
 from django.db import IntegrityError
 from django.test import TestCase
 
-from lacommunaute.forum_conversation.factories import TopicFactory
 from lacommunaute.forum_upvote.models import UpVote
+from tests.forum_conversation.factories import TopicFactory
 
 
 class UpVoteModelTest(TestCase):

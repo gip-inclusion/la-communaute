@@ -2,11 +2,11 @@ from django.test import override_settings
 from django.urls import reverse
 from pytest_django.asserts import assertContains
 
-from lacommunaute.forum.factories import CategoryForumFactory
-from lacommunaute.surveys.factories import DSPFactory
 from lacommunaute.surveys.models import DSP
-from lacommunaute.users.factories import UserFactory
+from tests.forum.factories import CategoryForumFactory
+from tests.surveys.factories import DSPFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 dsp_choices_list = [

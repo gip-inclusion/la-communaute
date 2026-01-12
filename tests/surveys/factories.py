@@ -3,7 +3,7 @@ from dateutil.relativedelta import relativedelta
 
 from lacommunaute.surveys.models import DSP
 from lacommunaute.surveys.recommendations import get_recommendations
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 class DSPFactory(factory.django.DjangoModelFactory):

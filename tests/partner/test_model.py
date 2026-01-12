@@ -2,8 +2,8 @@ import pytest
 from django.conf import settings
 from django.db import IntegrityError
 
-from lacommunaute.partner.factories import PartnerFactory
 from lacommunaute.partner.models import Partner
+from tests.partner.factories import PartnerFactory
 
 
 def test_name_uniqueness(db):

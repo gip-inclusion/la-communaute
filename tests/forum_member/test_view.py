@@ -4,12 +4,12 @@ from django.urls import reverse
 from machina.core.loading import get_class
 from pytest_django.asserts import assertContains, assertNotContains
 
-from lacommunaute.forum_member.factories import ForumProfileFactory
 from lacommunaute.forum_member.models import ForumProfile
 from lacommunaute.forum_member.shortcuts import get_forum_member_display_name
 from lacommunaute.forum_member.views import ForumProfileUpdateView
-from lacommunaute.users.factories import UserFactory
+from tests.forum_member.factories import ForumProfileFactory
 from tests.testing import parse_response_to_soup
+from tests.users.factories import UserFactory
 
 
 PermissionHandler = get_class("forum_permission.handler", "PermissionHandler")

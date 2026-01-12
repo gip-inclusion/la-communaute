@@ -3,7 +3,7 @@ from django.urls import reverse
 from pytest_django.asserts import assertContains, assertNotContains
 
 from lacommunaute.forum_member.enums import ActiveSearch, Regions
-from lacommunaute.forum_member.factories import ForumProfileFactory
+from tests.forum_member.factories import ForumProfileFactory
 
 
 @pytest.mark.parametrize(

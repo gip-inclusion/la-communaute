@@ -1,6 +1,6 @@
-from lacommunaute.forum.factories import CategoryForumFactory, ForumFactory
 from lacommunaute.forum.forms import ForumForm, SubCategoryForumUpdateForm
 from lacommunaute.forum.models import Forum
+from tests.forum.factories import CategoryForumFactory, ForumFactory
 
 
 def test_form_field():

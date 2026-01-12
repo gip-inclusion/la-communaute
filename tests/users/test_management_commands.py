@@ -5,16 +5,9 @@ from django.conf import settings
 from django.core.management import call_command
 from django.utils import timezone
 
-from lacommunaute.event.factories import EventFactory
-from lacommunaute.forum.factories import ForumFactory, ForumRatingFactory
-from lacommunaute.forum_conversation.factories import AnonymousPostFactory, AnonymousTopicFactory, TopicFactory
-from lacommunaute.forum_upvote.factories import UpVoteFactory
 from lacommunaute.notification.enums import EmailSentTrackKind, NotificationDelay
-from lacommunaute.notification.factories import NotificationFactory
 from lacommunaute.notification.models import Notification
-from lacommunaute.surveys.factories import DSPFactory
 from lacommunaute.users.enums import EmailLastSeenKind
-from lacommunaute.users.factories import EmailLastSeenFactory, UserFactory
 from lacommunaute.users.management.commands.populate_emaillastseen import (
     collect_clicked_notifs,
     collect_DSP,
@@ -29,6 +22,13 @@ from lacommunaute.users.management.commands.populate_emaillastseen import (
     keep_most_recent_tuple,
 )
 from lacommunaute.users.models import EmailLastSeen
+from tests.event.factories import EventFactory
+from tests.forum.factories import ForumFactory, ForumRatingFactory
+from tests.forum_conversation.factories import AnonymousPostFactory, AnonymousTopicFactory, TopicFactory
+from tests.forum_upvote.factories import UpVoteFactory
+from tests.notification.factories import NotificationFactory
+from tests.surveys.factories import DSPFactory
+from tests.users.factories import EmailLastSeenFactory, UserFactory
 
 
 class TestPopulateEmailLastSeen:

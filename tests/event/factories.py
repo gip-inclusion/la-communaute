@@ -2,7 +2,7 @@ import factory
 from faker import Faker
 
 from lacommunaute.event.models import Event
-from lacommunaute.users.factories import UserFactory
+from tests.users.factories import UserFactory
 
 
 faker = Faker()

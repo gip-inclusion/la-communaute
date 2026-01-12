@@ -4,9 +4,9 @@ from machina.core.db.models import get_model
 from machina.core.loading import get_class
 from machina.test.factories.polls import TopicPollFactory, TopicPollOptionFactory
 
-from lacommunaute.forum_conversation.factories import PostFactory, TopicFactory
 from lacommunaute.forum_conversation.forum_polls.models import TopicPollVote
-from lacommunaute.users.factories import UserFactory
+from tests.forum_conversation.factories import PostFactory, TopicFactory
+from tests.users.factories import UserFactory
 
 
 PermissionHandler = get_class("forum_permission.handler", "PermissionHandler")

@@ -6,10 +6,10 @@ import factory.django
 from django.utils import timezone
 from faker import Faker
 
-from lacommunaute.forum_conversation.factories import AnonymousPostFactory, TopicFactory
 from lacommunaute.notification.enums import EmailSentTrackKind, NotificationDelay
 from lacommunaute.notification.models import EmailSentTrack, Notification
 from lacommunaute.utils.factory_boy import AutoNowAddOverrideMixin
+from tests.forum_conversation.factories import AnonymousPostFactory, TopicFactory
 
 
 faker = Faker()

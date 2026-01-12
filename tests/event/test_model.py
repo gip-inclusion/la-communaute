@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.test import TestCase
 
-from lacommunaute.event.factories import EventFactory
+from tests.event.factories import EventFactory
 
 
 class EventModelTest(TestCase):
