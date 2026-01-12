@@ -97,10 +97,14 @@ class OIDConnectUserData:
                 created = True
 
         if not created:
+            updated = False
             for key, value in user_data_dict.items():
-                setattr(user, key, value)
+                if getattr(user, key) != value:
+                    setattr(user, key, value)
+                    updated = True
+            if updated:
+                user.save()
 
-        user.save()
         return user, created
 
     @staticmethod
