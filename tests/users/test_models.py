@@ -8,7 +8,7 @@ from django.db import IntegrityError
 from django.utils import timezone
 from itoutils.django.testing import assertSnapshotQueries
 
-from lacommunaute.users.enums import EmailLastSeenKind
+from lacommunaute.users.enums import EmailLastSeenKind, IdentityProvider
 from lacommunaute.users.models import EmailLastSeen, User
 from tests.users.factories import EmailLastSeenFactory
 
@@ -29,7 +29,7 @@ def test_email_hash(db):
 
 class TestUserModel:
     def test_create_user_without_username(self, db):
-        user = User.objects.create_user(email=EMAIL)
+        user = User.objects.create_user(email=EMAIL, identity_provider=IdentityProvider.MAGIC_LINK)
         assert re.match(r"^[a-f0-9]{8}(-[a-f0-9]{4}){3}-[a-f0-9]{12}$", user.username)
         assert user.email == EMAIL
 
