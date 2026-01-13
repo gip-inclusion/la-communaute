@@ -19,6 +19,4 @@ pip install factory-boy
 
 echo "Loading data"
 python manage.py loaddata fixtures/forum_permissions_fixtures.json
-python manage.py populate
-
-
+scripts/populate.py
