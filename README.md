@@ -77,7 +77,7 @@ $ python manage.py runserver_plus
 $ python manage.py createcachetable
 $ python manage.py migrate
 $ python manage.py configure_bucket
-$ python manage.py populate
+$ scripts/populate.py
 ```
 
 ### restaurer une base de données
@@ -212,7 +212,7 @@ Voir les GitHub actions `.github/workflows/review_app_creation.yml` et `.github/
 
 ### Comptes de test
 
-Des données fictives sont créées pour les recettes jetables. Voir la commande de gestion `forum/management/commands/populate.py`.
+Des données fictives sont créées pour les recettes jetables. Voir `scripts/populate.py`.
 - Compte superadministrateur : login `admin`, mot de passe `supercalifragilisticexpialidocious`.
 - Compte équipe : `staff` et `supercalifragilisticexpialidocious`.
 
