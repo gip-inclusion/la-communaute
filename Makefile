@@ -14,11 +14,11 @@ DJLINT_EXCLUDE ?= lacommunaute/templates/middleware/
 
 .PHONY: quality fix
 quality:
-	ruff check lacommunaute
+	ruff check .
 	djlint --lint --check lacommunaute --exclude $(DJLINT_EXCLUDE)
 
 fix:
-	ruff check --fix lacommunaute
+	ruff check --fix .
 	djlint --reformat lacommunaute
 
 .PHONY: index
