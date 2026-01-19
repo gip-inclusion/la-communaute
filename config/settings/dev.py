@@ -21,11 +21,6 @@ CSRF_COOKIE_SECURE = False
 
 AUTH_PASSWORD_VALIDATORS = []  # Avoid password strength validation in DEV.
 
-# Django-extensions.
-# ------------------------------------------------------------------------------
-
-INSTALLED_APPS += ["django_extensions"]  # noqa F405
-
 # Django-debug-toolbar.
 # ------------------------------------------------------------------------------
 
