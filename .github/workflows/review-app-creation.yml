@@ -22,6 +22,8 @@ env:
 jobs:
   create:
     runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
     if: github.event.action == 'labeled' && github.event.label.name == 'recette-jetable'
 
     steps:
@@ -81,6 +83,7 @@ jobs:
 
   redeploy:
     runs-on: ubuntu-latest
+    permissions: {}
     # A push event targets a new deployment.
     if: github.event.action == 'synchronize' && contains( github.event.pull_request.labels.*.name, 'recette-jetable')
 
