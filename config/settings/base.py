@@ -361,7 +361,7 @@ SITE_ID = 1
 
 DSP_FORUM_RELATED_ID = 108
 
-API_BAN_BASE_URL = "https://api-adresse.data.gouv.fr"
+API_BAN_BASE_URL = "https://data.geopf.fr"
 
 # EMPLOI
 # ------------------------------------------------------------------------------
