@@ -17,6 +17,7 @@ class Migration(migrations.Migration):
             model_name="forum",
             name="image",
             field=models.ImageField(
+                blank=True,
                 storage=storages.backends.s3.S3Storage(
                     bucket_name=settings.AWS_STORAGE_BUCKET_NAME, file_overwrite=False
                 ),

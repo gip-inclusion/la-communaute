@@ -15,6 +15,7 @@ class Migration(migrations.Migration):
             model_name="forum",
             name="tags",
             field=taggit.managers.TaggableManager(
+                blank=True,
                 help_text="A comma-separated list of tags.",
                 through="taggit.TaggedItem",
                 to="taggit.Tag",
