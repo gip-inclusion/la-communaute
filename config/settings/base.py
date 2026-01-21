@@ -361,7 +361,7 @@ SITE_ID = 1
 
 DSP_FORUM_RELATED_ID = 108
 
-API_BAN_BASE_URL = "https://data.geopf.fr"
+API_GEOPF_BASE_URL = "https://data.geopf.fr"
 
 # EMPLOI
 # ------------------------------------------------------------------------------
@@ -401,6 +401,7 @@ TAGGIT_STRIP_UNICODE_WHEN_SLUGIFY = True
 connect_src = [
     csp.constants.SELF,
     "*.sentry.io",
+    API_GEOPF_BASE_URL,
 ]
 img_src = [
     csp.constants.SELF,
@@ -425,10 +426,6 @@ style_src = [
     "https://fonts.googleapis.com",
     csp.constants.UNSAFE_INLINE,  # needed for htmx.js, embed.js & tartecitron.js
 ]
-if API_BAN_BASE_URL:
-    connect_src += [
-        API_BAN_BASE_URL,
-    ]
 
 if MATOMO_BASE_URL:
     connect_src += [
