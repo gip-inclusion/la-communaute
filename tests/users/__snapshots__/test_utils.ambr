@@ -103,7 +103,13 @@
                                  WHEN ("users_user"."id" = %s) THEN %s
                                  WHEN ("users_user"."id" = %s) THEN %s
                                  ELSE NULL
-                             END)::varchar(150)
+                             END)::varchar(150),
+              "is_active" = (CASE
+                                 WHEN ("users_user"."id" = %s) THEN %s
+                                 WHEN ("users_user"."id" = %s) THEN %s
+                                 WHEN ("users_user"."id" = %s) THEN %s
+                                 ELSE NULL
+                             END)::boolean
           WHERE "users_user"."id" IN (%s,
                                       %s,
                                       %s)
