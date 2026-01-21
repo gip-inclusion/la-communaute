@@ -10,7 +10,7 @@ class DSPForm(forms.ModelForm):
         label="Localisation",
         required=True,
         widget=forms.Select(
-            attrs={"class": "form-select", "data-ajax--url": f"{settings.API_BAN_BASE_URL}/geocodage/search/"}
+            attrs={"class": "form-select", "data-ajax--url": f"{settings.API_GEOPF_BASE_URL}/geocodage/search/"}
         ),
     )
     city_code = forms.CharField(widget=forms.HiddenInput(), required=False)
