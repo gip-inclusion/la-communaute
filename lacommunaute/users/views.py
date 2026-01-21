@@ -41,7 +41,7 @@ def send_magic_link(request, user, next_url):
         template_id=settings.SIB_MAGIC_LINK_TEMPLATE,
     )
 
-    if settings.ENVIRONMENT == Environment.DEV:
+    if settings.ENVIRONMENT in (Environment.DEV, Environment.REVIEW_APP):
         message = format_html('<a href="{0}">{0}</a> sent to {1}', login_link, user.email)
         messages.success(request, message)
 
