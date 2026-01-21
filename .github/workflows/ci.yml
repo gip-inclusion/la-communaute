@@ -13,6 +13,7 @@ jobs:
       PGPASSWORD: password
       PGHOST: localhost
       PGUSER: postgres
+      ENVIRONMENT: TEST
 
     services:
       minio:
