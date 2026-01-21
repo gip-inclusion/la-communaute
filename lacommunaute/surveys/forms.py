@@ -1,3 +1,5 @@
+from urllib.parse import urljoin
+
 from django import forms
 from django.conf import settings
 
@@ -10,7 +12,10 @@ class DSPForm(forms.ModelForm):
         label="Localisation",
         required=True,
         widget=forms.Select(
-            attrs={"class": "form-select", "data-ajax--url": f"{settings.API_GEOPF_BASE_URL}/geocodage/search/"}
+            attrs={
+                "class": "form-select",
+                "data-ajax--url": urljoin(settings.API_GEOPF_BASE_URL, "/geocodage/search/"),
+            }
         ),
     )
     city_code = forms.CharField(widget=forms.HiddenInput(), required=False)
