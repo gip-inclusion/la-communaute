@@ -9,4 +9,5 @@ class PeriodAggregation(models.TextChoices):
 class Environment(models.TextChoices):
     DEV = "DEV"
     PROD = "PROD"
+    REVIEW_APP = "REVIEW-APP"
     TEST = "TEST"
