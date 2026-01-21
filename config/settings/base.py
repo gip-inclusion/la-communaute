@@ -6,6 +6,8 @@ from botocore.config import Config
 from dotenv import load_dotenv
 from machina import MACHINA_MAIN_STATIC_DIR, MACHINA_MAIN_TEMPLATE_DIR
 
+from lacommunaute.utils.enums import Environment
+
 
 load_dotenv()
 
@@ -20,7 +22,7 @@ APPS_DIR = os.path.abspath(os.path.join(ROOT_DIR, "lacommunaute"))
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 DEBUG = os.getenv("DJANGO_DEBUG", "False") == "True"
-ENVIRONMENT = os.getenv("ENVIRONMENT")
+ENVIRONMENT = Environment(os.getenv("ENVIRONMENT"))
 
 PARKING_PAGE = os.getenv("PARKING_PAGE", "False") == "True"
 
