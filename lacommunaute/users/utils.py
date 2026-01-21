@@ -28,11 +28,12 @@ def soft_delete_users(email_last_seen_list):
         user.email = anonymized_emails[user.email]
         user.first_name = "Anonyme"
         user.last_name = "Anonyme"
+        user.is_active = False
 
     for post in posts:
         post.username = anonymized_emails[post.username]
 
-    user_count = User.objects.bulk_update(users, ["email", "first_name", "last_name"])
+    user_count = User.objects.bulk_update(users, ["email", "first_name", "last_name", "is_active"])
     post_count = Post.objects.bulk_update(posts, ["username"])
     email_last_seen_count = EmailLastSeen.objects.bulk_update(
         email_last_seen_list,

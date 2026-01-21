@@ -208,5 +208,8 @@ class TestDatasAnonymisation:
         assert EmailLastSeen.objects.filter(deleted_at__isnull=False, email_hash__isnull=False).count() == 3
         user.refresh_from_db()
         assert user.email.startswith("email-anonymise-")
+        assert not user.is_active
+        assert user.first_name == "Anonyme"
+        assert user.last_name == "Anonyme"
         post.refresh_from_db()
         assert post.username.startswith("email-anonymise-")
