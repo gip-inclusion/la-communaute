@@ -123,7 +123,7 @@
         {% endif %}
     {% endif %}
 </div>
-<script nonce="{{ request.csp_nonce }}">
+<script nonce="{{ csp_nonce }}">
     var showmorepostsButtons = document.querySelectorAll('.showmoreposts-button')
     showmorepostsButtons.forEach((button) => button.addEventListener('click', function() {
         button.classList.add('d-none');

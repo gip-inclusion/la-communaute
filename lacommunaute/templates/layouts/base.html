@@ -14,7 +14,7 @@
             <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
             <meta name="keywords" content="{% block meta_keywords %}{% endblock meta_keywords %}">
             <meta name="viewport" content="width=device-width, initial-scale=1">
-            <meta name="htmx-config" content='{"inlineScriptNonce":"{{ request.csp_nonce }}"}'>
+            <meta name="htmx-config" content='{"inlineScriptNonce":"{{ csp_nonce }}"}'>
             <!-- https://metatags.io Open Graph -->
             <meta property="og:locale" content="fr_FR">
             <meta property="og:type" content="website">
@@ -34,7 +34,7 @@
             <!-- Use this to get the value of the CSRF token in JavaScript. -->
             <meta name="csrf-token" content="{{ csrf_token }}">
             {% if not debug %}
-                <script src="https://browser.sentry-cdn.com/9.30.0/bundle.min.js" integrity="sha384-LmM+A4DydF1AZmOq6WQjgjRJR6kP5cMplsMi5NTXpcIcDvxuXctipgRiB+a6Ih1/" crossorigin="anonymous" nonce="{{ request.csp_nonce }}"></script>
+                <script src="https://browser.sentry-cdn.com/9.30.0/bundle.min.js" integrity="sha384-LmM+A4DydF1AZmOq6WQjgjRJR6kP5cMplsMi5NTXpcIcDvxuXctipgRiB+a6Ih1/" crossorigin="anonymous" nonce="{{ csp_nonce }}"></script>
             {% endif %}
         {% endblock head %}
         {% block extra_head %}{% endblock %}
@@ -107,7 +107,7 @@
         {% block js %}
             {% import_static_JS_theme_inclusion %}
             <script src="{% static 'machina/build/js/machina.min.js' %}" type="text/javascript" charset="utf-8"></script>
-            <script type="text/javascript" nonce="{{ request.csp_nonce }}">
+            <script type="text/javascript" nonce="{{ csp_nonce }}">
                 $(function() {
                     machina.init();
                     {% block onbodyload %}{% endblock onbodyload %}
@@ -116,7 +116,7 @@
         {% endblock %}
         {% block extra_js %}
             <script src="{% static "vendor/tarteaucitron.js-1.19.0/tarteaucitron.js" %}"></script>
-            <script nonce="{{ request.csp_nonce }}">
+            <script nonce="{{ csp_nonce }}">
                 // Tarteaucitron's language is set according to the browser configuration
                 // but a lot of users don't know how to change it.
                 // This can be forced only by using a global `var` statement.
@@ -166,7 +166,7 @@
             </script>
             {% if MATOMO_BASE_URL and matomo_custom_url %}
                 {# Matomo/Piwik open source web analytics #}
-                <script nonce="{{ request.csp_nonce }}">
+                <script nonce="{{ csp_nonce }}">
                     window._paq = window._paq || [];
                     window._paq.push(['setCustomUrl', new URL('{{ matomo_custom_url }}', window.location.origin).href]);
                 </script>
