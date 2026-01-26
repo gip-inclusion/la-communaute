@@ -36,6 +36,18 @@ class ForumProfileUpdateViewTest(TestCase):
         self.assertContains(response, "region")
         self.assertContains(response, "internship_duration")
 
+    def test_invalid_linkedin_url(self):
+        LINKEDIN_URL = "linkedin"
+        url = reverse("members:profile_update")
+        forum_profiles = ForumProfileFactory()
+        self.client.force_login(forum_profiles.user)
+        response = self.client.post(url, {LINKEDIN_URL: "http://foo.bar/"})
+
+        assert response.status_code == 200
+        assert response.context["form"].is_valid() is False
+        errors = response.context["form"].errors
+        assert errors[LINKEDIN_URL] == ["Le lien vers votre profil LinkedIn n'est pas valide"]
+
 
 class TestSeekersListView:
     def test_content(self, client, db):

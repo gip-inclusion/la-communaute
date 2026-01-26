@@ -1,3 +1,4 @@
+from django.core.exceptions import ValidationError
 from django.db import models
 from machina.apps.forum_member.abstract_models import AbstractForumProfile
 
@@ -5,8 +6,15 @@ from lacommunaute.forum_member.enums import ActiveSearch, Regions
 from lacommunaute.forum_member.shortcuts import get_forum_member_display_name
 
 
+def validate_linkedin(value):
+    if not value.startswith("https://www.linkedin.com/"):
+        raise ValidationError("Le lien vers votre profil LinkedIn n'est pas valide")
+
+
 class ForumProfile(AbstractForumProfile):
-    linkedin = models.URLField(blank=True, null=True, verbose_name="lien vers votre profil LinkedIn")
+    linkedin = models.URLField(
+        blank=True, null=True, verbose_name="lien vers votre profil LinkedIn", validators=[validate_linkedin]
+    )
     cv = models.FileField(upload_to="cv/", blank=True, null=True, verbose_name="votre CV")
     search = models.CharField(
         max_length=20,
