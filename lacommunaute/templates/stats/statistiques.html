@@ -111,7 +111,7 @@
     {{ block.super }}
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.0.1"></script>
     {# djlint: off #}
-        <script nonce="{{ request.csp_nonce }}">
+        <script nonce="{{ csp_nonce }}">
             const impact_stats = document.getElementById('impactChart');
             new Chart(impact_stats, {
                 type: 'bar',
@@ -142,7 +142,7 @@
                 }
             });
 </script>
-    <script nonce="{{ request.csp_nonce }}">
+    <script nonce="{{ csp_nonce }}">
         const ctx_stats = document.getElementById('statChart');
         new Chart(ctx_stats, {
             type: 'line',

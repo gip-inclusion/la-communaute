@@ -88,7 +88,7 @@
     {{ block.super }}
     <script type="text/javascript" src="{% static 'javascripts/jquery.min.js' %}"></script>
     <script type="text/javascript" src="{% static 'javascripts/select2.min.js' %}"></script>
-    <script nonce="{{ request.csp_nonce }}">
+    <script nonce="{{ csp_nonce }}">
         $(document).ready(function() {
             let cityCodeHiddenInput = $("#id_city_code");
             $('#id_location').on('select2:select', function(e) {
