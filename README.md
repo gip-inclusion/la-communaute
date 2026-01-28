@@ -68,7 +68,7 @@ $ docker-compose up -d
 Démarrer le service web
 
 ```bash
-$ python manage.py runserver_plus
+$ python manage.py runserver
 ```
 
 ## Préparer l'environnement de données
@@ -100,10 +100,11 @@ Ajouter d'une dépendance de développement :
 $ uv add --dev beautifulsoup4
 ```
 
-Mettre à jour les dépendances :
+Mettre à jour les dépendances ([dependabot](https://github.com/dependabot) s’en
+occupe) :
 
 ```bash
-$ uv lock
+$ uv sync --upgrade
 ```
 
 Mettre à jour son environnement virtuel :
