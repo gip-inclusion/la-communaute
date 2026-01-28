@@ -32,7 +32,6 @@ dev = [
     "pylint>=3.3",
     "pylint-django>=2.6",
     "pre-commit>=4.0",
-    "coverage>=7.6",
     "django-debug-toolbar>=5.0",
     "pytest-django>=4.9",
     "debugpy>=1.8",
