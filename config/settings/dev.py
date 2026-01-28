@@ -8,7 +8,7 @@ from lacommunaute.utils.enums import Environment
 
 # Define ENVIRONMENT before to import base.
 os.environ["ENVIRONMENT"] = Environment.DEV
-from .test import *  # pylint: disable=wildcard-import,unused-wildcard-import # noqa: F403 F401
+from .test import *  # noqa: F403 F401
 
 
 # Override ENVIRONMENT from test settings.

@@ -23,7 +23,6 @@ ENV/
 .ipython
 
 # Code quality
-.pylint.d
 *.isorted
 .cache
 

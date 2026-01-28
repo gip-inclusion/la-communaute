@@ -75,7 +75,7 @@ def pro_connect_authorize(request):
     return HttpResponseRedirect(f"{redirect_url}?{urlencode(data)}")
 
 
-def pro_connect_callback(request):  # pylint: disable=too-many-return-statements
+def pro_connect_callback(request):
     code = request.GET.get("code")
     state = request.GET.get("state")
     if code is None or not OpenID_State.is_valid(state):
