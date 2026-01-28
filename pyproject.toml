@@ -29,17 +29,13 @@ dependencies = [
 
 [dependency-groups]
 dev = [
-    "pylint>=3.3",
-    "pylint-django>=2.6",
     "pre-commit>=4.0",
     "django-debug-toolbar>=5.0",
     "pytest-django>=4.9",
-    "debugpy>=1.8",
     "factory-boy>=3.3",
     "itoutils[django-testing]>=25.12.22.0",
     "respx>=0.22",
     "pytest-xdist>=3.6",
-    "pillow>=11.1.0",
     "moto>=5.0",
     "ruff>=0.9",
     "djlint>=1.36",

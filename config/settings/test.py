@@ -6,7 +6,7 @@ from lacommunaute.utils.enums import Environment
 ENVIRONMENT = Environment.TEST
 os.environ["ENVIRONMENT"] = ENVIRONMENT
 
-from .base import *  # pylint: disable=wildcard-import,unused-wildcard-import # noqa: E402 F403
+from .base import *  # noqa: E402 F403
 
 
 # Django settings
