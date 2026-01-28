@@ -2,14 +2,16 @@ import os
 
 from lacommunaute.utils.enums import Environment
 
-from .base import *  # pylint: disable=wildcard-import,unused-wildcard-import # noqa: F403 F401
+
+ENVIRONMENT = Environment.TEST
+os.environ["ENVIRONMENT"] = ENVIRONMENT
+
+from .base import *  # pylint: disable=wildcard-import,unused-wildcard-import # noqa: E402 F403
 
 
 # Django settings
 # ---------------
 SECRET_KEY = "v3ry_s3cr3t_k3y"
-
-ENVIRONMENT = Environment.TEST
 
 # Database
 # ------------------------------------------------------------------------------

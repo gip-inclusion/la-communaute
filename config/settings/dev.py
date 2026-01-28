@@ -1,15 +1,23 @@
+import os
+
 # Enable django-debug-toolbar with Docker.
 import socket
 
 from lacommunaute.utils.enums import Environment
 
+
+# Define ENVIRONMENT before to import base.
+os.environ["ENVIRONMENT"] = Environment.DEV
 from .test import *  # pylint: disable=wildcard-import,unused-wildcard-import # noqa: F403 F401
+
+
+# Override ENVIRONMENT from test settings.
+ENVIRONMENT = Environment.DEV
 
 
 # Django settings
 # ---------------
 DEBUG = True
-ENVIRONMENT = Environment.DEV
 
 ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "192.168.0.1"]
 
