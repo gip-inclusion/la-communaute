@@ -17,12 +17,7 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser):
-    identity_provider = models.CharField(
-        max_length=2,
-        choices=IdentityProvider.choices,
-        null=False,
-        blank=False,
-    )
+    identity_provider = models.CharField(max_length=2, choices=IdentityProvider.choices)
 
     objects = UserManager()
 
