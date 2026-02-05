@@ -23,19 +23,6 @@
                             </p>
                         </div>
                     {% endif %}
-                    {% if profile.search != 'NO' and profile.cv %}
-                        <div class="profile-search-for-internship">
-                            <p class="my-3 text-center">
-                                <i class="ri-file-text-fill"></i>
-                                <a href="{{ profile.cv.url }}" target="_blank">CV</a>
-                            </p>
-                        </div>
-                    {% endif %}
-                    {% if profile.signature %}
-                        <div class="profile-signature">
-                            <p class="my-3 text-center text-muted">{{ profile.signature }}</p>
-                        </div>
-                    {% endif %}
                 </div>
             </div>
             {% if profile.user == request.user %}
@@ -43,20 +30,6 @@
             {% endif %}
         </div>
         <div class="col-md-9">
-            {% if profile.search != 'NO' %}
-                <div class="row mb-5">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3>{{ profile.get_search_display }}</h3>
-                            </div>
-                            <div class="card-body">
-                                Sur la région <strong>{{ profile.get_region_display }}</strong> et pour une durée de <strong>{{ profile.internship_duration }} mois</strong>.
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
             <div class="row recent-posts">
                 <div class="col-md-12">
                     <div class="card">
