@@ -24,33 +24,6 @@
     </section>
     <section id="action-box" class="s-section">
         <div class="s-section__container container">
-            {% if user.is_authenticated %}
-                <div class="s-section__row row">
-                    <div class="s-section__col col-12">
-                        <div class="c-box mb-5">
-                            <div class="row">
-                                <div class="col-lg col-12 mb-3">
-                                    <p>Je suis CIP en recherche d'un stage ou d'une alternance ? Je complète mon profil pour me faire connaitre.</p>
-                                </div>
-                                <div class="col-lg-auto col-12">
-                                    <a href="{{ update_url }}" class="btn btn-primary">Mettre à jour mon profil</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% else %}
-                <div class="s-section__row row">
-                    <div class="s-section__col col-12">
-                        <div class="c-box mb-5">
-                            <div class="row">
-                                <div class="col-lg col-12 mb-3">Je me connecte pour mettre à jour mon profil</div>
-                                <div class="col-lg-auto col-12">{% include "registration/includes/login_link.html" with next=update_url %}</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            {% endif %}
             <div class="s-section__row row">
                 <div class="s-section__col col-12">
                     <div class="row row-cols-1 row-cols-md-2 g-4">
@@ -61,12 +34,6 @@
                                         <h3 class="h5 card-title">
                                             <a href="{% url 'members:profile' username=forum_profile.user.username %}" class="matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="member">{{ forum_profile }}</a>
                                         </h3>
-                                        <p class="card-text">
-                                            Sur la région <strong>{{ forum_profile.get_region_display }}</strong> et pour une durée de <strong>{{ forum_profile.internship_duration }} mois</strong>.
-                                        </p>
-                                        <p class="card-text">
-                                            {% if forum_profile.signature %}<p class="card-text">{{ forum_profile.signature }}</p>{% endif %}
-                                        </p>
                                     </div>
                                 </div>
                             </div>
