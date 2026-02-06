@@ -647,22 +647,24 @@ wheels = [
 
 [[package]]
 name = "itoutils"
-version = "26.1.28.0"
+version = "26.2.6.0"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/b7/2f/acb02d4c388d47090a9194106b5444a3858c8bd03fdb0ad45951384eec1d/itoutils-26.1.28.0.tar.gz", hash = "sha256:9e983ab097edd9f39428cd26fc15ee3d36e23b36092e8a7cce8ae0cb95504048", size = 44505, upload-time = "2026-01-28T15:05:37.953Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/95/c0/eafb9fd77f93c0a3a8f299b06db847bae9ac5ed4cfe1aded1d4333774708/itoutils-26.2.6.0.tar.gz", hash = "sha256:5ae9344272261b6c86e4b380c0b64f7c9249af4e37a535e055f7ecffb1c3b89b", size = 50921, upload-time = "2026-02-06T09:30:20.905Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/66/28/144e4b1ef969200e0d91d4ef9b474e674b71b9e55dd8ebc145b1ce917e06/itoutils-26.1.28.0-py3-none-any.whl", hash = "sha256:35096692175965ca0d20ab271a3ad1d81733121ec5a7a869c6b91f53ba23ae7f", size = 11505, upload-time = "2026-01-28T15:05:37.024Z" },
+    { url = "https://files.pythonhosted.org/packages/68/50/f4b7a25c265485ad69e1d75f2872b3af8fa781cfcabf051a6f9867620605/itoutils-26.2.6.0-py3-none-any.whl", hash = "sha256:18535379984fb7eab0310b2952b8944771262d5acc787706cf8669cc34bce805", size = 15184, upload-time = "2026-02-06T09:30:19.796Z" },
 ]
 
 [package.optional-dependencies]
 django = [
     { name = "django" },
     { name = "django-datadog-logger" },
+    { name = "httpx" },
     { name = "jwcrypto" },
     { name = "psycopg", extra = ["binary"] },
 ]
 django-testing = [
     { name = "django" },
+    { name = "respx" },
     { name = "sqlparse" },
     { name = "syrupy" },
 ]
