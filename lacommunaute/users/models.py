@@ -5,24 +5,37 @@ from django.conf import settings
 from django.contrib.auth.models import AbstractUser, UserManager as BaseUserManager
 from django.db import models
 from django.utils import timezone
+from itoutils.django.nexus.models import NexusModelMixin, NexusQuerySetMixin
 
+from lacommunaute.nexus import sync
 from lacommunaute.users.enums import EmailLastSeenKind, IdentityProvider
 
 
-class UserManager(BaseUserManager):
+class UserQuerySet(NexusQuerySetMixin, models.QuerySet):
+    pass
+
+
+class UserManager(BaseUserManager.from_queryset(UserQuerySet)):
     def create_user(self, username=None, email=None, password=None, **extra_fields):
         if not username:
             username = str(uuid4())
         return super().create_user(username, email, password, **extra_fields)
 
 
-class User(AbstractUser):
+class User(NexusModelMixin, AbstractUser):
     identity_provider = models.CharField(max_length=2, choices=IdentityProvider.choices)
 
     objects = UserManager()
 
     def __str__(self):
         return self.email
+
+    nexus_tracked_fields = sync.USER_TRACKED_FIELDS
+    nexus_sync = staticmethod(sync.sync_users)
+    nexus_delete = staticmethod(sync.delete_users)
+
+    def should_sync_to_nexus(self):
+        return self.is_active and self.email and not self.is_staff
 
 
 class EmailLastSeenQuerySet(models.QuerySet):
