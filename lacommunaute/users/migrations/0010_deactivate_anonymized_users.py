@@ -5,6 +5,7 @@ from django.db import migrations
 
 def forward(apps, schema_editor):
     User = apps.get_model("users", "User")
+    User.nexus_tracked_fields = []
     User.objects.filter(email__startswith="email-anonymise-").update(is_active=False)
 
 
