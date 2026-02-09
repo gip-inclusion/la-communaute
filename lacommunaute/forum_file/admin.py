@@ -18,6 +18,6 @@ class PublicFileAdmin(admin.ModelAdmin):
         obj.save()
 
     def file_url(self, obj):
-        return format_html(f'<a href="{obj.get_file_url()}" target="_blank">{obj.get_file_url()}</a>')
+        return format_html('<a href="{0}" target="_blank">{0}</a>', obj.get_file_url())
 
     file_url.short_description = "URL du fichier"
