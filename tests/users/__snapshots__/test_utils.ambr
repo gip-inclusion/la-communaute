@@ -1,7 +1,7 @@
 # serializer version: 1
 # name: test_soft_delete_queries
   dict({
-    'num_queries': 10,
+    'num_queries': 8,
     'queries': list([
       dict({
         'origin': list([
@@ -82,20 +82,6 @@
       }),
       dict({
         'origin': list([
-          'UserQuerySet.update[itoutils/django/nexus/models.py]',
-          'soft_delete_users[users/utils.py]',
-        ]),
-        'sql': '''
-          SELECT "users_user"."id" AS "pk"
-          FROM "users_user"
-          WHERE "users_user"."id" IN (%s,
-                                      %s,
-                                      %s)
-        ''',
-      }),
-      dict({
-        'origin': list([
-          'UserQuerySet.update[itoutils/django/nexus/models.py]',
           'soft_delete_users[users/utils.py]',
         ]),
         'sql': '''
@@ -124,30 +110,6 @@
                                  WHEN ("users_user"."id" = %s) THEN %s
                                  ELSE NULL
                              END)::boolean
-          WHERE "users_user"."id" IN (%s,
-                                      %s,
-                                      %s)
-        ''',
-      }),
-      dict({
-        'origin': list([
-          'UserQuerySet.update[itoutils/django/nexus/models.py]',
-          'soft_delete_users[users/utils.py]',
-        ]),
-        'sql': '''
-          SELECT "users_user"."id",
-                 "users_user"."password",
-                 "users_user"."last_login",
-                 "users_user"."is_superuser",
-                 "users_user"."username",
-                 "users_user"."first_name",
-                 "users_user"."last_name",
-                 "users_user"."email",
-                 "users_user"."is_staff",
-                 "users_user"."is_active",
-                 "users_user"."date_joined",
-                 "users_user"."identity_provider"
-          FROM "users_user"
           WHERE "users_user"."id" IN (%s,
                                       %s,
                                       %s)
