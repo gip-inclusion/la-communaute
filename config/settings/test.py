@@ -47,15 +47,7 @@ EMPLOIS_COMPANY_SEARCH = "http://test.com/company/search"
 
 EMAIL_LAST_SEEN_HASH_SALT = "bobby"
 
-# Nexus metabase db
-# ---------------------------------------
-NEXUS_METABASE_DB_HOST = DATABASES["default"]["HOST"]  # noqa: F405
-NEXUS_METABASE_DB_PORT = DATABASES["default"]["PORT"]  # noqa: F405
-NEXUS_METABASE_DB_DATABASE = DATABASES["default"]["NAME"]  # noqa: F405
-NEXUS_METABASE_DB_USER = DATABASES["default"]["USER"]  # noqa: F405
-NEXUS_METABASE_DB_PASSWORD = DATABASES["default"]["PASSWORD"]  # noqa: F405
 PDI_JWT_KEY = {"k": "aTR4ZnR1WlpYYmphbFdtaXVlVjB3alljNjhrWXpfYSE", "kty": "oct"}
-NEXUS_ALLOWED_REDIRECT_HOSTS = ["domain.fr", "domain.com"]
 
 
 ASSERT_SNAPSHOT_QUERIES_EXTRA_PACKAGES_ALLOWLIST = [
