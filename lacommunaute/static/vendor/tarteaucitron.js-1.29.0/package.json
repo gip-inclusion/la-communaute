@@ -1,0 +1,27 @@
+{
+  "name": "tarteaucitronjs",
+  "version": "1.29.0",
+  "main": "tarteaucitron.js",
+  "description": "tarteaucitron.io - Get a compliant and accessible cookie banner",
+  "dependencies": {},
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AmauriC/tarteaucitron.js.git"
+  },
+  "keywords": [
+    "cookie",
+    "law",
+    "rgpd",
+    "gdpr"
+  ],
+  "author": "amauri.io",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AmauriC/tarteaucitron.js/issues"
+  },
+  "homepage": "https://tarteaucitron.io/"
+}
