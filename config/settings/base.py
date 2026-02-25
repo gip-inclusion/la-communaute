@@ -517,6 +517,9 @@ EMAIL_LAST_SEEN_MISSYOU_BATCH_SIZE = 25
 EMAIL_LAST_SEEN_ARCHIVE_PERSONNAL_DATAS_DELAY = 30  # days
 EMAIL_LAST_SEEN_MISSYOU_DELAY = 2 * 365 - EMAIL_LAST_SEEN_ARCHIVE_PERSONNAL_DATAS_DELAY  # days
 
+# Nexus
+# ---------------------------------------
+NEXUS_ALLOWED_REDIRECT_HOSTS = os.getenv("NEXUS_ALLOWED_REDIRECT_HOSTS", "").split(",")
 
 pdi_jwt_key = os.getenv("PDI_JWT_KEY")
 PDI_JWT_KEY = json.loads(pdi_jwt_key) if pdi_jwt_key else None

@@ -47,7 +47,10 @@ EMPLOIS_COMPANY_SEARCH = "http://test.com/company/search"
 
 EMAIL_LAST_SEEN_HASH_SALT = "bobby"
 
+# Nexus
+# ---------------------------------------
 PDI_JWT_KEY = {"k": "aTR4ZnR1WlpYYmphbFdtaXVlVjB3alljNjhrWXpfYSE", "kty": "oct"}
+NEXUS_ALLOWED_REDIRECT_HOSTS = ["domain.fr", "domain.com"]
 
 
 ASSERT_SNAPSHOT_QUERIES_EXTRA_PACKAGES_ALLOWLIST = [
