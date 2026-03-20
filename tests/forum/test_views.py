@@ -169,11 +169,11 @@ class ForumViewTest(TestCase):
         self.assertContains(response, poll_option.poll.question, status_code=200)
         self.assertContains(response, poll_option.text)
 
-    def test_can_submit_form(self):
+    def test_cannot_submit_form(self):
         self.client.force_login(self.user)
         response = self.client.get(self.url)
         self.assertIsInstance(response.context_data["form"], PostForm)
-        self.assertContains(response, f'id="collapsePost{self.topic.pk}', status_code=200)
+        self.assertNotContains(response, f'id="collapsePost{self.topic.pk}', status_code=200)
 
     def test_cannot_submit_post(self, *args):
         user = UserFactory()
