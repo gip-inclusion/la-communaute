@@ -3,7 +3,7 @@
 # Rebuild index for the search engine.
 #
 # About clever cloud cronjobs:
-# https://www.clever-cloud.com/doc/tools/crons/
+# https://www.clever.cloud/doc/tools/crons/
 #
 
 if [[ "$INSTANCE_NUMBER" != "0" ]]; then
