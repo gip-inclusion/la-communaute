@@ -3,18 +3,17 @@ from django.conf import settings
 from django.test import RequestFactory, TestCase
 from django.urls import reverse
 from faker import Faker
+from itoutils.urls import add_url_params
 from machina.core.db.models import get_model
 from machina.core.loading import get_class
+from pytest_django.asserts import assertRedirects
 
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import CertifiedPost, Topic
 from lacommunaute.forum_conversation.views_htmx import PostListView
-from lacommunaute.forum_moderation.enums import BlockedPostReason
-from lacommunaute.forum_moderation.models import BlockedPost
 from lacommunaute.users.enums import EmailLastSeenKind
 from lacommunaute.users.models import EmailLastSeen
 from tests.forum_conversation.factories import CertifiedPostFactory, PostFactory, TopicFactory
-from tests.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 from tests.forum_upvote.factories import UpVoteFactory
 from tests.notification.factories import NotificationFactory
 from tests.users.factories import UserFactory
@@ -230,7 +229,7 @@ class PostFeedCreateViewTest(TestCase):
     def test_get_method_unallowed(self):
         self.client.force_login(self.user)
         response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.status_code, 403)
 
     def test_topic_doesnt_exist(self):
         self.client.force_login(self.user)
@@ -250,151 +249,19 @@ class PostFeedCreateViewTest(TestCase):
 
         self.assertEqual(response.status_code, 404)
 
-    def test_form_is_invalid(self):
-        self.client.force_login(self.user)
-
-        response = self.client.post(self.url, data={})
-
-        self.assertContains(response, '<div id="div_id_content" class="form-group has-error">', status_code=200)
-
-    def test_create_post_as_authenticated_user(self, *args):
+    def test_create_post_as_authenticated_user_forbidden(self, *args):
         self.client.force_login(self.user)
 
         response = self.client.post(self.url, data={"content": self.content})
+        assert response.status_code == 403
 
-        self.assertContains(response, self.content, status_code=200)
-        self.assertIsInstance(response.context["form"], PostForm)
-        self.assertEqual(1, ForumReadTrack.objects.count())
-        self.assertContains(response, '<i class="ri-notification-2-line me-1" aria-hidden="true"></i><span>0</span>')
         self.topic.refresh_from_db()
-        self.assertEqual(self.topic.posts.count(), 2)
-        self.assertEqual(
-            self.topic.posts.values("content", "username", "approved", "update_reason").last(),
-            {"content": self.content, "username": None, "approved": True, "update_reason": None},
-        )
-
-    def test_create_post_as_blocked_not_blocked_anonymous(self, *args):
-        username = faker.email()
-
-        response = self.client.post(self.url, {"content": self.content, "username": username})
-
-        self.assertContains(response, self.content, status_code=200)
-        self.topic.refresh_from_db()
-        self.assertEqual(self.topic.posts.count(), 2)
-        self.assertEqual(
-            self.topic.posts.values("content", "username", "approved", "update_reason").last(),
-            {"content": self.content, "username": username, "approved": True, "update_reason": None},
-        )
-
-        BlockedEmailFactory(email=username).save()
-
-        response = self.client.post(self.url, {"content": self.content, "username": username})
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertContains(
-            response,
-            (
-                f'<input type="email" name="username" value="{username}" maxlength="254" '
-                'class="form-control" required id="id_username">'
-            ),
-            status_code=200,
-        )
-        self.topic.refresh_from_db()
-        self.assertEqual(self.topic.posts.count(), 2)
-
-        # the blocked post should be recorded in the database
-        blocked_post = BlockedPost.objects.get()
-        assert blocked_post.content == self.content
-        assert blocked_post.username == username
-        assert blocked_post.block_reason == BlockedPostReason.BLOCKED_USER
-
-    def test_create_post_with_nonfr_content(self):
-        self.client.force_login(self.user)
-        response = self.client.post(self.url, {"content": "популярные лучшие песни слушать онлайн"})
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertContains(
-            response,
-            (
-                '<textarea name="content" cols="40" rows="10" placeholder="Entrez votre message" '
-                'class="form-control" required id="id_content">'
-            ),
-            status_code=200,
-        )
-        self.topic.refresh_from_db()
-        self.assertEqual(self.topic.posts.count(), 1)
-
-        # the blocked post should be recorded in the database
-        blocked_post = BlockedPost.objects.get()
-        assert blocked_post.poster == self.user
-        assert blocked_post.content == "популярные лучшие песни слушать онлайн"
-        assert blocked_post.block_reason == BlockedPostReason.ALTERNATIVE_LANGUAGE
-
-    def test_create_post_with_html_content(self):
-        self.client.force_login(self.user)
-        response = self.client.post(
-            self.url,
-            {"content": "<p>Hello, <a href='https://www.example.com'>click here</a> to visit example.com</p>"},
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertContains(
-            response,
-            (
-                '<textarea name="content" cols="40" rows="10" placeholder="Entrez votre message" '
-                'class="form-control" required id="id_content">'
-            ),
-            status_code=200,
-        )
-        self.topic.refresh_from_db()
-        self.assertEqual(self.topic.posts.count(), 1)
-
-        # we don't create a BlockedPost record for HTML content to avoid storing malicious code
-        assert BlockedPost.objects.count() == 0
-
-    def test_create_post_with_blocked_domain_name(self):
-        BlockedDomainNameFactory(domain="blocked.com")
-
-        response = self.client.post(self.url, {"content": "la communauté", "username": "spam@blocked.com"})
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertContains(
-            response,
-            (
-                '<input type="email" name="username" value="spam@blocked.com" maxlength="254" '
-                'class="form-control" required id="id_username">'
-            ),
-            status_code=200,
-        )
-        self.topic.refresh_from_db()
-        self.assertEqual(self.topic.posts.count(), 1)
-
-        # the blocked post should be recorded in the database
-        blocked_post = BlockedPost.objects.get()
-        assert blocked_post.content == "la communauté"
-        assert blocked_post.username == "spam@blocked.com"
-        assert blocked_post.block_reason == BlockedPostReason.BLOCKED_DOMAIN
+        assert self.topic.posts.count() == 1
 
 
 class TestPostFeedCreateView:
     @pytest.mark.parametrize("logged", [True, False])
-    def test_email_last_seen_is_updated(self, client, db, logged):
+    def test_email_last_seen_is_updated_forbidden(self, client, db, logged):
         topic = TopicFactory(with_post=True)
         url = reverse(
             "forum_conversation_extension:post_create",
@@ -413,10 +280,13 @@ class TestPostFeedCreateView:
             data["username"] = "bobby@lapointe.fr"
 
         response = client.post(url, data=data)
-        assert response.status_code == 200
+        if logged:
+            assert response.status_code == 403
+        else:
+            assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
 
         email = topic.poster.email if logged else data["username"]
-        assert EmailLastSeen.objects.filter(email=email, last_seen_kind=EmailLastSeenKind.POST).exists()
+        assert not EmailLastSeen.objects.filter(email=email, last_seen_kind=EmailLastSeenKind.POST).exists()
 
 
 # vincentporte : not to futur self, rewrite it in pytest style
