@@ -4,7 +4,8 @@ from django.forms import HiddenInput
 from django.test import TestCase
 from django.urls import reverse
 from faker import Faker
-from taggit.models import Tag
+from itoutils.urls import add_url_params
+from pytest_django.asserts import assertRedirects
 
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import Topic
@@ -95,42 +96,29 @@ superuser_hidden_fields = {
 
 
 class TestTopicForm:
-    def test_create_topic_as_anonymous(self, db, client, forum):
+    def test_create_topic_as_anonymous_forbidden(self, db, client, forum):
         username = faker.email()
 
         response = client.post(
             get_create_topic_url(forum),
             data={"subject": "Test", "content": faker.paragraph(nb_sentences=5), "username": username},
         )
-        assert response.status_code == 302
+        assert response.status_code == 403
+        assert not Topic.objects.exists()
 
-        topic = Topic.objects.get()
-        assert topic.first_post.username == username
-        assert topic.poster is None
-        assert topic.first_post.poster is None
-        assert topic.first_post.updates_count == 0
-        assert topic.first_post.updated_by is None
-
-    def test_update_anonymous_topic_as_self(self, db, client, forum):
+    def test_update_anonymous_topic_as_self_forbidden(self, db, client, forum):
         topic = AnonymousTopicFactory(forum=forum, with_post=True)
         username = topic.first_post.username
         session = client.session
         session["anonymous_topic"] = topic.first_post.anonymous_key
 
         data = {"subject": faker.word(), "content": faker.paragraph(nb_sentences=5), "username": username}
-        response = client.post(get_update_topic_url(topic), data=data)
-        assert response.status_code == 302
+        url = get_update_topic_url(topic)
+        response = client.post(url, data=data)
+        assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
 
-        topic.refresh_from_db()
-        assert topic.first_post.username == username
-        assert topic.poster is None
-        assert topic.first_post.poster is None
-        assert topic.first_post.updates_count == 0  # surprisingly, this is not incremented
-        assert topic.first_post.updated_by is None  # updated_by is a FK on User
-
-    def test_update_anonymous_topic_as_superuser(self, db, client, forum):
+    def test_update_anonymous_topic_as_superuser_forbidden(self, db, client, forum):
         topic = AnonymousTopicFactory(forum=forum, with_post=True)
-        username = topic.first_post.username
         superuser = StaffUserFactory()
         client.force_login(superuser)
 
@@ -140,48 +128,29 @@ class TestTopicForm:
             **superuser_hidden_fields,
         }
         response = client.post(get_update_topic_url(topic), data=data)
-        assert response.status_code == 302
+        assert response.status_code == 403
 
-        topic.refresh_from_db()
-        assert topic.first_post.username == username
-        assert topic.poster is None
-        assert topic.first_post.poster is None
-        assert topic.first_post.updated_by == superuser
-
-    def test_create_topic_as_authenticated(self, db, client, forum):
+    def test_create_topic_as_authenticated_forbidden(self, db, client, forum):
         user = UserFactory()
         client.force_login(user)
 
         response = client.post(
             get_create_topic_url(forum), data={"subject": "Test", "content": faker.paragraph(nb_sentences=5)}
         )
-        assert response.status_code == 302
+        assert response.status_code == 403
+        assert not Topic.objects.exists()
 
-        topic = Topic.objects.get()
-        assert topic.poster == user
-        assert topic.first_post.poster == user
-        assert topic.first_post.username is None
-        assert topic.first_post.updates_count == 0
-        assert topic.first_post.updated_by is None
-
-    def test_update_authenticated_topic_as_self(self, db, client, forum):
+    def test_update_authenticated_topic_as_self_forbidden(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True)
         user = topic.poster
         client.force_login(user)
 
         data = {"subject": faker.word(), "content": faker.paragraph(nb_sentences=5)}
         response = client.post(get_update_topic_url(topic), data=data)
-        assert response.status_code == 302
+        assert response.status_code == 403
 
-        topic.refresh_from_db()
-        assert topic.first_post.username is None
-        assert topic.poster == user
-        assert topic.first_post.poster == user
-        assert topic.first_post.updated_by == user
-
-    def test_update_authenticated_topic_as_superuser(self, db, client, forum):
+    def test_update_authenticated_topic_as_superuser_forbidden(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True)
-        user = topic.poster
         superuser = StaffUserFactory()
         client.force_login(superuser)
 
@@ -191,128 +160,81 @@ class TestTopicForm:
             **superuser_hidden_fields,
         }
         response = client.post(get_update_topic_url(topic), data=data)
-        assert response.status_code == 302
-
-        topic.refresh_from_db()
-        assert topic.first_post.username is None
-        assert topic.poster == user
-        assert topic.first_post.poster == user
-        assert topic.first_post.updated_by == superuser
+        assert response.status_code == 403
 
     def test_init_tags_when_creating_topic(self, db, client, forum):
         response = client.get(get_create_topic_url(forum))
         assert response.status_code == 200
         assert response.context_data["post_form"].fields["tags"].initial is None
 
-    def test_init_tags_when_updating_topic(self, db, client, forum):
+    def test_init_tags_when_updating_topic_forbidden(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True)
         client.force_login(topic.poster)
         response = client.get(get_update_topic_url(topic))
-        assert response.status_code == 200
-        assert set(response.context_data["post_form"].fields["tags"].initial) == set(Tag.objects.none())
+        assert response.status_code == 403
 
-    def test_init_tags_when_updating_tagged_topic(self, db, client, forum):
+    def test_init_tags_when_updating_tagged_topic_forbidden(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True, with_tags=[faker.word() for _ in range(2)])
         client.force_login(topic.poster)
 
         response = client.get(get_update_topic_url(topic))
-        assert response.status_code == 200
-        assert set(response.context_data["post_form"].fields["tags"].initial) == set(Tag.objects.all())
+        assert response.status_code == 403
 
 
 class TestPostForm:
-    def test_reply_as_anonymous(self, db, client, forum):
+    def test_reply_as_anonymous_forbidden(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True)
         username = faker.email()
 
-        response = client.post(
-            get_reply_topic_url(topic), data={"content": faker.paragraph(nb_sentences=5), "username": username}
-        )
-        assert response.status_code == 200  # htmx view
+        url = get_reply_topic_url(topic)
+        response = client.post(url, data={"content": faker.paragraph(nb_sentences=5), "username": username})
+        assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
 
-        topic.refresh_from_db()
-        post = topic.posts.last()
-        assert post.username == username
-        assert post.poster is None
-        assert post.updates_count == 0
-        assert post.updated_by is None
-
-    def test_update_anonymous_reply_as_self(self, db, client, forum):
+    def test_update_anonymous_reply_as_self_forbidden(self, db, client, forum):
         post = AnonymousPostFactory(topic=TopicFactory(forum=forum, with_post=True))
         username = post.username
         session = client.session
         session["anonymous_post"] = post.anonymous_key
 
         data = {"content": faker.paragraph(nb_sentences=5), "username": username}
-        response = client.post(get_post_update_url(post), data=data)
-        assert response.status_code == 302
+        url = get_post_update_url(post)
+        response = client.post(url, data=data)
+        assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
 
-        post.refresh_from_db()
-        assert post.username == username
-        assert post.poster is None
-        assert post.updates_count == 0  # surprisingly, this is not incremented
-        assert post.updated_by is None
-
-    def test_update_anonymous_reply_as_superuser(self, db, client, forum):
+    def test_update_anonymous_reply_as_superuser_forbidden(self, db, client, forum):
         post = AnonymousPostFactory(topic=TopicFactory(forum=forum, with_post=True))
-        username = post.username
         superuser = StaffUserFactory()
         client.force_login(superuser)
 
         data = {"content": faker.paragraph(nb_sentences=5), **superuser_hidden_fields}
         response = client.post(get_post_update_url(post), data=data)
-        assert response.status_code == 302
+        assert response.status_code == 403
 
-        post.refresh_from_db()
-        assert post.username == username
-        assert post.poster is None
-        assert post.updates_count == 1
-        assert post.updated_by == superuser
-
-    def test_reply_as_authenticated(self, db, client, forum):
+    def test_reply_as_authenticated_forbidden(self, db, client, forum):
         topic = TopicFactory(forum=forum, with_post=True)
         user = UserFactory()
         client.force_login(user)
 
         response = client.post(get_reply_topic_url(topic), data={"content": faker.paragraph(nb_sentences=5)})
-        assert response.status_code == 200
+        assert response.status_code == 403
 
         topic.refresh_from_db()
-        assert topic.posts.count() == 2
+        assert topic.posts.count() == 1
 
-        post = topic.posts.last()
-        assert post.username is None
-        assert post.poster == user
-        assert post.updates_count == 0
-        assert post.updated_by is None
-
-    def test_update_authenticated_reply_as_self(self, db, client, forum):
+    def test_update_authenticated_reply_as_self_forbidden(self, db, client, forum):
         post = PostFactory(topic=TopicFactory(forum=forum, with_post=True))
         user = post.poster
         client.force_login(user)
 
         data = {"content": faker.paragraph(nb_sentences=5)}
         response = client.post(get_post_update_url(post), data=data)
-        assert response.status_code == 302
+        assert response.status_code == 403
 
-        post.refresh_from_db()
-        assert post.username is None
-        assert post.poster == user
-        assert post.updates_count == 1
-        assert post.updated_by == user
-
-    def test_update_authenticated_reply_as_superuser(self, db, client, forum):
+    def test_update_authenticated_reply_as_superuser_forbidden(self, db, client, forum):
         post = PostFactory(topic=TopicFactory(forum=forum, with_post=True))
-        user = post.poster
         superuser = StaffUserFactory()
         client.force_login(superuser)
 
         data = {"content": faker.paragraph(nb_sentences=5), **superuser_hidden_fields}
         response = client.post(get_post_update_url(post), data=data)
-        assert response.status_code == 302
-
-        post.refresh_from_db()
-        assert post.username is None
-        assert post.poster == user
-        assert post.updates_count == 1
-        assert post.updated_by == superuser
+        assert response.status_code == 403

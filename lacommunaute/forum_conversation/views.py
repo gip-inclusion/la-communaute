@@ -2,6 +2,7 @@ import logging
 
 from django.conf import settings
 from django.contrib import messages
+from django.core.exceptions import PermissionDenied
 from django.urls import reverse
 from django.views.generic import ListView
 from machina.apps.forum_conversation import views
@@ -32,6 +33,9 @@ class FormValidMixin:
 class TopicCreateView(FormValidMixin, views.TopicCreateView):
     post_form_class = TopicForm
 
+    def post(self, request, *args, **kwargs):
+        raise PermissionDenied("Action impossible")
+
     def get_success_url(self):
         if not self.forum_post.approved:
             return reverse(
@@ -56,25 +60,20 @@ class TopicUpdateView(FormValidMixin, views.TopicUpdateView):
     post_form_class = TopicForm
 
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if request.POST.get("unapprove") and self.request.user.is_staff:
-            self.object.first_post.approved = False
-            self.object.first_post.save()
-        return super().post(request, *args, **kwargs)
+        raise PermissionDenied("Action impossible")
 
 
 class PostCreateView(views.PostCreateView):
     def perform_permissions_check(self, user, obj, perms):
         return False
 
+    def post(self, request, *args, **kwargs):
+        raise PermissionDenied("Action impossible")
+
 
 class PostUpdateView(FormValidMixin, views.PostUpdateView):
     def post(self, request, *args, **kwargs):
-        self.object = self.get_object()
-        if request.POST.get("unapprove") and self.request.user.is_staff:
-            self.object.approved = False
-            self.object.save()
-        return super().post(request, *args, **kwargs)
+        raise PermissionDenied("Action impossible")
 
 
 class PostDeleteView(views.PostDeleteView):

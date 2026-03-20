@@ -8,9 +8,10 @@ from django.urls import reverse
 from django.utils.http import urlencode
 from faker import Faker
 from itoutils.django.testing import assertSnapshotQueries
+from itoutils.urls import add_url_params
 from machina.core.db.models import get_model
 from machina.core.loading import get_class
-from pytest_django.asserts import assertContains
+from pytest_django.asserts import assertContains, assertRedirects
 from taggit.models import Tag
 
 from lacommunaute.forum_conversation.enums import Filters
@@ -27,7 +28,6 @@ from tests.forum_conversation.factories import (
     PostFactory,
     TopicFactory,
 )
-from tests.forum_moderation.factories import BlockedDomainNameFactory, BlockedEmailFactory
 from tests.forum_upvote.factories import UpVoteFactory
 from tests.notification.factories import NotificationFactory
 from tests.testing import parse_response_to_soup
@@ -111,161 +111,23 @@ class TopicCreateViewTest(TestCase):
             response, '/post/delete/" title="Supprimer" role="button" class="btn btn-outline-danger">Supprimer</a>'
         )
 
-    def test_topic_create_as_anonymous_user(self, *args):
+    def test_topic_create_as_anonymous_user_forbidden(self, *args):
         self.post_data["username"] = faker.email()
 
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
+        response = self.client.post(self.url, self.post_data, follow=True)
+        assert response.status_code == 403
+        assert not Topic.objects.exists()
 
-        self.assertEqual(response.status_code, 200)
-        topic = Topic.objects.get()
-        self.assertEqual(self.post_data["subject"], topic.subject)
-        self.assertEqual(self.post_data["subject"], topic.first_post.subject)
-        self.assertEqual(self.post_data["content"], topic.first_post.content.raw)
-        self.assertEqual(self.post_data["username"], topic.first_post.username)
-        self.assertTrue(topic.approved)
-        self.assertTrue(topic.first_post.approved)
-
-        self.assertTrue(check_email_last_seen(self.post_data["username"]))
-
-    def test_topic_create_as_unapproved_anonymous_user(self, *args):
-        self.post_data["username"] = faker.email()
-        BlockedEmailFactory(email=self.post_data["username"])
-
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertEqual(Topic.objects.count(), 0)
-
-        self.assertFalse(check_email_last_seen(self.post_data["username"]))
-
-    def test_topic_create_with_nonfr_content(self, *args):
-        self.client.force_login(self.poster)
-        self.post_data["content"] = "популярные лучшие песни слушать онлайн"
-
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertEqual(Topic.objects.count(), 0)
-
-    def test_topic_create_with_numeric_content(self, *args):
-        self.client.force_login(self.poster)
-        self.post_data["content"] = "20"
-
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertEqual(Topic.objects.count(), 0)
-
-    def test_topic_create_with_html_content(self, *args):
-        self.client.force_login(self.poster)
-        self.post_data["content"] = "<p>la communaute</p>"
-
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertEqual(Topic.objects.count(), 0)
-
-    def test_topic_create_as_anonymous_user_with_blocked_domain_name(self, *args):
-        self.post_data["username"] = "spam@blocked.com"
-        BlockedDomainNameFactory(domain="blocked.com")
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertEqual(Topic.objects.count(), 0)
-
-        self.assertFalse(check_email_last_seen(self.post_data["username"]))
-
-    def test_topic_create_as_authenticated_user(self, *args):
+    def test_topic_create_as_authenticated_user_forbidden(self, *args):
         self.client.force_login(self.poster)
 
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
-
-        self.assertEqual(response.status_code, 200)
-        self.assertTrue(Topic.objects.first().approved)
-        self.assertTrue(Topic.objects.first().posts.first().approved)
-
-        self.assertTrue(check_email_last_seen(self.poster.email))
-
-    def test_tags_checkbox_are_displayed(self, *args):
-        Tag.objects.bulk_create([Tag(name=f"tag_x{i}", slug=f"tag_x{i}") for i in range(2)])
-        self.client.force_login(self.poster)
-
-        response = self.client.get(self.url)
-
-        self.assertContains(response, Tag.objects.first().name, status_code=200)
-        self.assertContains(response, Tag.objects.last().name)
-
-    def test_checked_tags_are_saved(self, *args):
-        Tag.objects.bulk_create([Tag(name=f"tag_y{i}", slug=f"tag_y{i}") for i in range(3)])
-        self.client.force_login(self.poster)
-        post_data = {
-            "subject": faker.text(max_nb_chars=5),
-            "content": faker.paragraph(nb_sentences=5),
-            "tags": [Tag.objects.first().pk, Tag.objects.last().pk],
-        }
-
-        response = self.client.post(
-            self.url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertEqual(response.status_code, 200)
-        topic = Topic.objects.get()
-        self.assertEqual(2, topic.tags.count())
-        self.assertEqual(list(topic.tags.all()), [Tag.objects.first(), Tag.objects.last()])
+        response = self.client.post(self.url, self.post_data, follow=True)
+        assert response.status_code == 403
+        assert not Topic.objects.exists()
 
 
 class TestTopicCreateView:
-    def test_create_with_new_tags(self, db, client):
+    def test_create_with_new_tags_forbidden(self, db, client):
         forum = ForumFactory()
         client.force_login(UserFactory())
         tags_list = [faker.word() for i in range(2)]
@@ -278,12 +140,10 @@ class TestTopicCreateView:
             },
             follow=True,
         )
-        assert response.status_code == 200
+        assert response.status_code == 403
+        assert not Topic.objects.exists()
 
-        queryset = forum.topics.get().tags.filter(name__in=tags_list)
-        assert all(tag in queryset.values_list("name", flat=True) for tag in tags_list)
-
-    def test_create_without_tag(self, db, client):
+    def test_create_without_tag_forbidden(self, db, client):
         forum = ForumFactory()
         client.force_login(UserFactory())
         response = client.post(
@@ -294,8 +154,8 @@ class TestTopicCreateView:
             },
             follow=True,
         )
-        assert response.status_code == 200
-        assert forum.topics.get().tags.count() == 0
+        assert response.status_code == 403
+        assert not Topic.objects.exists()
 
 
 class TopicUpdateViewTest(TestCase):
@@ -315,57 +175,7 @@ class TopicUpdateViewTest(TestCase):
         )
         cls.initial_raw_content = cls.topic.first_post.content.raw
 
-    def test_delete_post_button_is_shown(self):
-        self.client.force_login(self.poster)
-        response = self.client.get(self.url)
-        self.assertContains(
-            response,
-            reverse(
-                "forum_conversation:post_delete",
-                kwargs={
-                    "forum_slug": self.forum.slug,
-                    "forum_pk": self.forum.pk,
-                    "topic_slug": self.topic.slug,
-                    "topic_pk": self.topic.pk,
-                    "pk": self.topic.posts.first().pk,
-                },
-            ),
-            status_code=200,
-        )
-
-    def test_topic_is_marked_as_read_when_updated(self):
-        # evaluating ForumReadTrack instead of TopicReadTrack
-        # because of django-machina logic
-        self.assertFalse(ForumReadTrack.objects.count())
-
-        self.client.force_login(self.poster)
-
-        post_data = {"subject": "s", "content": faker.paragraph(nb_sentences=5), "approved": True}
-        response = self.client.post(
-            self.url,
-            post_data,
-            follow=True,
-        )
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(1, ForumReadTrack.objects.count())
-
-    def test_selected_tags_are_checked(self):
-        self.client.force_login(self.poster)
-
-        tag = Tag.objects.create(name=faker.word())
-
-        linked_tag = Tag.objects.create(name=faker.word())
-        self.topic.tags.add(linked_tag)
-        self.topic.save()
-
-        response = self.client.get(self.url)
-
-        checked_box = f'class="form-check-input" type="checkbox" name="tags" value="{linked_tag.id}" checked="">'
-        self.assertContains(response, checked_box, status_code=200)
-        not_checked_box = f'class="form-check-input" type="checkbox" name="tags" value="{tag.id}" >'
-        self.assertContains(response, not_checked_box)
-
-    def test_update_by_anonymous_user(self):
+    def test_update_by_anonymous_user_forbidden(self):
         topic = AnonymousTopicFactory(with_post=True, forum=self.forum)
         EmailLastSeen.objects.all().delete()
         session = self.client.session
@@ -374,97 +184,17 @@ class TopicUpdateViewTest(TestCase):
         updated_subject = faker.pystr().lower()
 
         response = self.client.post(
-            reverse(
-                "forum_conversation:topic_update",
-                kwargs={
-                    "forum_slug": self.forum.slug,
-                    "forum_pk": self.forum.pk,
-                    "slug": topic.slug,
-                    "pk": topic.pk,
-                },
-            ),
+            self.url,
             {"subject": updated_subject, "content": faker.paragraph(nb_sentences=5), "username": "foo@email.com"},
         )
-        self.assertRedirects(
-            response,
-            reverse(
-                "forum_conversation:topic",
-                kwargs={
-                    "forum_slug": self.forum.slug,
-                    "forum_pk": self.forum.pk,
-                    "slug": topic.slug,
-                    "pk": topic.pk,
-                },
-            ),
-        )
+        self.assertRedirects(response, add_url_params(reverse("users:login"), {"next": self.url}))
 
-        self.assertFalse(check_email_last_seen("foo@email.com"))
-        self.assertFalse(check_email_last_seen(topic.first_post.username))
-
-    def test_topic_update_with_nonfr_content(self, *args):
+    def test_topic_update_with_html_content_forbidden(self, *args):
         self.client.force_login(self.poster)
-        post_data = {"subject": "s", "content": "популярные лучшие песни слушать онлайн"}
+        post_data = {"subject": "s", "content": "blop"}
 
-        response = self.client.post(
-            self.url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.topic.refresh_from_db()
-        self.assertEqual(self.initial_raw_content, self.topic.first_post.content.raw)
-
-    def test_topic_update_with_html_content(self, *args):
-        self.client.force_login(self.poster)
-        post_data = {"subject": "s", "content": "<p>la communaute</p>"}
-
-        response = self.client.post(
-            self.url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.topic.refresh_from_db()
-        self.assertEqual(self.initial_raw_content, self.topic.first_post.content.raw)
-
-    def test_topic_update_with_blocked_domain_name(self, *args):
-        topic = AnonymousTopicFactory(with_post=True, forum=self.forum)
-        initial_raw_content = topic.first_post.content.raw
-        session = self.client.session
-        session["_anonymous_forum_key"] = topic.first_post.anonymous_key
-        session.save()
-        BlockedDomainNameFactory(domain="blackhat.com")
-
-        response = self.client.post(
-            reverse(
-                "forum_conversation:topic_update",
-                kwargs={
-                    "forum_slug": self.forum.slug,
-                    "forum_pk": self.forum.pk,
-                    "slug": topic.slug,
-                    "pk": topic.pk,
-                },
-            ),
-            {"subject": "subject", "content": "La communauté", "username": "foo@blackhat.com"},
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        topic.refresh_from_db()
-        self.assertEqual(topic.first_post.content.raw, initial_raw_content)
+        response = self.client.post(self.url, post_data, follow=True)
+        assert response.status_code == 403
 
 
 class TestTopicUpdateView:
@@ -488,9 +218,8 @@ class TestTopicUpdateView:
             )
         )
 
-        assert response.status_code == (200 if user.is_staff or is_poster else 403)
-
-        if response.status_code == 200:
+        if user.is_staff:
+            assert response.status_code == 200
             content = parse_response_to_soup(
                 response,
                 selector="div.form-actions",
@@ -501,10 +230,12 @@ class TestTopicUpdateView:
                 ],
             )
             assert str(content) == snapshot(name="form-actions-buttons")
+        else:
+            assert response.status_code == 403
 
     @pytest.mark.parametrize("user_factory", [StaffUserFactory, UserFactory, lambda: None])
     @pytest.mark.parametrize("name", [None, "dummy", "unapprove"])
-    def test_topic_update(self, db, client, user_factory, name):
+    def test_topic_update_forbidden(self, db, client, user_factory, name):
         data = {"content": "content", name: True} if name else {"content": "content"}
         user = user_factory()
         if user:
@@ -512,22 +243,20 @@ class TestTopicUpdateView:
 
         topic = TopicFactory(with_post=True, poster=user) if user else AnonymousTopicFactory(with_post=True)
 
-        response = client.post(
-            reverse(
-                "forum_conversation:topic_update",
-                kwargs={
-                    "forum_slug": topic.forum.slug,
-                    "forum_pk": topic.forum.pk,
-                    "slug": topic.slug,
-                    "pk": topic.pk,
-                },
-            ),
-            data,
-            follow=True,
+        url = reverse(
+            "forum_conversation:topic_update",
+            kwargs={
+                "forum_slug": topic.forum.slug,
+                "forum_pk": topic.forum.pk,
+                "slug": topic.slug,
+                "pk": topic.pk,
+            },
         )
-        assert response.status_code == 200
-        topic.refresh_from_db()
-        assert topic.first_post.approved is not (user and user.is_staff and name == "unapprove")
+        response = client.post(url, data, follow=True)
+        if user is None:
+            assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
+        else:
+            assert response.status_code == 403
 
 
 class PostCreateViewTest(TestCase):
@@ -576,29 +305,19 @@ class PostUpdateViewTest(TestCase):
         cls.post_data = {"content": faker.paragraph(nb_sentences=5), "approved": True}
         cls.initial_raw_content = cls.post.content.raw
 
-    def test_delete_post_button_is_visible(self, *args):
+    def test_update_view_forbidden(self, *args):
         self.client.force_login(self.poster)
 
         response = self.client.get(self.url)
+        assert response.status_code == 403
 
-        self.assertContains(response, reverse("forum_conversation:post_delete", kwargs=self.kwargs), status_code=200)
-
-    def test_update_post_as_authenticated_user(self, *args):
+    def test_update_post_as_authenticated_user_forbidden(self, *args):
         self.client.force_login(self.poster)
 
-        response = self.client.post(
-            self.url,
-            self.post_data,
-            follow=True,
-        )
+        response = self.client.post(self.url, self.post_data, follow=True)
+        assert response.status_code == 403
 
-        self.assertEqual(response.status_code, 200)
-        self.post.refresh_from_db()
-        self.assertEqual(self.post.content.raw, self.post_data["content"])
-        self.assertIsNone(self.post.username)
-        self.assertTrue(self.post.approved)
-
-    def test_update_post_as_anonymous_user(self, *args):
+    def test_update_post_as_anonymous_user_forbidden(self, *args):
         post = AnonymousPostFactory(topic=self.topic)
         session = self.client.session
         session["_anonymous_forum_key"] = post.anonymous_key
@@ -616,114 +335,8 @@ class PostUpdateViewTest(TestCase):
 
         post_data = {"content": faker.paragraph(nb_sentences=5), "username": post.username, "approved": True}
 
-        response = self.client.post(
-            url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertEqual(response.status_code, 200)
-        post.refresh_from_db()
-        self.assertTrue(post.approved)
-
-        BlockedEmailFactory(email=post.username)
-
-        response = self.client.post(
-            url,
-            {"content": faker.paragraph(nb_sentences=5), "username": post.username},
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        post.refresh_from_db()
-        self.assertEqual(post.content.raw, post_data["content"])
-
-    def test_update_post_with_nonfr_content(self, *args):
-        self.client.force_login(self.poster)
-        post_data = {"content": "популярные лучшие песни слушать онлайн"}
-
-        response = self.client.post(
-            self.url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.post.refresh_from_db()
-        self.assertEqual(self.initial_raw_content, self.post.content.raw)
-
-    def test_update_post_with_html_content(self, *args):
-        self.client.force_login(self.poster)
-        post_data = {"content": "<p>la communaute</p>"}
-
-        response = self.client.post(
-            self.url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.post.refresh_from_db()
-        self.assertEqual(self.post.content.raw, self.initial_raw_content)
-
-    def test_update_post_with_blocked_domain_name(self, *args):
-        # add post.anonymous_key to session var to bypass the permissions check
-        post = AnonymousPostFactory(topic=self.topic, username="john@doe.com")
-        session = self.client.session
-        session["_anonymous_forum_key"] = post.anonymous_key
-        session.save()
-        url = reverse(
-            "forum_conversation:post_update",
-            kwargs={
-                "forum_slug": self.forum.slug,
-                "forum_pk": self.forum.pk,
-                "topic_slug": self.topic.slug,
-                "topic_pk": self.topic.pk,
-                "pk": post.pk,
-            },
-        )
-
-        post_data = {"content": post.content.raw, "username": "spam@blocked.com"}
-        BlockedDomainNameFactory(domain="blocked.com")
-
-        response = self.client.post(
-            url,
-            post_data,
-            follow=True,
-        )
-
-        self.assertContains(
-            response,
-            "Votre message ne respecte pas les règles de la communauté.",
-            status_code=200,
-        )
-        self.assertContains(
-            response,
-            '<form method="post" action="." class="form" enctype="multipart/form-data" novalidate>',
-            status_code=200,
-        )
-        self.assertContains(
-            response,
-            (
-                '<input type="email" name="username" value="spam@blocked.com" maxlength="254" '
-                'class="form-control" required id="id_username">'
-            ),
-            status_code=200,
-        )
-        post.refresh_from_db()
-        self.assertEqual(post.username, "john@doe.com")
+        response = self.client.post(url, post_data, follow=True)
+        self.assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
 
 
 class TestPostUpdateView:
@@ -749,9 +362,8 @@ class TestPostUpdateView:
             )
         )
 
-        assert response.status_code == (200 if user.is_staff or is_poster else 403)
-
-        if response.status_code == 200:
+        if user.is_staff:
+            assert response.status_code == 200
             content = parse_response_to_soup(
                 response,
                 selector="div.form-actions",
@@ -762,10 +374,12 @@ class TestPostUpdateView:
                 ],
             )
             assert str(content) == snapshot(name="form-actions-buttons")
+        else:
+            assert response.status_code == 403
 
     @pytest.mark.parametrize("user_factory", [StaffUserFactory, UserFactory, lambda: None])
     @pytest.mark.parametrize("name", [None, "dummy", "unapprove"])
-    def test_post_update(self, db, client, user_factory, name):
+    def test_post_update_forbidden(self, db, client, user_factory, name):
         topic = TopicFactory(with_post=True)
         data = {"content": "content", name: True} if name else {"content": "content"}
         user = user_factory()
@@ -774,23 +388,21 @@ class TestPostUpdateView:
 
         post = PostFactory(topic=topic, poster=user) if user else AnonymousPostFactory(topic=topic)
 
-        response = client.post(
-            reverse(
-                "forum_conversation:post_update",
-                kwargs={
-                    "forum_slug": topic.forum.slug,
-                    "forum_pk": topic.forum.pk,
-                    "topic_slug": topic.slug,
-                    "topic_pk": topic.pk,
-                    "pk": post.pk,
-                },
-            ),
-            data,
-            follow=True,
+        url = reverse(
+            "forum_conversation:post_update",
+            kwargs={
+                "forum_slug": topic.forum.slug,
+                "forum_pk": topic.forum.pk,
+                "topic_slug": topic.slug,
+                "topic_pk": topic.pk,
+                "pk": post.pk,
+            },
         )
-        assert response.status_code == 200
-        post.refresh_from_db()
-        assert post.approved is not (user and user.is_staff and name == "unapprove")
+        response = client.post(url, data, follow=True)
+        if user is None:
+            assertRedirects(response, add_url_params(reverse("users:login"), {"next": url}))
+        else:
+            assert response.status_code == 403
 
 
 class PostDeleteViewTest(TestCase):
@@ -871,11 +483,13 @@ class TopicViewTest(TestCase):
         response = self.client.get(self.url)
         self.assertContains(response, tag, status_code=200)
 
-    def test_edit_link_is_visible(self):
+    def test_edit_link_is_not_visible(self):
         self.client.force_login(self.poster)
 
         response = self.client.get(self.url)
-        self.assertContains(response, reverse("forum_conversation:topic_update", kwargs=self.kwargs), status_code=200)
+        self.assertNotContains(
+            response, reverse("forum_conversation:topic_update", kwargs=self.kwargs), status_code=200
+        )
 
     def test_delete_link_visibility(self):
         self.client.force_login(self.poster)
