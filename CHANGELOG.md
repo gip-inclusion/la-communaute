@@ -1,5 +1,12 @@
 # Journal des modifications
 
+## [2.25.0](https://github.com/gip-inclusion/la-communaute/compare/v2.24.0...v2.25.0) (2026-03-24)
+
+
+### Features
+
+* Block posts creation and update ([5a53d96](https://github.com/gip-inclusion/la-communaute/commit/5a53d96f18a3c33d12e248594eeddc041813d4d3))
+
 ## [2.24.0](https://github.com/gip-inclusion/la-communaute/compare/v2.23.0...v2.24.0) (2025-11-18)
 
 
