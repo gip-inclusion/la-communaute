@@ -413,15 +413,15 @@ wheels = [
 
 [[package]]
 name = "django-permissions-policy"
-version = "4.29.0"
+version = "4.30.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/ad/58/cd7f4cba102ef076a709bb8e86c56b5f419c42687623e8da6fb8fd357fb1/django_permissions_policy-4.29.0.tar.gz", hash = "sha256:9046457a4c3f74e077df00f2d90007ffb14f812e8402b04b020ee0ff9cc1f6c3", size = 11373, upload-time = "2026-03-27T22:05:29.918Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/12/e5/346b6abdcc2fc0a66677a210acbfa8b9fda0a596d2d477333c30f8ca2bb6/django_permissions_policy-4.30.0.tar.gz", hash = "sha256:fa43b89fbe6b09b61b1e0bd833a114dfc453dce1751ed8a63fcb3918ff1d3a30", size = 11371, upload-time = "2026-05-13T10:23:46.368Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f5/86/66a7c20fd68b2029dc7b1fd189162a97c8080accbc5c3c6b27093651713d/django_permissions_policy-4.29.0-py3-none-any.whl", hash = "sha256:42adb0a2dea9a2e9bec3aa2b644fbdaebbfd29cec02ffc279560fdd231db94cf", size = 7198, upload-time = "2026-03-27T22:05:28.836Z" },
+    { url = "https://files.pythonhosted.org/packages/79/c0/3ea575f625bf13b521214496ff0e4153cf226f3eba8d08a75a460f0be15e/django_permissions_policy-4.30.0-py3-none-any.whl", hash = "sha256:c391423db4ab8ba513b7f963718d651cce3733617765e53441d71d6e43a9bc82", size = 7171, upload-time = "2026-05-13T10:23:45.081Z" },
 ]
 
 [[package]]
