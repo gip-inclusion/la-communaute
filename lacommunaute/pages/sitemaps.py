@@ -5,7 +5,7 @@ from django.urls import reverse
 
 from lacommunaute.forum.models import Forum
 from lacommunaute.forum_conversation.models import Topic
-from lacommunaute.partner.models import Partner
+from lacommunaute.partner.helpers import PARTNERS
 
 
 class PagesSitemap(Sitemap):
@@ -40,10 +40,7 @@ class TopicSitemap(Sitemap):
 
 class PartnerSitemap(Sitemap):
     def items(self):
-        return Partner.objects.all()
+        return list(PARTNERS.values())
 
     def location(self, obj: Model) -> str:
-        return reverse("partner:detail", kwargs={"slug": obj.slug, "pk": obj.pk})
-
-    def lastmod(self, obj: Model) -> str:
-        return obj.updated
+        return reverse("partner:detail", kwargs={"slug": obj["slug"]})

@@ -18,5 +18,4 @@ echo "install requirements"
 pip install factory-boy
 
 echo "Loading data"
-python manage.py loaddata fixtures/forum_permissions_fixtures.json
-scripts/populate.py
+python manage.py rebuild_index

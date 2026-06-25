@@ -25,11 +25,6 @@ def test_logo_url(db):
     assert "AWSAccessKeyId=" in partner.logo.url
 
 
-def test_get_absolute_url(db):
-    partner = PartnerFactory()
-    assert partner.get_absolute_url() == f"/partenaires/{partner.slug}-{partner.pk}/"
-
-
 def test_ordering(db):
     partners = PartnerFactory.create_batch(2)
     assert list(Partner.objects.all()) == partners[::-1]

@@ -5,6 +5,7 @@ from django.contrib.flatpages import views
 from django.urls import include, path, re_path
 from machina.core.loading import get_class
 
+from lacommunaute.documentation import urls as documentation_urls
 from lacommunaute.event import urls as event_urls
 from lacommunaute.forum import urls as forum_extension_urls
 from lacommunaute.forum_conversation import urls as forum_conversation_extension_urls
@@ -37,6 +38,7 @@ urlpatterns = [
     path("", include(forum_extension_urls)),
     path("", include(forum_polls_extension_urls)),
     path("", include(forum_upvote_urls)),
+    path("documentation/", include(documentation_urls)),
     path("search/", include(search_urls)),
     path("", include(forum_moderation_urls)),
     path("calendar/", include(event_urls)),

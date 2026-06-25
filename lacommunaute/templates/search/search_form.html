@@ -1,20 +1,11 @@
-{% load i18n %}
 <form method="get" action="." class="form" name="search_form">
     <div class="form-row align-items-end">
         <div class="col">{% include "partials/form_field.html" with field=form.q %}</div>
         <div class="col-auto mb-3">
             <button type="submit" class="btn btn-primary btn-ico matomo-event" data-matomo-category="engagement" data-matomo-action="search" data-matomo-option="submit_query">
                 <i class="ri-search-line"></i>
-                <span>{% trans "Search" %}</span>
+                <span>Rechercher</span>
             </button>
-        </div>
-    </div>
-    <div class="form-row align-items-end">
-        <div class="col-auto">{{ form.m.label }}</div>
-        <div class="col">
-            <ul class="list-inline mb-0">
-                {% for m in form.m %}<li class="list-inline-item me-3">{{ m }}{{ m.label }}</li>{% endfor %}
-            </ul>
         </div>
     </div>
 </form>

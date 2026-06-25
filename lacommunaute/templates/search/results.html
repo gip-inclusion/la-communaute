@@ -1,0 +1,128 @@
+{% extends "layouts/base.html" %}
+{% load date_filters %}
+{% load str_filters %}
+{% load url_query_tags %}
+{% block title %}Rechercher{{ block.super }}{% endblock %}
+{% block content %}
+    <section class="s-title-01 mt-lg-5">
+        <div class="s-title-01__container container">
+            <div class="s-title-01__row row">
+                <div class="s-title-01__col col-12">
+                    <h1>Chercher dans la communauté</h1>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="s-section">
+        <div class="s-section__container container">
+            <div class="row">
+                <div class="col-12">
+                    <div class="c-box">{% include "search/search_form.html" %}</div>
+                </div>
+            </div>
+            {% if form.q.value %}
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="c-box">
+                            {% if page_obj.paginator.count %}
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="h4 mb-0">{{ page_obj.paginator.count }} résultat{{ page_obj.paginator.count|pluralizefr }}</h3>
+                                    </div>
+                                </div>
+                                <div class="table-responsive-lg">
+                                    <table class="table table-hover mt-3 mt-md-4">
+                                        <caption class="visually-hidden">Liste de résultats</caption>
+                                        <tbody>
+                                            {% for result in page_obj.object_list %}
+                                                {% if result.category_slug %}
+                                                    <tr>
+                                                        <td class="position-relative">
+                                                            <a href="{% url 'documentation:category' result.category_slug %}"
+                                                               class="btn-link stretched-link btn-ico matomo-event"
+                                                               data-matomo-category="engagement"
+                                                               data-matomo-action="view"
+                                                               data-matomo-option="topic">
+                                                                <i class="ri-user-line ri-lg" aria-hidden="true"></i>
+                                                                <span>{{ result.title }}</span>
+                                                            </a>
+                                                            <div>{{ result.headline|safe }}</div>
+                                                        </td>
+                                                    </tr>
+                                                {% else %}
+                                                    <tr>
+                                                        <td class="position-relative">
+                                                            <a href="{% url 'documentation:card' result.card_slug %}" class="btn-link btn-ico stretched-link matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="forum">
+                                                                <i class="ri-article-line" aria-hidden="true"></i>
+                                                                <span>{{ result.title }}</span>
+                                                            </a>
+                                                            <br>
+                                                            {% if result.timestamp %}
+                                                                <small class="text-muted">
+                                                                    {% spaceless %}
+                                                                        Fiche mise à jour
+                                                                    {% endspaceless %}
+                                                                    {{ result.timestamp|relativetimesince_fr }}
+                                                                </small>
+                                                            {% endif %}
+                                                            <div>{{ result.headline|safe }}</div>
+                                                        </td>
+                                                    </tr>
+                                                {% endif %}
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            {% else %}
+                                <div class="row align-items-center">
+                                    <div class="col">
+                                        <h3 class="h4 mb-0">Aucun résultat.</h3>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% if page_obj.has_previous or page_obj.has_next %}
+                                {% with pagination_size="pagination-sm justify-content-center mt-5" %}
+                                    {% include "partials/pagination.html" %}
+                                {% endwith %}
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-12">
+                        <div class="c-box">
+                            <div class="row align-items-center mb-3">
+                                <div class="col">Je recherche un emploi inclusif ?</div>
+                                <div class="col-12 col-md-auto mt-3 mt-md-0 d-flex align-items-center justify-content-center">
+                                    <a href="{% autologin_proconnect EMPLOIS_COMPANY_SEARCH user %}"
+                                       rel="nofollow"
+                                       class="btn btn-outline-primary btn-ico btn-block matomo-event"
+                                       data-matomo-category="engagement"
+                                       data-matomo-action="emplois"
+                                       data-matomo-option="search-prescriber">
+                                        <i class="ri-chat-new-line ri-lg"></i>
+                                        <span>Trouver une offre d'emploi</span>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row align-items-center">
+                                <div class="col">Je recherche un prescripteur habilité ?</div>
+                                <div class="col-12 col-md-auto mt-3 mt-md-0 d-flex align-items-center justify-content-center">
+                                    <a href="{% autologin_proconnect EMPLOIS_PRESCRIBER_SEARCH user %}"
+                                       rel="nofollow"
+                                       class="btn btn-outline-primary btn-ico btn-block matomo-event"
+                                       data-matomo-category="engagement"
+                                       data-matomo-action="emplois"
+                                       data-matomo-option="search-company">
+                                        <i class="ri-chat-new-line ri-lg"></i>
+                                        <span>Trouver un prescripteur habilité</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+{% endblock content %}

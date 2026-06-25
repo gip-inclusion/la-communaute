@@ -3,13 +3,12 @@ from django.db.models import F
 from django.views.generic import ListView
 from django.views.generic.edit import FormMixin
 
-from lacommunaute.forum.models import Forum
-from lacommunaute.search.enums import CommonIndexKind
 from lacommunaute.search.forms import SearchForm
 from lacommunaute.search.models import CommonIndex
 
 
 class SearchView(FormMixin, ListView):
+    template_name = "search/results.html"
     model = CommonIndex
     form_class = SearchForm
     paginate_by = 10
@@ -17,7 +16,6 @@ class SearchView(FormMixin, ListView):
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         data = self.request.GET.copy()
-        data.setdefault("m", "all")
         kwargs["data"] = data
         return kwargs
 
@@ -31,9 +29,6 @@ class SearchView(FormMixin, ListView):
             config="french",
             search_type="websearch",
         )
-        search_kind = form.cleaned_data["m"]
-        if search_kind in CommonIndexKind.values:
-            queryset = queryset.filter(kind=search_kind)
         return (
             queryset.annotate(rank=SearchRank(F("content_ts"), search_query, cover_density=True))
             # Arbitrary threshold. From running a couple searches, good results
@@ -54,8 +49,3 @@ class SearchView(FormMixin, ListView):
             )
             .order_by("-rank")
         )
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        context["forum"] = Forum.objects.get_main_forum()
-        return context

@@ -1,0 +1,15 @@
+<div class="container">
+    <nav class="c-breadcrumb" aria-label="Fil d'ariane">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">Retourner vers</li>
+            <li class="breadcrumb-item">
+                <a href="{% url 'documentation:index' %}" class="matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="documentation_breadcrumb">Documentation</a>
+            </li>
+            {% if category|default:None %}
+                <li class="breadcrumb-item">
+                    <a href="{% url 'documentation:category' category.slug %}" class="matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="forum">{{ category.name }}</a>
+                </li>
+            {% endif %}
+        </ol>
+    </nav>
+</div>

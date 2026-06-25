@@ -1,0 +1,9 @@
+{% load static %}
+<a href="{% url 'partner:detail' partner.slug %}">
+    <div class="d-flex gap-3 align-items-center mb-2">
+        {% if partner.image %}
+            <img src="{% static partner.image %}" alt="{{ partner.name }}" class="img-fluid" width="100" loading="lazy" />
+        {% endif %}
+        <h4>Fiche co-rédigée en partenariat avec {{ partner.name }}</h4>
+    </div>
+</a>

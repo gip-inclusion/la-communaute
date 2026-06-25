@@ -1,0 +1,520 @@
+# serializer version: 1
+# name: test_category[no_filter]
+  '''
+  <main class="s-main" id="main" role="main">
+              
+      <div class="container">
+      <nav aria-label="Fil d'ariane" class="c-breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item">Retourner vers</li>
+              <li class="breadcrumb-item">
+                  <a class="matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="documentation_breadcrumb" href="/documentation/">Documentation</a>
+              </li>
+              
+          </ol>
+      </nav>
+  </div>
+  
+  
+              
+                  
+      <section class="s-title-01 mt-lg-5">
+          <div class="s-title-01__container container">
+              <div class="s-title-01__row row">
+                  <div class="s-title-01__col col-12">
+                      <h1>Evaluer et développer les compétences !</h1>
+                      <h2 class="mt-3">Découvrez des fiches pratiques pour identifier, analyser et valoriser les compétences de vos publics. Accédez à des fiches pratiques conçues pour renforcer vos méthodes d’accompagnement et approfondir vos connaissances. Ces ressources vous aideront à mieux évaluer les compétences, à les faire reconnaître et à améliorer votre pratique professionnelle.</h2>
+                  </div>
+              </div>
+          </div>
+      </section>
+      
+      
+          <section class="s-section">
+              <div class="s-section__container container">
+                  <div class="s-section__row row">
+                      <div class="s-section__col col-12">
+                          
+  <div class="container-fluid" id="subforums_area">
+      
+          <div class="c-box">
+              <div class="text-center mb-3">Afficher les fiches contenant l'étiquette</div>
+              <div class="text-center tag-group">
+                  
+      
+          
+              <button aria-label="Filtrer par Formations" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formations" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formations">Formations</button>
+          
+      
+  
+      
+          
+              <button aria-label="Filtrer par Accompagnement à l'insertion" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=accompagnement-à-linsertion" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-accompagnement-à-linsertion">Accompagnement à l'insertion</button>
+          
+      
+  
+      
+          
+              <button aria-label="Filtrer par Formation" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formation" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formation">Formation</button>
+          
+      
+  
+  
+              </div>
+          </div>
+      
+      <div class="row mt-4" id="documentation-category-subforums">
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_134.png"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">La Validation des Acquis de l'Expérience</p>
+                          <div>
+  </div>
+                          <div class="mt-3">La Validation des Acquis de l'Expérience (VAE) est un processus volontaire pour la reconnaissance officielle de compétences professionnelles, accessible à toute personne avec trois ans d'expérience, indépendamment de son statut, et sans obligation ni risque de licenciement en cas de refus.</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/la-validation-des-acquis-de-lexp%C3%A9rience">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_247.png"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">POE : une formation avant l’embauche pour sécuriser le retour à l’emploi</p>
+                          <div>
+      
+          <span class="tag bg-info-lighter text-info">Formations</span>
+      
+  
+      
+          <span class="tag bg-info-lighter text-info">Accompagnement à l'insertion</span>
+      
+  
+      
+          <span class="tag bg-info-lighter text-info">Formation</span>
+      
+  
+  </div>
+                          <div class="mt-3">La Préparation Opérationnelle à l’Emploi (POE, POEI, POEC) de France Travail est une formation financée pour les demandeurs d’emploi afin d’acquérir les compétences exigées par les employeurs avant l’embauche. Un dispositif clé pour l’insertion professionnelle, la reconversion et le recrutement réussi dans les métiers en tension.</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/poe-une-formation-avant-lembauche-pour-s%C3%A9curiser-le-retour-%C3%A0-lemploi">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_132.png"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">Les certificats cléA</p>
+                          <div>
+  </div>
+                          <div class="mt-3">Le CLéA est la première certification interprofessionnelle à destination des salariés et demandeurs d’emploi peu qualifiés ou non diplômés</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/les-certificats-cl%C3%A9a">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+      </div>
+  </div>
+  
+                      </div>
+                  </div>
+              </div>
+          </section>
+      
+  
+              
+          </main>
+  '''
+# ---
+# name: test_category[with_filter]
+  '''
+  <main class="s-main" id="main" role="main">
+              
+      <div class="container">
+      <nav aria-label="Fil d'ariane" class="c-breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item">Retourner vers</li>
+              <li class="breadcrumb-item">
+                  <a class="matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="documentation_breadcrumb" href="/documentation/">Documentation</a>
+              </li>
+              
+          </ol>
+      </nav>
+  </div>
+  
+  
+              
+                  
+      <section class="s-title-01 mt-lg-5">
+          <div class="s-title-01__container container">
+              <div class="s-title-01__row row">
+                  <div class="s-title-01__col col-12">
+                      <h1>Evaluer et développer les compétences !</h1>
+                      <h2 class="mt-3">Découvrez des fiches pratiques pour identifier, analyser et valoriser les compétences de vos publics. Accédez à des fiches pratiques conçues pour renforcer vos méthodes d’accompagnement et approfondir vos connaissances. Ces ressources vous aideront à mieux évaluer les compétences, à les faire reconnaître et à améliorer votre pratique professionnelle.</h2>
+                  </div>
+              </div>
+          </div>
+      </section>
+      
+      
+          <section class="s-section">
+              <div class="s-section__container container">
+                  <div class="s-section__row row">
+                      <div class="s-section__col col-12">
+                          
+  <div class="container-fluid" id="subforums_area">
+      
+          <div class="c-box">
+              <div class="text-center mb-3">Afficher les fiches contenant l'étiquette</div>
+              <div class="text-center tag-group">
+                  
+      
+          
+              <button aria-label="Supprimer ce filtre" class="tag bg-info text-white matomo-event" data-bs-placement="top" data-bs-title="Supprimer ce filtre" data-bs-toggle="tooltip" data-matomo-action="unfilter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formations">
+                  <i class="ri-close-fill ri-xs"></i>Formations
+              </button>
+          
+      
+  
+      
+          
+              <button aria-label="Filtrer par Accompagnement à l'insertion" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=accompagnement-à-linsertion" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-accompagnement-à-linsertion">Accompagnement à l'insertion</button>
+          
+      
+  
+      
+          
+              <button aria-label="Filtrer par Formation" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formation" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formation">Formation</button>
+          
+      
+  
+  
+              </div>
+          </div>
+      
+      <div class="row mt-4" id="documentation-category-subforums">
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_247.png"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">POE : une formation avant l’embauche pour sécuriser le retour à l’emploi</p>
+                          <div>
+      
+          <span class="tag bg-info-lighter text-info">Formations</span>
+      
+  
+      
+          <span class="tag bg-info-lighter text-info">Accompagnement à l'insertion</span>
+      
+  
+      
+          <span class="tag bg-info-lighter text-info">Formation</span>
+      
+  
+  </div>
+                          <div class="mt-3">La Préparation Opérationnelle à l’Emploi (POE, POEI, POEC) de France Travail est une formation financée pour les demandeurs d’emploi afin d’acquérir les compétences exigées par les employeurs avant l’embauche. Un dispositif clé pour l’insertion professionnelle, la reconversion et le recrutement réussi dans les métiers en tension.</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/poe-une-formation-avant-lembauche-pour-s%C3%A9curiser-le-retour-%C3%A0-lemploi">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+      </div>
+  </div>
+  
+                      </div>
+                  </div>
+              </div>
+          </section>
+      
+  
+              
+          </main>
+  '''
+# ---
+# name: test_index
+  '''
+  <main class="s-main" id="main" role="main">
+              
+              
+                  
+      <section class="s-title-01 mt-lg-5">
+          <div class="s-title-01__container container">
+              <div class="s-title-01__row row">
+                  <div class="s-title-01__col col-12">
+                      <h1>Documentation</h1>
+                      <h2 class="mt-3">
+                          Retrouver les ressources nécessaires pour améliorer ses diagnostics socio-professionnels et ses accompagnements des personnes éloignées de l’emploi
+                      </h2>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="s-section">
+          <div class="s-section__container container">
+              <div class="s-section__row row">
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_108.jpg"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Les bases de l'IAE
+                                  </p>
+                                  <div>Structures, acteurs dispositifs : reprenez les bases de l'IAE pour tout comprendre</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/les-bases-de-liae">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_119.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Mon parcours CIP: des ressources pour réussir son avenir dans l'accompagnement professionnel !
+                                  </p>
+                                  <div>Découvrez les essentiels du CIP : Des ressources pour les futurs professionnels en insertion ou pour tout simplement mettre à jour vos pratiques professionnelle. Tout ce qu'il vous faut pour réussir votre certification au TP conseiller en insertion professionnelle et réussir sa prise en main du métier d'accompagnateur vers l'insertion.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/mon-parcours-cip-des-ressources-pour-r%C3%A9ussir-son-avenir-dans-laccompagnement-professionnel">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_129.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Tout savoir sur les aides et contrats vers l'emploi
+                                  </p>
+                                  <div>Connaitre les mesures, les mobiliser pour les personnes plus eloignées de l'emploi</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/tout-savoir-sur-les-aides-et-contrats-vers-lemploi">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_131.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Lever les freins périphériques bloquant le retour à l’emploi
+                                  </p>
+                                  <div>Des dispositifs pour lever les freins périphériques à l'emploi (mobilité, santé, logement, garde d'enfants...), liés aux obstacles socio-professionnels</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/lever-les-freins-p%C3%A9riph%C3%A9riques-bloquant-le-retour-%C3%A0-lemploi">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_133.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Evaluer et développer les compétences !
+                                  </p>
+                                  <div>Découvrez des fiches pratiques pour identifier, analyser et valoriser les compétences de vos publics. Accédez à des fiches pratiques conçues pour renforcer vos méthodes d’accompagnement et approfondir vos connaissances. Ces ressources vous aideront à mieux évaluer les compétences, à les faire reconnaître et à améliorer votre pratique professionnelle.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_149.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> La Boîte à outils des CIP
+                                  </p>
+                                  <div>Un espace dédié rassemblant des outils, des guides pour accompagner les acteurs de l'inclusion dans leur soutien aux personnes éloignées du marché du travail, confrontées à des obstacles multiples et complexes.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/la-bo%C3%AEte-%C3%A0-outils-des-cip">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_220.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Le coin du règlementaire
+                                  </p>
+                                  <div>Réglementaire : votre repère clair et à jour pour comprendre droits, devoirs et démarches liées à l’emploi. Des informations sur les aides et prestations disponibles sous Régime Général ou Agricole.
+  Réformes, allocations, aides... Explications fiables, conseils pratiques et ressources clés pour les professionnels de l’insertion et les personnes accompagnées.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/le-coin-du-r%C3%A8glementaire">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_142.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> L'inclusion aujourd'hui, les défis de demain
+                                  </p>
+                                  <div>Les replay de l'évènement du 1er février 2024 rassemblant l’ensemble des professionnels de l’inclusion. Ce évènement est organisé par la Communauté de l’inclusion, un service numérique qui permet à plus de 11000 professionnels de l’inclusion de partager leurs difficultés et identifier des moyens d’entraide.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/linclusion-aujourdhui-les-d%C3%A9fis-de-demain">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_227.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> Handicap et emploi : ressources pour l'insertion professionnelle
+                                  </p>
+                                  <div>Découvrez dans cette rubrique dédiée au handicap, où vous trouverez des fiches pratiques, des études de cas et des informations à jour sur la législation, les aides et les accompagnements disponibles.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/handicap-et-emploi-ressources-pour-linsertion-professionnelle">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_243.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> On a besoin de vous, de votre avis.
+                                  </p>
+                                  <div>Un espace pour faire entendre votre voix : idées, besoins, retours d’expérience… Ici, on vous consulte via des sondages et questionnaires mis à jour régulièrement — et bien sûr, on vous partage les résultats. Parce que c’est sur le terrain que se vivent les réalités… et que vos retours sont indispensables pour faire évoluer nos pratiques.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/on-a-besoin-de-vous-de-votre-avis">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+                      <div class="col-12 col-md-4 mb-3 mb-md-5">
+                          <div class="card c-card has-links-inside h-100">
+                              <div class="card-header">
+                                  <img alt="" class="img-fluid img-fitcover" src="/static/images/documentation/fiche_pratique_256.png"/>
+                              </div>
+                              <div class="card-body pb-0">
+                                  <p class="h3 lh-base">
+                                      <i class="ri-newspaper-line fw-normal"></i> La boîte à outils des professionnels de l’insertion : la Plateforme de l’inclusion
+                                  </p>
+                                  <div>Tous les outils de la Plateforme de l’Inclusion au même endroit : objectifs, publics, cas d’usage, pas à pas. Une rubrique pensée pour les pros de l’insertion qui veulent aller vite, mieux coordonner, et sécuriser les démarches des personnes accompagnées.</div>
+                              </div>
+                              <div class="card-footer text-end">
+                                  <a class="btn btn-ico btn-link stretched-link matomo-event" data-matomo-action="show" data-matomo-category="engagement" data-matomo-option="fichestechniques" href="/documentation/la-bo%C3%AEte-%C3%A0-outils-des-professionnels-de-linsertion-la-plateforme-de-linclusion">
+                                      <span>Consulter les fiches du thème</span>
+                                      <i class="ri-arrow-right-up-line ri-lg"></i>
+                                  </a>
+                              </div>
+                          </div>
+                      </div>
+                  
+              </div>
+          </div>
+      </section>
+  
+              
+          </main>
+  '''
+# ---
