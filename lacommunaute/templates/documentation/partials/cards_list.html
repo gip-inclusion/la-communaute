@@ -1,0 +1,38 @@
+{% load static %}
+<div id="subforums_area" class="container-fluid">
+    {% if tags %}
+        <div class="c-box">
+            <div class="text-center mb-3">Afficher les fiches contenant l'étiquette</div>
+            <div class="text-center tag-group">
+                {% include "documentation/partials/tags.html" with tags=tags active_tag_slug=active_tag_slug category=category only %}
+            </div>
+        </div>
+    {% endif %}
+    <div class="row mt-4" id="documentation-category-subforums">
+        {% for card in cards %}
+            <div class="col-12 col-md-4 mb-3 mb-md-5">
+                <div class="card c-card has-one-link-inside h-100">
+                    {% if card.image %}
+                        <div class="card-header card-header-thumbnail rounded">
+                            <img src="{% static card.image %}" class="img-fluid img-fitcover" alt="">
+                        </div>
+                    {% endif %}
+                    <div class="card-body pb-0">
+                        <p class="h3 lh-base">{{ card.name }}</p>
+                        <div>{% include "documentation/partials/tags.html" with tags=card.tags only %}</div>
+                        <div class="mt-3">{{ card.description }}</div>
+                    </div>
+                    <div class="card-footer text-end">
+                        <a href="{% url 'documentation:card' card.slug %}"
+                           class="btn btn-sm btn-ico btn-link stretched-link matomo-event"
+                           data-matomo-category="engagement"
+                           data-matomo-action="view"
+                           data-matomo-option="fiches_techniques">
+                            <i class="ri-arrow-right-line ri-lg"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+</div>

@@ -1,4 +1,6 @@
 import importlib
+import re
+from itertools import chain
 
 from bs4 import BeautifulSoup
 from django.db import connection
@@ -19,6 +21,10 @@ class reload_module(TestContextDecorator):
             setattr(self._module, key, value)
 
 
+def remove_static_hash(content):
+    return re.sub(r"\.[\da-f]{12}\.(svg|png|jpg|pdf)\b", r".\1", content)
+
+
 def parse_response_to_soup(response, selector=None, no_html_body=False, replace_in_href=None, replace_img_src=False):
     soup = BeautifulSoup(response.content, "html5lib", from_encoding=response.charset or "utf-8")
     if no_html_body:
@@ -34,6 +40,10 @@ def parse_response_to_soup(response, selector=None, no_html_body=False, replace_
         soup["nonce"] = "NORMALIZED_CSP_NONCE"
     for csp_nonce_script in soup.find_all("script", {"nonce": True}):
         csp_nonce_script["nonce"] = "NORMALIZED_CSP_NONCE"
+    for img in chain(
+        soup.find_all("img", attrs={"src": True}), soup.find_all("input", attrs={"type": "image", "src": True})
+    ):
+        img["src"] = remove_static_hash(img["src"])
     if replace_in_href:
         replacements = [
             (

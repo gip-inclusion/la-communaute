@@ -4,7 +4,6 @@ from django.urls import reverse
 
 from tests.forum.factories import ForumFactory
 from tests.forum_conversation.factories import TopicFactory
-from tests.partner.factories import PartnerFactory
 
 
 def test_sitemap(client, db):
@@ -20,7 +19,6 @@ def test_sitemap(client, db):
     [
         (TopicFactory, {"with_post": True}, "last_post_on"),
         (ForumFactory, {}, "updated"),
-        (PartnerFactory, {}, "updated"),
     ],
 )
 def test_objects_are_in_sitemap(client, db, factory, factory_kwargs, lastmod_field):

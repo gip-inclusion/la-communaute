@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import models
-from django.urls import reverse
 from django.utils.encoding import force_str
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -39,6 +38,3 @@ class Partner(DatedModel):
     def save(self, *args, **kwargs):
         self.slug = slugify(force_str(self.name), allow_unicode=True)
         super().save(*args, **kwargs)
-
-    def get_absolute_url(self):
-        return reverse("partner:detail", kwargs={"slug": self.slug, "pk": self.pk})

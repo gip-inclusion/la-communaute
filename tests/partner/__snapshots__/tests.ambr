@@ -1,0 +1,449 @@
+# serializer version: 1
+# name: test_listview
+  '''
+  <section class="s-section" id="partner-list">
+          <div class="s-section__container container">
+              <div class="s-section__row row">
+                  <div class="s-section__col col-12">
+                      <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4">
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="1 Jeune 1 Solution" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">1 Jeune 1 Solution</p>
+                                          <div class="card-text">accompagner, former, et faciliter l’entrée dans la vie professionnelle de tous les jeunes de 15 à 30 ans, sur tous les territoires</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/1-jeune-1-solution">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="Academie France Travail" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">Academie France Travail</p>
+                                          <div class="card-text">L'Academie France Travail offre un espace de développement de compétences pour les acteurs du Réseau Pour l'Emploi (RPE)</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/academie-france-travail">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="Diagoriente" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">Diagoriente</p>
+                                          <div class="card-text">Au service des parcours et des transitions professionnelles, Diagorient développe des outils d'analyse, de valorisation et de cartographie des compétences afin d'accompagner toute personne ainsi que l'administration et les organisations.</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/diagoriente">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="Info droit handicap" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">Info droit handicap</p>
+                                          <div class="card-text">Info Droit Handicap est un groupe Facebook qui, depuis 2015, simplifie l’accès aux droits pour les personnes en situation de handicap et leurs aidants, en offrant soutien, informations juridiques et outils innovants.</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/info-droit-handicap">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="La MEDNUM" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">La MEDNUM</p>
+                                          <div class="card-text">La Mednum est une coopérative d’acteurs engagés pour un numérique inclusif, au service des territoires et des personnes en difficulté face au numérique 🌍💻</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/la-mednum">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="La Pause Brindille" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">La Pause Brindille</p>
+                                          <div class="card-text">soutient les jeunes aidants, des jeunes de 7 à 25 ans, confrontés à la maladie, au handicap ou à l’addiction d’un proche</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/la-pause-brindille">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="Les CIDFF / Centres d'Information sur les Droits des Femmes et des Familles" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">Les CIDFF / Centres d'Information sur les Droits des Femmes et des Familles</p>
+                                          <div class="card-text">Les CIDFF accompagnent les femmes dans l’accès à leurs droits et leur insertion, avec pour mission de promouvoir l’égalité et de lutter contre les violences sexistes et sexuelles.</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/les-cidff-centres-dinformation-sur-les-droits-des-femmes-et-des-familles">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="Mon Aide Cyber" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">Mon Aide Cyber</p>
+                                          <div class="card-text">Vous souhaitez vous protéger contre les cyberattaques mais ne savez pas comment vous y prendre ? Prenez votre cyberdépart !</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/mon-aide-cyber">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="SEVE Emploi" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">SEVE Emploi</p>
+                                          <div class="card-text">Un programme ambitieux de lutte contre le chômage de longue durée et d’accès à un emploi durable</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/seve-emploi">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="le Réseau des Carif-Oref" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">le Réseau des Carif-Oref</p>
+                                          <div class="card-text">Les missions des Carif-Oref (centres d’animation, de ressources et d’information sur la formation / observatoires régionaux emploi-formation) s’articulent autour de trois grands axes : Observation, Information et animation, Professionnalisation</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/le-r%C3%A9seau-des-carif-oref">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="le reseau des cap emploi" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">le reseau des cap emploi</p>
+                                          <div class="card-text">Le réseau Cap emploi, créé en 2000, a pour mission d'améliorer l'accès et le retour à l'emploi des personnes en situation de handicap.</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/le-reseau-des-cap-emploi">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                              <div class="col mb-3 mb-md-5">
+                                  <div class="card c-card has-one-link-inside h-100">
+                                      
+                                          <div class="card-header card-header--partners mb-3">
+                                              <img alt="🎯Mes Ressources Formation : booster l'accompagnemenet de vos publics" class="img-fluid" loading="lazy" src="[img src]"/>
+                                          </div>
+                                      
+                                      <div class="card-body pb-0">
+                                          <p class="h3 lh-base">🎯Mes Ressources Formation : booster l'accompagnemenet de vos publics</p>
+                                          <div class="card-text">Un simulateur innonvant pour aider vos publics a se projeter dans un projet de formation</div>
+                                      </div>
+                                      <div class="card-footer text-end">
+                                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner" href="/partenaires/mes-ressources-formation-booster-laccompagnemenet-de-vos-publics">
+                                              <i aria-hidden="true" class="ri-arrow-right-line ri-lg"></i>
+                                          </a>
+                                      </div>
+                                  </div>
+                              </div>
+                          
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </section>
+  '''
+# ---
+# name: test_partner_detailview
+  '''
+  <main class="s-main" id="main" role="main">
+              
+                  
+              
+              
+      <div class="container">
+      <nav aria-label="Fil d'ariane" class="c-breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item">Retourner vers</li>
+              <li class="breadcrumb-item">
+                  <a class="matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner-list" href="/partenaires/">Partenaires</a>
+              </li>
+          </ol>
+      </nav>
+  </div>
+  
+  
+              
+                  
+      <section class="s-title-01 mt-lg-5">
+          <div class="s-title-01__container container">
+              <div class="s-title-01__row row">
+                  <div class="s-title-01__col col-12">
+                      <div class="d-flex gap-3 align-items-center mb-2">
+                          
+                              <img alt="Les CIDFF / Centres d'Information sur les Droits des Femmes et des Familles" class="img-fluid" src="[img src]" width="200"/>
+                          
+                          <h1 class="mb-0">Les CIDFF / Centres d'Information sur les Droits des Femmes et des Familles</h1>
+                      </div>
+                      <h2 class="mt-3">Les CIDFF accompagnent les femmes dans l’accès à leurs droits et leur insertion, avec pour mission de promouvoir l’égalité et de lutter contre les violences sexistes et sexuelles.</h2>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="s-section">
+          <div class="s-section__container container">
+              <div class="s-section__row row">
+                  <div class="col-12">
+                      <article class="textarea_cms_md">
+  
+      
+  
+  </article>
+                      
+                          <div class="mt-3">
+                              <a class="has-external-link" href="https://fncidff.info/" rel="noopener noreferrer" target="_blank">https://fncidff.info/</a>
+                          </div>
+                      
+                  </div>
+              </div>
+              
+          </div>
+      </section>
+  
+              
+          </main>
+  '''
+# ---
+# name: test_partner_detailview_with_forums
+  '''
+  <main class="s-main" id="main" role="main">
+              
+                  
+              
+              
+      <div class="container">
+      <nav aria-label="Fil d'ariane" class="c-breadcrumb">
+          <ol class="breadcrumb">
+              <li class="breadcrumb-item">Retourner vers</li>
+              <li class="breadcrumb-item">
+                  <a class="matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="partner-list" href="/partenaires/">Partenaires</a>
+              </li>
+          </ol>
+      </nav>
+  </div>
+  
+  
+              
+                  
+      <section class="s-title-01 mt-lg-5">
+          <div class="s-title-01__container container">
+              <div class="s-title-01__row row">
+                  <div class="s-title-01__col col-12">
+                      <div class="d-flex gap-3 align-items-center mb-2">
+                          
+                              <img alt="1 Jeune 1 Solution" class="img-fluid" src="[img src]" width="200"/>
+                          
+                          <h1 class="mb-0">1 Jeune 1 Solution</h1>
+                      </div>
+                      <h2 class="mt-3">accompagner, former, et faciliter l’entrée dans la vie professionnelle de tous les jeunes de 15 à 30 ans, sur tous les territoires</h2>
+                  </div>
+              </div>
+          </div>
+      </section>
+      <section class="s-section">
+          <div class="s-section__container container">
+              <div class="s-section__row row">
+                  <div class="col-12">
+                      <article class="textarea_cms_md">
+  
+      
+  
+  </article>
+                      
+                          <div class="mt-3">
+                              <a class="has-external-link" href="https://www.1jeune1solution.gouv.fr/" rel="noopener noreferrer" target="_blank">https://www.1jeune1solution.gouv.fr/</a>
+                          </div>
+                      
+                  </div>
+              </div>
+              
+                  <div class="s-section__row row mt-5">
+                      <div class="col-12">
+                          <h2>Leurs contributions dans la communauté</h2>
+                      </div>
+                      <div class="col-12">
+  <div class="container-fluid" id="subforums_area">
+      
+      <div class="row mt-4" id="documentation-category-subforums">
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="[img src]"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">L'accès au logement est un droit des personnes : un levier d'inclusion et d'insertion.</p>
+                          <div>
+  </div>
+                          <div class="mt-3">Les aides financières au logement et les dispositifs d’insertion par le logement</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/lacc%C3%A8s-au-logement-est-un-droit-des-personnes-un-levier-dinclusion-et-dinsertion">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="[img src]"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">🌟 Les  aides financières à la mobilité et solutions de transport</p>
+                          <div>
+      
+          <span class="tag bg-info-lighter text-info">Mobilité inclusive et solidaire</span>
+      
+  
+  </div>
+                          <div class="mt-3">Les personnes à faibles ressources ou en recherche d'emploi font souvent face à des problèmes de mobilité. En effet, la moitié d'entre elles ont refusé un emploi ou une formation pour cette raison, et 28% ont quitté un emploi ou une formation en cours à cause de difficultés de déplacement.</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/les-aides-financi%C3%A8res-%C3%A0-la-mobilit%C3%A9-et-solutions-de-transport">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+              <div class="col-12 col-md-4 mb-3 mb-md-5">
+                  <div class="card c-card has-one-link-inside h-100">
+                      
+                          <div class="card-header card-header-thumbnail rounded">
+                              <img alt="" class="img-fluid img-fitcover" src="[img src]"/>
+                          </div>
+                      
+                      <div class="card-body pb-0">
+                          <p class="h3 lh-base">🚗Zoom sur le covoiturage quotidien</p>
+                          <div>
+      
+          <span class="tag bg-info-lighter text-info">Mobilité inclusive et solidaire</span>
+      
+  
+  </div>
+                          <div class="mt-3">Le covoiturage quotidien offre une solution économique pour aider les publics en précarité mobilité à accéder à l'emploi ou à la formation, un enjeu crucial pour les conseillers en insertion professionnelle. Grâce à la Loi d’orientation des mobilités et au plan national covoiturage, des incitations financières sont proposées par les collectivités pour encourager cette pratique, avec un objectif de</div>
+                      </div>
+                      <div class="card-footer text-end">
+                          <a class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="fiches_techniques" href="/documentation/card/zoom-sur-le-covoiturage-quotidien">
+                              <i class="ri-arrow-right-line ri-lg"></i>
+                          </a>
+                      </div>
+                  </div>
+              </div>
+          
+      </div>
+  </div>
+  </div>
+                  </div>
+              
+          </div>
+      </section>
+  
+              
+          </main>
+  '''
+# ---

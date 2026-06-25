@@ -1,5 +1,3 @@
-import re
-
 import pytest
 from django.conf import settings
 from django.contrib.contenttypes.models import ContentType
@@ -17,11 +15,10 @@ from lacommunaute.forum.views import ForumView
 from lacommunaute.forum_conversation.enums import Filters
 from lacommunaute.forum_conversation.forms import PostForm
 from lacommunaute.forum_conversation.models import Topic
-from tests.forum.factories import CategoryForumFactory, ForumFactory, ForumRatingFactory
+from tests.forum.factories import CategoryForumFactory, ForumFactory
 from tests.forum_conversation.factories import CertifiedPostFactory, PostFactory, TopicFactory
-from tests.partner.factories import PartnerFactory
 from tests.testing import parse_response_to_soup, reset_model_sequence_fixture
-from tests.users.factories import StaffUserFactory, UserFactory
+from tests.users.factories import UserFactory
 
 
 faker = Faker()
@@ -109,15 +106,6 @@ class ForumViewTest(TestCase):
 
         response = self.client.get(self.url, **{"HTTP_HX_REQUEST": "true"})
         self.assertTemplateUsed(response, "forum_conversation/topic_list.html")
-
-        documentation_category_forum = CategoryForumFactory(with_child=True)
-        documentation_forum = documentation_category_forum.children.first()
-
-        response = self.client.get(documentation_category_forum.get_absolute_url())
-        self.assertTemplateUsed(response, "forum/forum_documentation_category.html")
-
-        response = self.client.get(documentation_forum.get_absolute_url())
-        self.assertTemplateUsed(response, "forum/forum_documentation.html")
 
     def test_show_comments(self):
         topic_url = reverse(
@@ -268,66 +256,10 @@ class ForumViewTest(TestCase):
 
         self.assertContains(response, "<h1>title</h1>", status_code=200)
 
-    def test_descendants_are_in_cards_if_forum_is_category_type(self):
-        forum = CategoryForumFactory(with_child=True)
-        child_forum = forum.get_children().first()
-        url = reverse("forum_extension:forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-
-        response = self.client.get(url)
-
-        self.assertContains(response, '<div class="card-body', status_code=200)
-        self.assertContains(response, child_forum.name)
-        self.assertContains(
-            response, reverse("forum_extension:forum", kwargs={"pk": child_forum.pk, "slug": child_forum.slug})
-        )
-
-    def test_show_add_forum_button_for_staff_if_forum_is_category_type(self):
-        forum = CategoryForumFactory(with_child=True)
-        url = reverse("forum_extension:forum", kwargs={"pk": forum.pk, "slug": forum.slug})
-
-        user = UserFactory()
-        self.client.force_login(user)
-        response = self.client.get(url)
-        self.assertNotContains(
-            response, reverse("forum_extension:create_subcategory", kwargs={"pk": forum.pk}), status_code=200
-        )
-
-        user.is_staff = True
-        user.save()
-        response = self.client.get(url)
-        self.assertContains(
-            response, reverse("forum_extension:create_subcategory", kwargs={"pk": forum.pk}), status_code=200
-        )
-
-    def test_siblings_in_context(self):
-        forum = CategoryForumFactory()
-        ForumFactory.create_batch(3, parent=forum)
-        child_forum = forum.get_children().first()
-        url = reverse("forum_extension:forum", kwargs={"pk": child_forum.pk, "slug": child_forum.slug})
-
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, 200)
-
-        self.assertEqual(response.context_data["sibling_forums"].count(), 3)
-        for f in forum.get_children():
-            self.assertContains(response, f.name)
-
     def test_next_url_in_context(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.context_data["next_url"], self.url)
-
-    def test_share_buttons(self):
-        forum = CategoryForumFactory(with_child=True)
-        child_forum = forum.get_children().first()
-        url = reverse("forum_extension:forum", kwargs={"pk": child_forum.pk, "slug": child_forum.slug})
-
-        response = self.client.get(url)
-        self.assertContains(
-            response,
-            f'div class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuSocialShare{child_forum.id}">',
-            status_code=200,
-        )
 
     def test_can_view_update_forum_link(self):
         url = reverse("forum_extension:edit_forum", kwargs={"pk": self.forum.pk, "slug": self.forum.slug})
@@ -384,26 +316,6 @@ reset_forum_sequence = pytest.fixture(reset_model_sequence_fixture(Forum))
 
 
 class TestForumViewContent:
-    def test_not_rated_forum(self, client, db, snapshot):
-        category_forum = CategoryForumFactory(with_child=True, name="B Category")
-        forum = category_forum.get_children().first()
-
-        response = client.get(reverse("forum_extension:forum", kwargs={"pk": forum.pk, "slug": forum.slug}))
-        assert response.status_code == 200
-        content = parse_response_to_soup(response, selector="#rating-area1", replace_in_href=[category_forum, forum])
-        assert str(content) == snapshot(name="not_rated_forum")
-
-    def test_rated_forum(self, client, db, snapshot):
-        client.session.save()
-        category_forum = CategoryForumFactory(with_child=True)
-        forum = category_forum.get_children().first()
-        ForumRatingFactory(forum=forum, rating=5, session_id=client.session.session_key)
-
-        response = client.get(reverse("forum_extension:forum", kwargs={"pk": forum.pk, "slug": forum.slug}))
-        assert response.status_code == 200
-        content = parse_response_to_soup(response, selector="#rating-area1")
-        assert str(content) == snapshot(name="rated_forum")
-
     def test_opengraph_for_forum_with_image(self, client, db):
         forum = ForumFactory(with_image=True)
         response = client.get(forum.get_absolute_url())
@@ -421,32 +333,6 @@ class TestForumViewContent:
         response = client.get(forum.get_absolute_url())
         assertContains(response, '<meta property="og:image" content="/static/images/logo-og-communaute')
         assertContains(response, '<meta property="og:image" content="/static/images/logo-og-communaute')
-
-    @pytest.mark.parametrize(
-        "upvote_count, logged", [(0, False), (0, True), (1, False), (1, True), (2, False), (2, True)]
-    )
-    def test_upvotes_counts(self, client, db, reset_forum_sequence, snapshot, upvote_count, logged):
-        forum = CategoryForumFactory(with_child=True, for_snapshot=True)
-        child_forum = forum.get_children().first()
-
-        for _ in range(upvote_count):
-            child_forum.upvotes.create(voter=UserFactory())
-
-        response = client.get(child_forum.get_absolute_url())
-        content = parse_response_to_soup(
-            response, selector=f"#upvotesarea{child_forum.pk}", replace_in_href=[child_forum]
-        )
-        assert str(content) == snapshot(name=f"upvotes_counts_{upvote_count}")
-
-        if logged:
-            user = UserFactory()
-            client.force_login(user)
-            child_forum.upvotes.create(voter=user)
-            response = client.get(child_forum.get_absolute_url())
-            content = parse_response_to_soup(
-                response, selector=f"#upvotesarea{child_forum.pk}", replace_in_href=[child_forum]
-            )
-            assert str(content) == snapshot(name=f"upvotes_counts_{upvote_count}_self_upvoted")
 
 
 @pytest.fixture(name="forum_for_snapshot")
@@ -517,69 +403,6 @@ class TestForumDetailContent:
         assert str(forum_actions_block[0]) == snapshot(name="forum_detail_forum_actions_block")
 
 
-class TestDocumentationForumContent:
-    def test_documentation_forum_share_actions(self, client, db, snapshot, reset_forum_sequence, documentation_forum):
-        response = client.get(documentation_forum.get_absolute_url())
-        content = parse_response_to_soup(response)
-
-        upvotes_area = content.select(f"#upvotesarea{str(documentation_forum.pk)}")[0]
-        assert str(upvotes_area) == snapshot(name="template_documentation_upvotes")
-        social_share_area = content.select(f"#dropdownMenuSocialShare{str(documentation_forum.pk)}")[0]
-        assert str(social_share_area) == snapshot(name="template_documentation_social_share")
-
-    def test_documentation_certified(self, client, db, documentation_forum):
-        response = client.get(documentation_forum.get_absolute_url())
-        content = re.findall(r"Fiche mise à jour le (\d{2}/\d{2}/\d{4})", response.content.decode())
-        assert len(content) == 1
-
-        documentation_forum.certified = True
-        documentation_forum.save()
-
-        response = client.get(documentation_forum.get_absolute_url())
-        content = re.findall(
-            r"Certifiée par la communauté de l'inclusion le (\d{2}/\d{2}/\d{4})", response.content.decode()
-        )
-        assert len(content) == 1
-
-    def test_documentation_forum_header_content(self, client, db, snapshot, reset_forum_sequence, documentation_forum):
-        sibling_forum = ForumFactory(parent=documentation_forum.parent, name="Test-2")
-
-        response = client.get(documentation_forum.get_absolute_url())
-        content = parse_response_to_soup(response)
-
-        assert len(content.find_all("img", src=re.compile(documentation_forum.image.name))) == 1
-        assert (
-            len(
-                content.select(
-                    "article.textarea_cms_md",
-                    string=(lambda x: x.startswith(str(documentation_forum.description)[:10])),
-                )
-            )
-            == 1
-        )
-
-        user_add_topic = content.find_all(
-            "a",
-            href=str(
-                reverse("forum_conversation:topic_create", args=(documentation_forum.slug, documentation_forum.pk))
-            ),
-        )
-        assert len(user_add_topic) == 2
-
-        link_to_parent = content.find_all("a", href=documentation_forum.parent.get_absolute_url())
-        assert len(link_to_parent) == 1
-        assert (str(link_to_parent[0])) == snapshot(name="template_documentation_link_to_parent")
-
-        assert len(content.find_all("a", href=sibling_forum.get_absolute_url())) == 1
-
-    def test_documentation_forum_with_partner(self, client, db, snapshot, documentation_forum):
-        documentation_forum.partner = PartnerFactory(for_snapshot=True, with_logo=True)
-        documentation_forum.save()
-        response = client.get(documentation_forum.get_absolute_url())
-        content = parse_response_to_soup(response, replace_in_href=[documentation_forum.partner], replace_img_src=True)
-        assert str(content.select("#partner_area")) == snapshot(name="documentation_forum_with_partner")
-
-
 @pytest.fixture(name="documentation_category_forum_with_descendants")
 def documentation_category_forum_with_descendants_fixture():
     tags = [faker.word() for _ in range(3)]
@@ -594,78 +417,6 @@ def documentation_category_forum_with_descendants_fixture():
     ForumFactory(parent=third_child, with_tags=[tags[2]])
 
     return category_forum, tags[0], [first_child, second_child]
-
-
-@pytest.mark.usefixtures("unittest_compatibility")
-class TestDocumentationCategoryForumContent:
-    def test_documentation_category_subforum_list(
-        self, client, db, snapshot, reset_forum_sequence, documentation_forum
-    ):
-        response = client.get(documentation_forum.parent.get_absolute_url())
-        content = parse_response_to_soup(response, replace_img_src=True)
-
-        subforum_content = content.select("#documentation-category-subforums")
-        assert len(subforum_content) == 1
-        assert str(subforum_content[0]) == snapshot(name="documentation_category_subforum_list")
-
-    def test_documentation_category_foot_content(
-        self, client, db, snapshot, reset_forum_sequence, documentation_forum
-    ):
-        response = client.get(documentation_forum.parent.get_absolute_url())
-        content = parse_response_to_soup(response)
-
-        # require superuser permission
-        assert len(content.select("#add-documentation-to-category-control")) == 0
-
-        client.force_login(StaffUserFactory())
-        response = client.get(documentation_forum.parent.get_absolute_url())
-        content = parse_response_to_soup(response)
-
-        add_documentation_control = content.select("#add-documentation-to-category-control")
-        assert len(add_documentation_control) == 1
-        assert str(add_documentation_control[0]) == snapshot(name="documentation_category_add_file_control")
-
-    @pytest.mark.parametrize("filtered, sub_forums_count", [(False, 4), (True, 2)])
-    def test_filter_subforums_on_tags(
-        self, client, db, documentation_category_forum_with_descendants, filtered, sub_forums_count
-    ):
-        category_forum, first_tag, subforums_with_first_tag = documentation_category_forum_with_descendants
-
-        expected = subforums_with_first_tag if filtered else list(category_forum.get_children())
-        url = (
-            category_forum.get_absolute_url() + f"?forum_tag={first_tag}"
-            if filtered
-            else category_forum.get_absolute_url()
-        )
-
-        response = client.get(url)
-        assert response.status_code == 200
-        sub_forums = [node.obj for node in response.context_data["sub_forums"].top_nodes]
-        assert sub_forums == expected
-        assert len(sub_forums) == sub_forums_count
-
-    def test_show_subforum_tag(self, client, db, snapshot, reset_forum_sequence):
-        category_forum = CategoryForumFactory(for_snapshot=True)
-        ForumFactory(parent=category_forum, for_snapshot=True, name="Test-1")
-        ForumFactory(
-            parent=category_forum,
-            with_tags=["tag1", "tag2"],
-            with_image=True,
-            for_snapshot=True,
-            name="Test-2",
-        )
-        response = client.get(category_forum.get_absolute_url())
-        assert response.status_code == 200
-
-        content = parse_response_to_soup(response, selector="main", replace_img_src=True)
-        assert str(content) == snapshot(name="documentation_category_subforum_tag")
-
-    def test_numqueries_on_tags(self, client, db, django_assert_num_queries):
-        category_forum = CategoryForumFactory()
-        ForumFactory.create_batch(20, parent=category_forum, with_tags=[f"tag{i}" for i in range(3)])
-        # vincentporte TOBEFIXED : DUPLICATED QUERIES
-        with assertSnapshotQueries(self.snapshot):
-            client.get(category_forum.get_absolute_url())
 
 
 @pytest.fixture(name="discussion_area_forum")
