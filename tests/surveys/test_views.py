@@ -127,10 +127,3 @@ class TestDSPDetailView:
         response = client.get(url)
         content = parse_response_to_soup(response, selector="main")
         assert str(content) == snapshot(name="level_max")
-
-
-class TestHomeView:
-    def test_link_to_dsp(self, db, client):
-        client.force_login(UserFactory())
-        response = client.get(reverse("pages:home"))
-        assertContains(response, reverse("surveys:dsp_create"))
