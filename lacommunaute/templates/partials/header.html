@@ -4,12 +4,8 @@
 {% load forum_member_tags %}
 {% load url_query_tags %}
 {% url 'pages:home' as home_url %}
-{% url 'forum_conversation_extension:topics' as publicforum_url %}
 {% url 'forum_extension:documentation' as documentation_url %}
-{% url 'members:seekers' as seeker_url %}
 {% url 'search:index' as search_url %}
-{% url 'surveys:dsp_create' as dsp_url %}
-{% url 'event:current' as event_url %}
 <header role="banner" id="header">
     <section class="s-header">
         <div class="s-header__container container">
@@ -152,22 +148,11 @@
                                 <a href="{{ home_url }}" class="{% if request.path == home_url %}is-active {% endif %}">Accueil</a>
                             </li>
                             <li>
-                                <a href="{{ publicforum_url }}" class="{% if request.path == publicforum_url %}is-active {% endif %}matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="topics">{% trans "Discussion area" %}</a>
-                            </li>
-                            <li>
                                 <a href="{{ documentation_url }}"
                                    class="{% if request.path == documentation_url %}is-active {% endif %}matomo-event"
                                    data-matomo-category="engagement"
                                    data-matomo-action="view"
-                                   data-matomo-option="documentation_header">{% trans "Documents" %}</a>
-                            </li>
-                            <li>
-                                <a href="{{ event_url }}" class="{% if request.path == event_url %}is-active {% endif %}matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="events">{% trans "Events" %}</a>
-                            </li>
-                            <li>
-                                <a href="{{ dsp_url }}" class="{% if request.path == dsp_url %}is-active {% endif %}matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="dsp">
-                                    Diagnostic Parcours IAE
-                                </a>
+                                   data-matomo-option="documentation_header">Documentation</a>
                             </li>
                         </ul>
                     </nav>
@@ -202,26 +187,11 @@
                         <a href="{{ home_url }}" class="nav-link{% if request.path == home_url %} active{% endif %}">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a href="{{ publicforum_url }}"
-                           class="nav-link{% if request.path == publicforum_url %} active{% endif %} matomo-event"
-                           data-matomo-category="engagement"
-                           data-matomo-action="view"
-                           data-matomo-option="topics">{% trans "Discussion area" %}</a>
-                    </li>
-                    <li class="nav-item">
                         <a href="{{ documentation_url }}"
                            class="nav-link{% if request.path == documentation_url %} active{% endif %} matomo-event"
                            data-matomo-category="engagement"
                            data-matomo-action="view"
                            data-matomo-option="documentation_header">{% trans "Documents" %}</a>
-                    </li>
-                    <li>
-                        <a href="{{ event_url }}" class="nav-link{% if request.path == event_url %} active{% endif %} matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="events">{% trans "Events" %}</a>
-                    </li>
-                    <li>
-                        <a href="{{ dsp_url }}" class="nav-link{% if request.path == dsp_url %} active{% endif %} matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="dsp">
-                            Diagnostic Parcours IAE
-                        </a>
                     </li>
                 </ul>
             </nav>
