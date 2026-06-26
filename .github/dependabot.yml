@@ -12,6 +12,10 @@ updates:
     commit-message:
       prefix: "requirement"
       prefix-development: "dev requirement"
+    cooldown:
+      default-days: 5
+      exclude:
+        - "itoutils"
     # Only allow updates to the lockfile for uv and
     # ignore any version updates that affect the manifest
     versioning-strategy: lockfile-only
@@ -20,3 +24,9 @@ updates:
     allow:
       # Allow both direct and indirect updates for all packages
       - dependency-type: all
+    groups:
+      # All dev updates together, all prod updates together.
+      dev:
+        dependency-type: development
+      prod:
+        dependency-type: production
