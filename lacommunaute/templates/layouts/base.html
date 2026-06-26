@@ -6,9 +6,7 @@
     <head>
         {% block head %}
             <meta charset="utf-8">
-            <title>
-                {% block title %}- La communauté de l'inclusion{% endblock %}
-            </title>
+            <title>{% block title %}- La communauté de l'inclusion{% endblock %}</title>
             <meta name="created" content="{% now "jS M Y h:i" %}">
             <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
             <meta name="keywords" content="{% block meta_keywords %}{% endblock meta_keywords %}">
@@ -36,7 +34,8 @@
                 <script src="https://browser.sentry-cdn.com/9.30.0/bundle.min.js" integrity="sha384-LmM+A4DydF1AZmOq6WQjgjRJR6kP5cMplsMi5NTXpcIcDvxuXctipgRiB+a6Ih1/" crossorigin="anonymous" nonce="{{ csp_nonce }}"></script>
             {% endif %}
         {% endblock head %}
-        {% block extra_head %}{% endblock %}
+        {% block extra_head %}
+        {% endblock %}
         {% block css %}
             <link rel="shortcut icon" href="{% static_theme_images "favicon.ico" %}" type="image/ico">
             {% import_static_CSS_theme_inclusion %}
@@ -80,7 +79,8 @@
         <main id="main" role="main" class="s-main">
             {% block breadcrumb %}{% endblock %}
             {% block main %}
-                {% block content %}{% endblock %}
+                {% block content %}
+                {% endblock %}
             {% endblock %}
         </main>
         {% block footer %}
