@@ -214,11 +214,7 @@
   '''
 # ---
 # name: test_page_title_header_footer[homepage_title]
-  '''
-  <title>
-                  Accueil- La communauté de l'inclusion
-              </title>
-  '''
+  "<title>Accueil- La communauté de l'inclusion</title>"
 # ---
 # name: test_queries
   dict({
