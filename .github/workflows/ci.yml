@@ -4,7 +4,6 @@ on: [push]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions: {}
     env:
@@ -64,23 +63,9 @@ jobs:
         run: |
           python manage.py collectstatic --no-input
           python manage.py compress
-      - name: 🚧 compile translations
-        run: |
-          sudo apt-get install -y gettext
-          python manage.py compilemessages
       - name: 🚧 Check pending migrations
         run: python manage.py makemigrations --check --dry-run --noinput
-      - name: 🚧 Configure bucket
-        run: python manage.py configure_bucket
       - name: 🤹‍ Django tests
         run: pytest --numprocesses=logical --create-db
         env:
           DJANGO_DEBUG: True
-      - name: 🚀 test S3 compliance
-        env:
-          CELLAR_ADDON_KEY_ID: ${{ secrets.REVIEW_CELLAR_ADDON_KEY_ID }}
-          CELLAR_ADDON_KEY_SECRET: ${{ secrets.REVIEW_CELLAR_ADDON_KEY_SECRET }}
-          CELLAR_ADDON_HOST: cellar-c2.services.clever-cloud.com
-          CELLAR_ADDON_PROTOCOL: https
-        run: |
-          pytest tests/utils/test_live_cellar.py --create-db

@@ -6,8 +6,6 @@ import re
 
 from django import template
 from django.template.defaultfilters import stringfilter
-from django.urls import reverse
-from django.utils.http import urlencode
 from django.utils.safestring import mark_safe
 
 from lacommunaute.utils.urls import urlize
@@ -32,14 +30,6 @@ def pluralizefr(value, arg="s"):
         except TypeError:  # len() of unsized object.
             pass
     return ""
-
-
-@register.simple_tag
-def login_url(next_url, anchor=None):
-    if anchor:
-        next_url = f"{next_url}#{anchor}"
-    params = {"next": next_url}
-    return f"{reverse('users:login')}?{urlencode(params)}"
 
 
 @register.filter(is_safe=True, needs_autoescape=True)

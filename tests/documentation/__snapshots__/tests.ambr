@@ -3,9 +3,6 @@
   '''
   <main class="s-main" id="main" role="main">
               
-                  
-              
-              
       <div class="container">
       <nav aria-label="Fil d'ariane" class="c-breadcrumb">
           <ol class="breadcrumb">
@@ -48,9 +45,8 @@
                           </div>
                           <div class="col-12 col-sm-auto">
                               
-  
   <button aria-expanded="false" aria-haspopup="true" class="btn btn-sm btn-ico-only btn-secondary" data-bs-toggle="dropdown" id="dropdownMenuSocialShare" type="button">
-      <i aria-label="Partager ce sujet sur " class="ri-share-fill ri-lg"></i>
+      <i aria-label="Partager ce sujet" class="ri-share-fill ri-lg"></i>
   </button>
   <div aria-labelledby="dropdownMenuSocialShare" class="dropdown-menu dropdown-menu-end">
       <a class="dropdown-item" href="https://www.facebook.com/sharer/sharer.php?u=http%3A//testserver/documentation/card/les-certificats-cl%25C3%25A9a" target="_blank"><i class="ri-facebook-fill ri-lg"></i> Partager sur Facebook</a>
@@ -75,9 +71,53 @@
                           
                           <div class="col-12 col-sm-auto mt-3">
                               <article class="textarea_cms_md">
-  
-      
-  
+  <h3>🚀 Trois Certifications Interprofessionnelles Clés</h3>
+  <p>Les partenaires sociaux ont conçu trois certifications interprofessionnelles : CléA, CléA Numérique et CléA Management. Chacune repose sur un référentiel spécifique, définissant les critères d'évaluation adaptés à tous les publics et à tous les secteurs d'activité.</p>
+  <h3>🗝️ Certification CléA : Compétences Professionnelles Essentielles</h3>
+  <p>Le dispositif CléA permet de construire un parcours de formation personnalisé, précédé et accompagné par une évaluation qui couvre les 7 domaines du référentiel et s’appuie sur 28 sous-domaines et 108 critères d’évaluation. </p>
+  <p><strong>Les Domaines Évalués</strong> :</p>
+  <p>✅ Communication en français<br/>
+  ✅ Utilisation des règles de base de calcul et du raisonnement mathématique<br/>
+  ✅ Utilisation des techniques numériques d'information et de communication<br/>
+  ✅ Aptitude au travail en équipe<br/>
+  ✅  Autonomie et réalisation d'objectifs individuels<br/>
+  ✅ Capacité d'apprentissage continu<br/>
+  ✅Maîtrise des gestes et postures, et respect des règles d'hygiène, de sécurité et environnementales<br/>
+  ✅ Reconnaissance et Gestion : Certification paritaire inscrite au répertoire spécifique de France compétences, avec une portée nationale et des spécificités sectorielles.</p>
+  <blockquote>
+  <p>💡Les organismes qui réalisent ces évaluations sont obligatoirement habilités par Certif'Pro. L’évaluateur ne peut pas intervenir comme formateur CléA, pour une même personne. L’habilitation est délivrée pour 3 ans, renouvelable 1 fois. </p>
+  </blockquote>
+  <h3>💻 Certification CléA Numérique : Compétences Numériques Fondamentales</h3>
+  <h3>Les compétences numériques essentielles en milieu professionnel.</h3>
+  <p>✅Compréhension et utilisation de l'environnement numérique<br/>
+  ✅ Exploitation de l'information numérique<br/>
+  ✅Collaboration en ligne<br/>
+  ✅Sécurité numérique<br/>
+  ✅Certification : Interprofessionnelle, référencée spécifiquement.</p>
+  <h3>📈 Certification CléA Management : Leadership et Gestion</h3>
+  <p>Cible : Nouveaux managers ou ceux cherchant à consolider leurs compétences managériales.<br/>
+   Domaines :  Organisation et gestion d'activités et l'animation d'équipes<br/>
+   Développement des compétences des collaborateurs</p>
+  <blockquote>
+  <p>💡 Il est inscrit au Répertoire Spécifique de France Compétences.</p>
+  </blockquote>
+  <h3>🎯Accessibilité et Public Cible des Certifications</h3>
+  <p>Ces certifications sont conçues pour être accessibles à tous, en particulier aux individus peu qualifiés, aux nouveaux managers, et à ceux souhaitant renforcer leur employabilité.  Elles sont disponibles via diverses formations professionnelles.</p>
+  <h3>📊 Évaluation et Formation Personnalisée</h3>
+  <p>CléA : Évaluation sur 7 domaines, formation modulaire, évaluation finale.<br/>
+   CléA Numérique : Évaluation préalable, formation adaptée, évaluation finale.<br/>
+   CléA Management : Évaluation sur 3 domaines, formation adaptée, évaluation finale.</p>
+  <h3>🏅 Processus de Certification et Financement</h3>
+  <p>Tout candidat qui présente une demande d’habilitation auprès de Certif Pro, qu’elle soit initiale ou non, qu’elle soit acceptée ou refusée donne lieu à la facturation par Certif Pro d’un montant forfaitaire de 330€ HT par candidat au titre des frais d’instruction.</p>
+  <p>Lorsque la demande est acceptée, l’organisme habilité est redevable d’un montant forfaitaire annuel de 33€ HT (55€ HT pour CléA) par site ou établissement enregistrés sur la plateforme, au titre des frais de gestion liés à l’habilitation.</p>
+  <p>Les frais de dossier facturés à l'organisme par Certif’Pro pour assurer leur instruction sont de :</p>
+  <p>💶 Pour CléA : 22 € HT pour chaque évaluation préalable réalisée et 5.50 € HT pour chaque certificat CléA délivré<br/>
+  💶 Pour CléA numérique et CléA management : 11 € HT par certificat attribué.</p>
+  <blockquote>
+  <p>💡Ces montants peuvent être modifiés chaque année par décision du conseil d'administration de Certif'Pro. Pour en savoir plus 👉<strong><a href="https://www.certificat-clea.fr/" rel="nofollow" target="_blank">https://www.certificat-clea.f…</a></strong></p>
+  </blockquote>
+  <p>📝Texte réglementaire : Articles D6323-20-4  et D6113-29 à 33  et D6113-2 et 3 du code du travail, référentiels CléA et CléA numérique, certificat CléA, certificat CléA numérique, certificat CléA management.</p>
+  <h5>ℹ️ Rédigée par  Sihame ZL</h5>
   </article>
                           </div>
                           
@@ -112,9 +152,6 @@
 # name: test_category[no_filter]
   '''
   <main class="s-main" id="main" role="main">
-              
-                  
-              
               
       <div class="container">
       <nav aria-label="Fil d'ariane" class="c-breadcrumb">
@@ -270,9 +307,6 @@
   '''
   <main class="s-main" id="main" role="main">
               
-                  
-              
-              
       <div class="container">
       <nav aria-label="Fil d'ariane" class="c-breadcrumb">
           <ol class="breadcrumb">
@@ -386,9 +420,6 @@
 # name: test_index
   '''
   <main class="s-main" id="main" role="main">
-              
-                  
-              
               
               
                   

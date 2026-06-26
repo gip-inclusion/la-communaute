@@ -1,18 +1,10 @@
 import logging
 
-from django.contrib.auth.mixins import UserPassesTestMixin
 from django.shortcuts import render
 from django.views.generic.base import TemplateView
 
 
 logger = logging.getLogger(__name__)
-
-
-class LandingPagesListView(UserPassesTestMixin, TemplateView):
-    template_name = "pages/landing_pages.html"
-
-    def test_func(self):
-        return self.request.user.is_staff
 
 
 class HomeView(TemplateView):

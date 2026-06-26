@@ -13,9 +13,6 @@ ENV/
 # Django stuff:
 *.log
 
-# Compiled translations
-*.mo
-
 # Clever Cloud
 .clever.json
 

@@ -23,11 +23,7 @@ ALLOWED_HOSTS = ["localhost", "0.0.0.0", "127.0.0.1", "192.168.0.1"]
 
 # Security.
 # ------------------------------------------------------------------------------
-SESSION_COOKIE_SECURE = False
-
 CSRF_COOKIE_SECURE = False
-
-AUTH_PASSWORD_VALIDATORS = []  # Avoid password strength validation in DEV.
 
 # Django-debug-toolbar.
 # ------------------------------------------------------------------------------
@@ -52,8 +48,6 @@ DEBUG_TOOLBAR_CONFIG = {
     "SHOW_TEMPLATE_CONTEXT": True,
 }
 
-# See: https://docs.djangoproject.com/en/dev/ref/settings/#media-url
-MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/"  # noqa: F405
 
 SECURE_CSP["default-src"] = ["*"]  # noqa undefined-local-with-import-star-usage
 SECURE_CSP["img-src"].append("localhost:9000")  # noqa undefined-local-with-import-star-usage

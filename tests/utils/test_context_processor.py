@@ -3,11 +3,7 @@ from django.test import override_settings
 from django.urls import reverse
 
 from lacommunaute.utils.enums import Environment
-from tests.event.factories import EventFactory
-from tests.forum.factories import ForumFactory
-from tests.forum_conversation.factories import TopicFactory
 from tests.testing import parse_response_to_soup
-from tests.users.factories import UserFactory
 
 
 @pytest.mark.parametrize(
@@ -38,15 +34,13 @@ def test_exposed_settings(client, db):
     assert "EMPLOIS_COMPANY_SEARCH" in response.context
 
 
-def test_matomo(client, settings, db, snapshot):
+def test_matomo(client, db, settings, snapshot):
     """Test on a canonically problematic view that we get the right Matomo properties.
 
     Namely, verify that the URL params are cleaned and
     the path params are replaced by a the variadic version.
     """
     settings.MATOMO_BASE_URL = "https://fake.matomo.url"
-    user = UserFactory()
-    client.force_login(user)
 
     # An unknown url is always resolved into a django flatpage
     response = client.get("/doesnotexist?token=blah&mtm_foo=truc", follow=True)
@@ -54,23 +48,15 @@ def test_matomo(client, settings, db, snapshot):
     assert response.status_code == 404
 
     # A forum url -> We need to keep the forum slug and pk since we use matomo to build the website stats
-    forum = ForumFactory()
-    response = client.get(reverse("forum_extension:forum", kwargs={"slug": forum.slug, "pk": forum.pk}))
-    assert response.context["matomo_custom_url"] == f"forum/{forum.slug}-{forum.pk}/"
+    response = client.get(reverse("documentation:category", args=("les-bases-de-liae",)))
+    assert response.context["matomo_custom_url"] == "documentation/les-bases-de-liae"
 
     # A topic url -> We need to keep the forum slug and pk since we use matomo to build the website stats
-    topic = TopicFactory(forum=forum, with_post=True)
-    response = client.get(
-        reverse(
-            "forum_conversation:topic",
-            kwargs={"forum_slug": forum.slug, "forum_pk": forum.pk, "slug": topic.slug, "pk": topic.pk},
-        )
-    )
-    assert response.context["matomo_custom_url"] == f"forum/{forum.slug}-{forum.pk}/topic/<str:slug>-<int:pk>/"
+    response = client.get(reverse("documentation:card", args=("contrat-adultes-relais",)))
+    assert response.context["matomo_custom_url"] == "documentation/card/contrat-adultes-relais"
 
     # Any other url
-    event = EventFactory()
-    url = reverse("event:detail", kwargs={"pk": event.pk})
+    url = reverse("pages:home")
     response = client.get(f"{url}?foo=bar&mtm_foo=truc&mtm_bar=bidule")
     assert response.status_code == 200
-    assert response.context["matomo_custom_url"] == "calendar/<int:pk>/?mtm_bar=bidule&mtm_foo=truc"
+    assert response.context["matomo_custom_url"] == "?mtm_bar=bidule&mtm_foo=truc"

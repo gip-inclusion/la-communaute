@@ -21,20 +21,6 @@ DATABASES["default"]["NAME"] = os.getenv("PGDATABASE", "communaute")  # noqa: F4
 DATABASES["default"]["USER"] = os.getenv("PGUSER", "postgres")  # noqa: F405
 DATABASES["default"]["PASSWORD"] = os.getenv("PGPASSWORD", "password")  # noqa: F405
 
-# S3 uploads
-# ------------------------------------------------------------------------------
-
-AWS_S3_ACCESS_KEY_ID = os.getenv("CELLAR_ADDON_KEY_ID", "minioadmin")
-AWS_S3_SECRET_ACCESS_KEY = os.getenv("CELLAR_ADDON_KEY_SECRET", "minioadmin")
-AWS_S3_ENDPOINT_URL = (
-    f"{os.getenv('CELLAR_ADDON_PROTOCOL', 'http')}://{os.getenv('CELLAR_ADDON_HOST', 'localhost:9000')}"
-)
-AWS_STORAGE_BUCKET_NAME = "communaute-django-review-bucket"
-AWS_STORAGE_BUCKET_NAME_PUBLIC = "communaute-django-review-bucket-public"
-AWS_S3_STORAGE_BUCKET_REGION = "eu-west-3"
-
-MEDIA_URL = f"{AWS_S3_ENDPOINT_URL}/"
-
 # SENDINBLUE
 # ---------------------------------------
 SIB_URL = "http://test.com"
@@ -45,14 +31,4 @@ SIB_API_KEY = "dummy-sib-api-key"
 EMPLOIS_PRESCRIBER_SEARCH = "http://test.com/prescriber/search"
 EMPLOIS_COMPANY_SEARCH = "http://test.com/company/search"
 
-EMAIL_LAST_SEEN_HASH_SALT = "bobby"
-
-# Nexus
-# ---------------------------------------
-PDI_JWT_KEY = {"k": "aTR4ZnR1WlpYYmphbFdtaXVlVjB3alljNjhrWXpfYSE", "kty": "oct"}
-NEXUS_ALLOWED_REDIRECT_HOSTS = ["domain.fr", "domain.com"]
-
-
-ASSERT_SNAPSHOT_QUERIES_EXTRA_PACKAGES_ALLOWLIST = [
-    ("machina/apps/forum_permission/viewmixins.py", "check_permissions"),
-]
+ASSERT_SNAPSHOT_QUERIES_EXTRA_PACKAGES_ALLOWLIST = []

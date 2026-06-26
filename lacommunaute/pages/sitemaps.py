@@ -3,8 +3,7 @@ from django.contrib.sitemaps import Sitemap
 from django.db.models.base import Model
 from django.urls import reverse
 
-from lacommunaute.forum.models import Forum
-from lacommunaute.forum_conversation.models import Topic
+from lacommunaute.documentation.helpers import CARDS, CATEGORIES
 from lacommunaute.partner.helpers import PARTNERS
 
 
@@ -19,23 +18,20 @@ class PagesSitemap(Sitemap):
         return "weekly"
 
 
-class ForumSitemap(Sitemap):
+class DocumentationCategorySitemap(Sitemap):
     def items(self):
-        return Forum.objects.all().order_by("id")
+        return CATEGORIES
 
     def location(self, obj: Model) -> str:
-        return reverse("forum_extension:forum", kwargs={"pk": obj.pk, "slug": obj.slug})
-
-    def lastmod(self, obj: Model) -> str:
-        return obj.updated
+        return reverse("documentation:category", kwargs={"slug": obj["slug"]})
 
 
-class TopicSitemap(Sitemap):
+class DocumentationCardSitemap(Sitemap):
     def items(self):
-        return Topic.objects.exclude(approved=False).order_by("-last_post_on")
+        return list(CARDS.values())
 
-    def lastmod(self, obj: Model) -> str:
-        return obj.last_post_on
+    def location(self, obj: Model) -> str:
+        return reverse("documentation:card", kwargs={"slug": obj["slug"]})
 
 
 class PartnerSitemap(Sitemap):

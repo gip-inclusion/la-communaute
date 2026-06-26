@@ -1,11 +1,6 @@
-
 from django.urls import reverse
-from faker import Faker
 
 from tests.testing import parse_response_to_soup
-
-
-faker = Faker()
 
 
 def test_index(client, db, snapshot):
