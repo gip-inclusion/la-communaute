@@ -1,5 +1,4 @@
 {% load static %}
-{% load i18n %}
 {% load compress %}
 {% load theme_inclusion %}
 <!DOCTYPE html>
@@ -8,7 +7,7 @@
         {% block head %}
             <meta charset="utf-8">
             <title>
-                {% block title %}- {{ MACHINA_FORUM_NAME|default:"Forum" }}{% endblock %}
+                {% block title %}- La communauté de l'inclusion{% endblock %}
             </title>
             <meta name="created" content="{% now "jS M Y h:i" %}">
             <meta name="description" content="{% block meta_description %}{% endblock meta_description %}">
@@ -40,8 +39,6 @@
         {% block extra_head %}{% endblock %}
         {% block css %}
             <link rel="shortcut icon" href="{% static_theme_images "favicon.ico" %}" type="image/ico">
-            <link rel="stylesheet" href="{% static 'machina/build/css/machina.board_theme.vendor.min.css' %}">
-            <link rel="stylesheet" href="{% static 'machina/build/css/machina.board_theme.min.css' %}">
             {% import_static_CSS_theme_inclusion %}
         {% endblock %}
         {% compress css %}
@@ -81,17 +78,6 @@
         {% endblock %}
         {% block sub_header %}{% endblock %}
         <main id="main" role="main" class="s-main">
-            {% block messages %}
-                {% if messages %}
-                    <section class="s-section m-0">
-                        <div class="s-section__container container">
-                            <div class="s-section__row row">
-                                <div class="s-section__col col-12">{% include 'partials/messages.html' %}</div>
-                            </div>
-                        </div>
-                    </section>
-                {% endif %}
-            {% endblock %}
             {% block breadcrumb %}{% endblock %}
             {% block main %}
                 {% block content %}{% endblock %}
@@ -106,13 +92,6 @@
         </div>
         {% block js %}
             {% import_static_JS_theme_inclusion %}
-            <script src="{% static 'machina/build/js/machina.min.js' %}" type="text/javascript" charset="utf-8"></script>
-            <script type="text/javascript" nonce="{{ csp_nonce }}">
-                $(function() {
-                    machina.init();
-                    {% block onbodyload %}{% endblock onbodyload %}
-                });
-            </script>
         {% endblock %}
         {% block extra_js %}
             <script src="{% static "vendor/tarteaucitron.js-1.19.0/tarteaucitron.js" %}"></script>

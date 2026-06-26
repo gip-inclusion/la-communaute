@@ -1,6 +1,5 @@
 User-agent: *
 Disallow: /static/javascripts/
 Disallow: /static/stylesheets/
-Disallow: /static/machina/
 
 Sitemap: https://communaute.inclusion.gouv.fr/sitemap.xml

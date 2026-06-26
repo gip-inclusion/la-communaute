@@ -1,7 +1,5 @@
 {% load static %}
-{% load i18n %}
 {% load theme_inclusion %}
-{% load forum_member_tags %}
 {% load url_query_tags %}
 {% url 'pages:home' as home_url %}
 {% url 'documentation:index' as documentation_url %}
@@ -26,106 +24,15 @@
                             <li id="header_search_form">
                                 <form action="{% url 'search:index' %}" name="header_search_form">
                                     <div class="input-group input-group-rounded-pill">
-                                        <input class="form-control w-300px" type="search" placeholder="{% trans "Search forums" %}" aria-label="{% trans "Search forums" %}" name="q">
+                                        <input class="form-control w-300px" type="search" placeholder="Chercher dans la communauté" aria-label="Chercher dans la communauté" name="q">
                                         <div class="input-group-text p-0">
                                             <button type="submit" class="btn btn-link btn-ico matomo-event" data-matomo-category="engagement" data-matomo-action="search" data-matomo-option="submit_query_header">
-                                                <i class="ri-search-line fw-bold" aria-label="{% trans "Search forums" %}"></i>
+                                                <i class="ri-search-line fw-bold" aria-label="Chercher dans la communauté"></i>
                                             </button>
                                         </div>
                                     </div>
                                 </form>
                             </li>
-                            {% if user.is_authenticated %}
-                                <li class="dropdown">
-                                    <button type="button"
-                                            class="btn btn-outline-primary btn-ico btn-block bg-white dropdown-toggle my-3"
-                                            data-bs-toggle="dropdown"
-                                            aria-haspopup="true"
-                                            aria-controls="dashboardUserDropdown"
-                                            aria-expanded="false">
-                                        <i class="ri-account-circle-line" aria-hidden="true"></i>
-                                        <span class="d-none d-sm-inline-block ms-0 ms-sm-2">Mon espace</span>
-                                    </button>
-                                    <div class="dropdown-menu" id="dashboardUserDropdown">
-                                        <ul class="list-unstyled">
-                                            <li>
-                                                <div class="dropdown-item">
-                                                    <div class="d-flex align-items-center">
-                                                        <span class="flex-shrink-0"><i class="ri-user-line ri-2x"></i></span>
-                                                        <div class="flex-grow-1 ms-2 lh-sm">
-                                                            {% if user.get_username %}
-                                                                <span>{{ user|forum_member_display_name }}</span>
-                                                                <br>
-                                                            {% endif %}
-                                                            <span class="fs-sm lh-sm text-muted">{{ user.email }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                            <li>
-                                                <div class="dropdown-divider"></div>
-                                            </li>
-                                            <li>
-                                                <a href="{% url 'members:profile' user.username %}" class="dropdown-item text-primary matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="member">{% trans "Go to my profile" %}</a>
-                                            </li>
-                                            <li>
-                                                <a href="{% url 'forum_upvote:mine' %}" class="dropdown-item text-primary matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="upvotes">{% trans "Go to my UpVotes" %}</a>
-                                            </li>
-                                            <li>
-                                                <a href="{% url 'event:myevents' %}" class="dropdown-item text-primary matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="event">{% trans "Go to my events" %}</a>
-                                            </li>
-                                            {% if user.is_superuser %}
-                                                <li>
-                                                    <div class="dropdown-divider"></div>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item text-primary" href="{% url 'forum_moderation:queue' %}"><i class="ri-alarm-warning-line ri-xl text-warning"></i> Moderation Queue</a>
-                                                </li>
-                                            {% endif %}
-                                            {% if user.is_staff %}
-                                                <li>
-                                                    <div class="dropdown-divider"></div>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item text-primary" href="{% url 'admin:forum_file_publicfile_add' %}">Nouvelle image publique</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item text-primary" href="{% url 'pages:landing_pages' %}">Liste des landing pages</a>
-                                                </li>
-                                                <li>
-                                                    <a class="dropdown-item text-primary" href="{% url 'admin:index' %}">Accéder à l'admin</a>
-                                                </li>
-                                            {% endif %}
-                                            <li>
-                                                <div class="dropdown-divider"></div>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-primary" href="{% url 'search:index' %}">Rechercher dans la documentation</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-primary matomo-event"
-                                                   data-matomo-category="engagement"
-                                                   data-matomo-action="emplois"
-                                                   data-matomo-option="search-company-header"
-                                                   href="{% autologin_proconnect EMPLOIS_COMPANY_SEARCH user %}">Rechercher un emploi inclusif</a>
-                                            </li>
-                                            <li>
-                                                <a class="dropdown-item text-primary matomo-event"
-                                                   data-matomo-category="engagement"
-                                                   data-matomo-action="emplois"
-                                                   data-matomo-option="search-prescriber-header"
-                                                   href="{% autologin_proconnect EMPLOIS_PRESCRIBER_SEARCH user %}">Rechercher un prescripteur habilité</a>
-                                            </li>
-                                            <li>
-                                                <div class="dropdown-divider"></div>
-                                            </li>
-                                            <li>{% include "registration/includes/logout_link.html" %}</li>
-                                        </ul>
-                                    </div>
-                                </li>
-                            {% else %}
-                                <li>{% include "registration/includes/login_link.html" %}</li>
-                            {% endif %}
                         </ul>
                     </nav>
                 </div>
@@ -174,10 +81,10 @@
             <nav role="navigation" aria-label="Navigation secondaire pour mobile">
                 <form action="{% url 'search:index' %}" class="mb-4" name="header_search_form">
                     <div class="input-group input-group-rounded-pill">
-                        <input class="form-control" type="search" placeholder="{% trans "Search forums" %}" aria-label="{% trans "Search forums" %}" name="q">
+                        <input class="form-control" type="search" placeholder="Chercher dans la communauté" aria-label="Chercher dans la communauté" name="q">
                         <div class="input-group-text p-0">
                             <button type="submit" class="btn btn-link btn-ico matomo-event" data-matomo-category="engagement" data-matomo-action="search" data-matomo-option="submit_query_header">
-                                <i class="ri-search-line fw-bold" aria-label="{% trans "Search forums" %}"></i>
+                                <i class="ri-search-line fw-bold" aria-label="Chercher dans la communauté"></i>
                             </button>
                         </div>
                     </div>
@@ -191,82 +98,9 @@
                            class="nav-link{% if request.path == documentation_url %} active{% endif %} matomo-event"
                            data-matomo-category="engagement"
                            data-matomo-action="view"
-                           data-matomo-option="documentation_header">{% trans "Documents" %}</a>
+                           data-matomo-option="documentation_header">Documentation</a>
                     </li>
                 </ul>
-            </nav>
-        </div>
-        <div class="offcanvas-footer flex-column align-items-stretch">
-            <nav role="navigation" aria-label="Menu de navigation principale pour mobile">
-                {% if user.is_authenticated %}
-                    <div class="dropdown-center">
-                        <button type="button"
-                                class="btn btn-outline-primary btn-ico btn-block bg-white dropdown-toggle my-3"
-                                data-bs-toggle="dropdown"
-                                aria-haspopup="true"
-                                aria-controls="dashboardUserDropdown"
-                                aria-expanded="false">
-                            <i class="ri-account-circle-line" aria-hidden="true"></i>
-                            <span class="d-none d-sm-inline-block ms-0 ms-sm-2">Mon espace</span>
-                        </button>
-                        <div class="dropdown-menu" id="dashboardUserDropdown">
-                            <ul class="list-unstyled">
-                                <li>
-                                    <div class="dropdown-item">
-                                        <div class="d-flex align-items-center">
-                                            <span class="flex-shrink-0"><i class="ri-user-line ri-2x"></i></span>
-                                            <div class="flex-grow-1 ms-2 lh-sm w-75">
-                                                {% if user.get_username %}
-                                                    <span>{{ user|forum_member_display_name }}</span>
-                                                    <br>
-                                                {% endif %}
-                                                <span class="fs-sm lh-sm text-muted has-ellipsis d-inline-block w-100">{{ user.email }}</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>
-                                    <a href="{% url 'members:profile' user.username %}" class="dropdown-item text-primary matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="member">{% trans "Go to my profile" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'forum_upvote:mine' %}" class="dropdown-item text-primary matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="upvotes">{% trans "Go to my UpVotes" %}</a>
-                                </li>
-                                <li>
-                                    <a href="{% url 'event:myevents' %}" class="dropdown-item text-primary matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="event">{% trans "Go to my events" %}</a>
-                                </li>
-                                {% if user.is_superuser %}
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-primary" href="{% url 'forum_moderation:queue' %}"><i class="ri-alarm-warning-line ri-xl text-warning"></i> Moderation Queue</a>
-                                    </li>
-                                    <li>
-                                        <div class="dropdown-divider"></div>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-primary" href="{% url 'admin:forum_file_publicfile_add' %}">Nouvelle image publique</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-primary" href="{% url 'pages:landing_pages' %}">Liste des landing pages</a>
-                                    </li>
-                                    <li>
-                                        <a class="dropdown-item text-primary" href="{% url 'admin:index' %}">Accéder à l'admin</a>
-                                    </li>
-                                {% endif %}
-                                <li>
-                                    <div class="dropdown-divider"></div>
-                                </li>
-                                <li>{% include "registration/includes/logout_link.html" %}</li>
-                            </ul>
-                        </div>
-                    </div>
-                {% else %}
-                    <div>{% include "registration/includes/login_link.html" %}</div>
-                {% endif %}
             </nav>
         </div>
     </div>

@@ -76,8 +76,7 @@ $ python manage.py runserver
 ```bash
 $ python manage.py createcachetable
 $ python manage.py migrate
-$ python manage.py configure_bucket
-$ scripts/populate.py
+$ python manage.py rebuild_index
 ```
 
 ### restaurer une base de données
@@ -132,7 +131,6 @@ Ajouter les secrets suivants dans le repo git
 Créer et lier les addons
 
 - postgresql
-- cellar S3 storage
 - configuration provider
 
 Créer les variables d'environnement suivantes dans le configuration provider
@@ -168,14 +166,12 @@ arguments pour se connecter à la base de données.
 Créer et lier les addons (différents de ceux de production ^^)
 
 - postgresql
-- cellar S3 storage
 - configuration provider
 
 Ajouter les secrets suivants dans le repo git
 
 - CLEVER_REVIEW_APPS_CONFIGURATION_ADDON
 - CLEVER_REVIEW_APPS_ORG
-- CLEVER_REVIEW_APPS_S3_ADDON
 
 ## Recettes jetables
 

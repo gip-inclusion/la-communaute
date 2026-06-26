@@ -6,6 +6,7 @@ from django.conf import settings
 
 logger = logging.getLogger(__name__)
 
+
 def expose_settings(request):
     """
     Put things into the context to make them available in templates.
@@ -29,12 +30,8 @@ def matomo(request):
 
     url = request.resolver_match.route
     kwargs = request.resolver_match.kwargs
-    if url.startswith("forum/<str:forum_slug>-<int:forum_pk>/"):
-        url = url.replace("<str:forum_slug>-<int:forum_pk>", f"{kwargs['forum_slug']}-{kwargs['forum_pk']}")
-    elif url.startswith("forum/<str:slug>-<int:pk>/"):
-        url = url.replace("<str:slug>-<int:pk>", f"{kwargs['slug']}-{kwargs['pk']}")
-    elif {"slug", "pk"} <= set(kwargs) or {"forum_slug", "forum_pk"} <= set(kwargs):
-        logger.warning("URL {url} should be parametrized for matomo in the context processor.")
+    if url.startswith("documentation/<str:slug>") or url.startswith("documentation/card/<str:slug>"):
+        url = url.replace("<str:slug>", kwargs["slug"])
 
     # Only keep Matomo-related params for now.
     params = {k: v for k, v in request.GET.lists() if k.startswith(("utm_", "mtm_", "piwik_"))}

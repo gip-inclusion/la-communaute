@@ -94,7 +94,7 @@
                             <div class="row align-items-center mb-3">
                                 <div class="col">Je recherche un emploi inclusif ?</div>
                                 <div class="col-12 col-md-auto mt-3 mt-md-0 d-flex align-items-center justify-content-center">
-                                    <a href="{% autologin_proconnect EMPLOIS_COMPANY_SEARCH user %}"
+                                    <a href="{{ EMPLOIS_COMPANY_SEARCH }}"
                                        rel="nofollow"
                                        class="btn btn-outline-primary btn-ico btn-block matomo-event"
                                        data-matomo-category="engagement"
@@ -108,7 +108,7 @@
                             <div class="row align-items-center">
                                 <div class="col">Je recherche un prescripteur habilité ?</div>
                                 <div class="col-12 col-md-auto mt-3 mt-md-0 d-flex align-items-center justify-content-center">
-                                    <a href="{% autologin_proconnect EMPLOIS_PRESCRIBER_SEARCH user %}"
+                                    <a href="{{ EMPLOIS_PRESCRIBER_SEARCH }}"
                                        rel="nofollow"
                                        class="btn btn-outline-primary btn-ico btn-block matomo-event"
                                        data-matomo-category="engagement"

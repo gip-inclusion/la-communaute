@@ -16,7 +16,7 @@
                                   <a href="/search/">Chercher dans la communauté</a>
                               </li>
                               <li>
-                                  <a href="/partenaires/">Nos partenaires</a>
+                                  <a href="/partenaires/">Partenaires</a>
                               </li>
                           </ul>
                       </div>
@@ -105,9 +105,6 @@
                           <li>
                               <a aria-label="Politique de confidentialité" href="/politique-de-confidentialite/">Politique de confidentialité</a>
                           </li>
-                          <li>
-                              <a href="/statistiques/">Statistiques</a>
-                          </li>
                       </ul>
                       <p>
                           Sauf mention contraire, tous les contenus de ce site sont sous licence <a aria-label="Licence ouverte Etalab (lien externe)" href="https://github.com/etalab/licence-ouverte/blob/master/LO.md" target="_blank">etalab-2.0</a>
@@ -150,14 +147,6 @@
                                       </div>
                                   </form>
                               </li>
-                              
-                                  <li>
-  
-  
-      <a class="btn btn-outline-primary btn-ico btn-block" href="/users/login/?next=%2F">Se connecter | S'inscrire</a>
-  
-  </li>
-                              
                           </ul>
                       </nav>
                   </div>
@@ -220,18 +209,6 @@
                   </ul>
               </nav>
           </div>
-          <div class="offcanvas-footer flex-column align-items-stretch">
-              <nav aria-label="Menu de navigation principale pour mobile" role="navigation">
-                  
-                      <div>
-  
-  
-      <a class="btn btn-outline-primary btn-ico btn-block" href="/users/login/?next=%2F">Se connecter | S'inscrire</a>
-  
-  </div>
-                  
-              </nav>
-          </div>
       </div>
   </header>
   '''
@@ -245,7 +222,7 @@
 # ---
 # name: test_queries
   dict({
-    'num_queries': 6,
+    'num_queries': 2,
     'queries': list([
       dict({
         'origin': list([
@@ -256,46 +233,6 @@
       dict({
         'origin': list([
           'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
-        ]),
-        'sql': 'RELEASE SAVEPOINT "<snapshot>"',
-      }),
-      dict({
-        'origin': list([
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
-        ]),
-        'sql': '''
-          SELECT %s AS "a"
-          FROM "django_session"
-          WHERE "django_session"."session_key" = %s
-          LIMIT 1
-        ''',
-      }),
-      dict({
-        'origin': list([
-          'Atomic.__enter__[<site-packages>/django/db/transaction.py]',
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
-        ]),
-        'sql': 'SAVEPOINT "<snapshot>"',
-      }),
-      dict({
-        'origin': list([
-          'Session.save[<site-packages>/django/db/models/base.py]',
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
-        ]),
-        'sql': '''
-          INSERT INTO "django_session" ("session_key",
-                                        "session_data",
-                                        "expire_date")
-          VALUES (%s, %s, %s)
-        ''',
-      }),
-      dict({
-        'origin': list([
-          'Atomic.__exit__[<site-packages>/django/db/transaction.py]',
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
-          'SessionStore.save[<site-packages>/django/contrib/sessions/backends/db.py]',
         ]),
         'sql': 'RELEASE SAVEPOINT "<snapshot>"',
       }),

@@ -2,9 +2,6 @@ from urllib.parse import urlsplit, urlunsplit
 
 from django import template
 from django.http import QueryDict
-from django.urls import reverse
-
-from lacommunaute.users.enums import IdentityProvider
 
 
 register = template.Library()
@@ -28,10 +25,3 @@ def url_add_query(url, **kwargs):
             querystring.pop(item)
     querystring.update(kwargs)
     return urlunsplit(parsed._replace(query=querystring.urlencode()))
-
-
-@register.simple_tag
-def autologin_proconnect(url, user):
-    if user.is_authenticated and user.identity_provider == IdentityProvider.PRO_CONNECT:
-        return reverse("nexus:auto_login", query={"next_url": url})
-    return url
