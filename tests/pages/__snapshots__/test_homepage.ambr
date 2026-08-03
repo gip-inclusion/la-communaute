@@ -235,13 +235,3 @@
     ]),
   })
 # ---
-# name: test_updated_forum_short_description[truncated_encoded_short_description]
-  '''
-  <div class="s-section__col col-12 col-md-8" id="updated_forums">
-                      <p class="h1 text-tertiary">De nombreuses fiches pratiques</p>
-                      <ul class="list-group list-group-flush list-group-link mb-3 mb-md-4">
-                      </ul>
-                      <a class="btn btn-outline-primary matomo-event" data-matomo-action="view" data-matomo-category="engagement" data-matomo-option="documentation" href="/documentation/">Voir toute la documentation</a>
-                  </div>
-  '''
-# ---
