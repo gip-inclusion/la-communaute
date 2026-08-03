@@ -100,7 +100,7 @@ class UtilsTemplateTagsTestCase(TestCase):
         template = Template("{% load str_filters %}{{ str|urlizetrunc_target_blank:16 }}")
         out = template.render(Context({"str": "www.neuralia.co/mission"}))
         self.assertEqual(
-            out, '<a target="_blank" href="http://www.neuralia.co/mission" rel="nofollow">www.neuralia.co…</a>'
+            out, '<a target="_blank" href="https://www.neuralia.co/mission" rel="nofollow">www.neuralia.co…</a>'
         )
 
         out = template.render(Context({"str": 'src="www.neuralia.co/image.png"'}))

@@ -305,6 +305,8 @@ SECURE_HSTS_PRELOAD = True
 
 SECURE_CROSS_ORIGIN_OPENER_POLICY = "same-origin"
 
+URLIZE_ASSUME_HTTPS = True
+
 # SESSIONS
 # ---------------------------------------
 CSRF_COOKIE_SECURE = True
