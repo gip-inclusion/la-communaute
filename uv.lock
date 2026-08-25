@@ -280,15 +280,15 @@ wheels = [
 
 [[package]]
 name = "django-permissions-policy"
-version = "4.32.0"
+version = "4.33.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asgiref" },
     { name = "django" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/49/e0/2ab7350e222fcad1713fd7f40b89e7ed8b9d38a79559ff30a0eac1c2775d/django_permissions_policy-4.32.0.tar.gz", hash = "sha256:a43a465990b36f130f0b61719cdeb1fcedb1b51789ce7c3893179fc53f7e4a4a", size = 14912, upload-time = "2026-06-26T19:53:48.716Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/58/05/ea04d8efbd023583d77df0d2991ba2c96162742f6197e5169c5f4271180e/django_permissions_policy-4.33.0.tar.gz", hash = "sha256:1af13623a29def284057c23d77bc8e95a246f97a6155f56bff03057b7f2ec7fd", size = 8736, upload-time = "2026-08-14T20:40:40.734Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c9/76/8fbdc6b5af9b37e97b785730b8907db50b39054d38d867e2bf1a02071183/django_permissions_policy-4.32.0-py3-none-any.whl", hash = "sha256:8debc44843e096ffaff60a6c8553b2b4163f9a613d3993148002c673ed28e6d3", size = 8641, upload-time = "2026-06-26T19:53:47.615Z" },
+    { url = "https://files.pythonhosted.org/packages/37/8c/894e453cfa510600578e2a575c6d01be980e1076bc7ac03fa04fa69f5d9e/django_permissions_policy-4.33.0-py3-none-any.whl", hash = "sha256:b9401fadaa9b5b4791ff4affe116303bd62ec8038d23e09fb91afdb75c563411", size = 9343, upload-time = "2026-08-14T20:40:39.523Z" },
 ]
 
 [[package]]
@@ -795,11 +795,11 @@ wheels = [
 
 [[package]]
 name = "python-dotenv"
-version = "1.2.2"
+version = "1.2.3"
 source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/82/ed/0301aeeac3e5353ef3d94b6ec08bbcabd04a72018415dcb29e588514bba8/python_dotenv-1.2.2.tar.gz", hash = "sha256:2c371a91fbd7ba082c2c1dc1f8bf89ca22564a087c2c287cd9b662adde799cf3", size = 50135, upload-time = "2026-03-01T16:00:26.196Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/6a/53/ed9d74092561d4b01a2ef1349d52cdbc135e526c245f366b089cfca6de49/python_dotenv-1.2.3.tar.gz", hash = "sha256:a20a594dabeaa385725aa239d5244871c143ecb356add8a20fcf23773a6c3a35", size = 58945, upload-time = "2026-08-16T16:54:54.067Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/0b/d7/1959b9648791274998a9c3526f6d0ec8fd2233e4d4acce81bbae76b44b2a/python_dotenv-1.2.2-py3-none-any.whl", hash = "sha256:1d8214789a24de455a8b8bd8ae6fe3c6b69a5e3d64aa8a8e5d68e694bbcb285a", size = 22101, upload-time = "2026-03-01T16:00:25.09Z" },
+    { url = "https://files.pythonhosted.org/packages/0d/17/c5c6b53ddc18f297992099b3d9ec16c855c0ccc83263a21fe4d1c625ec6c/python_dotenv-1.2.3-py3-none-any.whl", hash = "sha256:904552145e8bfed22162c09dab1c2b9b54fefa7b23ba780f4f26ca0316b0f0d9", size = 22780, upload-time = "2026-08-16T16:54:52.473Z" },
 ]
 
 [[package]]
