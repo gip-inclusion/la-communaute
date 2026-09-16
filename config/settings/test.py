@@ -21,11 +21,6 @@ DATABASES["default"]["NAME"] = os.getenv("PGDATABASE", "communaute")  # noqa: F4
 DATABASES["default"]["USER"] = os.getenv("PGUSER", "postgres")  # noqa: F405
 DATABASES["default"]["PASSWORD"] = os.getenv("PGPASSWORD", "password")  # noqa: F405
 
-# SENDINBLUE
-# ---------------------------------------
-SIB_URL = "http://test.com"
-SIB_API_KEY = "dummy-sib-api-key"
-
 # EMPLOIS
 # ---------------------------------------
 EMPLOIS_PRESCRIBER_SEARCH = "http://test.com/prescriber/search"
