@@ -2,13 +2,14 @@ import re
 from itertools import chain
 
 from bs4 import BeautifulSoup
+from bs4.formatter import HTMLFormatter
 
 
 def remove_static_hash(content):
     return re.sub(r"\.[\da-f]{12}\.(svg|png|jpg|pdf)\b", r".\1", content)
 
 
-def parse_response_to_soup(response, selector=None, no_html_body=False, replace_img_src=False):
+def parse_response(response, selector=None, no_html_body=False, replace_img_src=False):
     soup = BeautifulSoup(response.content, "html5lib", from_encoding=response.charset or "utf-8")
     if no_html_body:
         # If the provided HTML does not contain <html><body> tags
@@ -31,4 +32,4 @@ def parse_response_to_soup(response, selector=None, no_html_body=False, replace_
         for attr in ["src"]:
             for links in soup.find_all("img", attrs={attr: True}):
                 links.attrs.update({attr: "[img src]"})
-    return soup
+    return soup.prettify(formatter=HTMLFormatter(indent=4))
