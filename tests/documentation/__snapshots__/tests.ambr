@@ -193,19 +193,19 @@
                   
       
           
-              <button aria-label="Filtrer par Formations" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formations" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formations">Formations</button>
+              <button aria-label="Filtrer par Formations" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formations" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formations" type="button">Formations</button>
           
       
   
       
           
-              <button aria-label="Filtrer par Accompagnement à l'insertion" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=accompagnement-à-linsertion" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-accompagnement-à-linsertion">Accompagnement à l'insertion</button>
+              <button aria-label="Filtrer par Accompagnement à l'insertion" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=accompagnement-à-linsertion" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-accompagnement-à-linsertion" type="button">Accompagnement à l'insertion</button>
           
       
   
       
           
-              <button aria-label="Filtrer par Formation" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formation" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formation">Formation</button>
+              <button aria-label="Filtrer par Formation" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formation" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formation" type="button">Formation</button>
           
       
   
@@ -347,7 +347,7 @@
                   
       
           
-              <button aria-label="Supprimer ce filtre" class="tag bg-info text-white matomo-event" data-bs-placement="top" data-bs-title="Supprimer ce filtre" data-bs-toggle="tooltip" data-matomo-action="unfilter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formations">
+              <button aria-label="Supprimer ce filtre" class="tag bg-info text-white matomo-event" data-bs-placement="top" data-bs-title="Supprimer ce filtre" data-bs-toggle="tooltip" data-matomo-action="unfilter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formations" type="button">
                   <i class="ri-close-fill ri-xs"></i>Formations
               </button>
           
@@ -355,13 +355,13 @@
   
       
           
-              <button aria-label="Filtrer par Accompagnement à l'insertion" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=accompagnement-à-linsertion" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-accompagnement-à-linsertion">Accompagnement à l'insertion</button>
+              <button aria-label="Filtrer par Accompagnement à l'insertion" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=accompagnement-à-linsertion" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-accompagnement-à-linsertion" type="button">Accompagnement à l'insertion</button>
           
       
   
       
           
-              <button aria-label="Filtrer par Formation" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formation" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formation">Formation</button>
+              <button aria-label="Filtrer par Formation" class="tag bg-info-lighter text-info matomo-event" data-matomo-action="filter" data-matomo-category="engagement" data-matomo-option="forum" hx-get="/documentation/evaluer-et-d%C3%A9velopper-les-comp%C3%A9tences?tag=formation" hx-swap="outerHTML" hx-target="#subforums_area" id="filterforum-formation" type="button">Formation</button>
           
       
   

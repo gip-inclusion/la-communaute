@@ -2,6 +2,7 @@
     {% if category %}
         {% if tag.slug == active_tag_slug %}
             <button id="filterforum-{{ tag.slug }}"
+                    type="button"
                     hx-target="#subforums_area"
                     hx-swap="outerHTML"
                     hx-get="{% url 'documentation:category' category.slug %}"
@@ -17,6 +18,7 @@
             </button>
         {% else %}
             <button id="filterforum-{{ tag.slug }}"
+                    type="button"
                     hx-target="#subforums_area"
                     hx-swap="outerHTML"
                     hx-get="{% url 'documentation:category' category.slug %}?tag={{ tag.slug }}"
