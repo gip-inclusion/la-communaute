@@ -25,7 +25,6 @@ dependencies = [
 dev = [
     "pre-commit>=4.0",
     "pytest-django>=4.9",
-    "itoutils[django-testing]>=25.12.22.0",
     "pytest-xdist>=3.6",
     "ruff>=0.9",
     "djlint>=1.36",
