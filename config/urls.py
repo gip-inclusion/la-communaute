@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.flatpages import views
 from django.urls import include, path, re_path
 
