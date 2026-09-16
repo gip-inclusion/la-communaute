@@ -52,7 +52,11 @@
                                                 {% else %}
                                                     <tr>
                                                         <td class="position-relative">
-                                                            <a href="{% url 'documentation:card' result.card_slug %}" class="btn-link btn-ico stretched-link matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="forum">
+                                                            <a href="{% url 'documentation:card' result.card_slug %}"
+                                                               class="btn-link btn-ico stretched-link matomo-event"
+                                                               data-matomo-category="engagement"
+                                                               data-matomo-action="view"
+                                                               data-matomo-option="forum">
                                                                 <i class="ri-article-line" aria-hidden="true"></i>
                                                                 <span>{{ result.title }}</span>
                                                             </a>

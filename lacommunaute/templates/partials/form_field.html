@@ -8,7 +8,7 @@
     {{ field }}
     {% if field.help_text %}<small class="form-text text-muted">{{ field.help_text }}</small>{% endif %}
     {% for error in field.errors %}<span class="text-danger error">{{ error }}</span>{% endfor %}
-    {% if field.auto_id == 'id_content' %}
+    {% if field.auto_id == "id_content" %}
         {% if id %}
             {% include "partials/form_field_mentions.html" with id=id %}
         {% else %}

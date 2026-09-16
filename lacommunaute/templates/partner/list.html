@@ -23,7 +23,10 @@
                                 <div class="card c-card has-one-link-inside h-100">
                                     {% if partner.image %}
                                         <div class="card-header card-header--partners mb-3">
-                                            <img src="{% static partner.image %}" alt="{{ partner.name }}" loading="lazy" class="img-fluid">
+                                            <img src="{% static partner.image %}"
+                                                 alt="{{ partner.name }}"
+                                                 loading="lazy"
+                                                 class="img-fluid">
                                         </div>
                                     {% endif %}
                                     <div class="card-body pb-0">
@@ -31,7 +34,11 @@
                                         <div class="card-text">{{ partner.description }}</div>
                                     </div>
                                     <div class="card-footer text-end">
-                                        <a href="{% url "partner:detail" partner.slug %}" class="btn btn-sm btn-ico btn-link stretched-link matomo-event" data-matomo-category="engagement" data-matomo-action="view" data-matomo-option="partner">
+                                        <a href="{% url "partner:detail" partner.slug %}"
+                                           class="btn btn-sm btn-ico btn-link stretched-link matomo-event"
+                                           data-matomo-category="engagement"
+                                           data-matomo-action="view"
+                                           data-matomo-option="partner">
                                             <i class="ri-arrow-right-line ri-lg" aria-hidden="true"></i>
                                         </a>
                                     </div>

@@ -54,4 +54,5 @@ def test_pagination_perserves_get_params(client, db, search_url):
         response,
         f'<a href="{search_url}?q=IAE&amp;page=2" class="page-link">2</a>',
         count=1,
+        html=True,
     )

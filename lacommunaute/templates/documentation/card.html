@@ -35,12 +35,14 @@
                         {% if card.image %}
                             <div class="col-12 col-sm-auto">
                                 <div class="d-none d-md-block forum-image mt-3" loading="lazy">
-                                    <img src="{% static card.image %}" alt="{{ card.name }}" class="rounded img-fluid" />
+                                    <img src="{% static card.image %}"
+                                         alt="{{ card.name }}"
+                                         class="rounded img-fluid" />
                                 </div>
                             </div>
                         {% endif %}
                         <div class="col-12 col-sm-auto mt-3">
-                            <article class="textarea_cms_md">{% include 'partials/rendered_md.html' with content=card.html only %}</article>
+                            <article class="textarea_cms_md">{% include "partials/rendered_md.html" with content=card.html only %}</article>
                         </div>
                         {% if partner %}
                             <div class="col-12 col-sm-auto mt-3" id="partner_area">
@@ -58,7 +60,8 @@
                     <ul class="nav nav-tabs flex-column">
                         {% for sibling_card in sibling_cards %}
                             <li class="nav-item">
-                                <a href="{% url 'documentation:card' sibling_card.slug %}" class="nav-link{% if card.slug == sibling_card.slug %} active{% endif %}">{{ sibling_card.name }}</a>
+                                <a href="{% url 'documentation:card' sibling_card.slug %}"
+                                   class="nav-link{% if card.slug == sibling_card.slug %} active{% endif %}">{{ sibling_card.name }}</a>
                             </li>
                         {% endfor %}
                     </ul>

@@ -16,7 +16,8 @@
             <meta property="og:locale" content="fr_FR">
             <meta property="og:type" content="website">
             <meta property="og:url" content="https://communaute.inclusion.gouv.fr/">
-            <meta property="og:image" content="{% if og_image %}{{ og_image.url }}{% else %}{% static 'images/logo-og-communaute.png' %}{% endif %}">
+            <meta property="og:image"
+                  content="{% if og_image %}{{ og_image.url }}{% else %}{% static 'images/logo-og-communaute.png' %}{% endif %}">
             <meta property="og:image:alt" content="Logo de la communauté de l'inclusion">
             <meta property="og:image:type" content="image/png">
             <meta property="og:image:width" content="1200">
@@ -24,14 +25,18 @@
             <!-- https://metatags.io Twitter -->
             <meta property="twitter:card" content="summary_large_image">
             <meta property="twitter:url" content="https://communaute.inclusion.gouv.fr/">
-            <meta property="twitter:image" content="{% if og_image %}{{ og_image.url }}{% else %}{% static 'images/logo-og-communaute.png' %}{% endif %}">
+            <meta property="twitter:image"
+                  content="{% if og_image %}{{ og_image.url }}{% else %}{% static 'images/logo-og-communaute.png' %}{% endif %}">
             <meta property="twitter:site" content="inclusion_gouv">
             <!-- https://metatags.io Facebook -->
             <meta property="fb:page_id" content="inclusion.gouv">
             <!-- Use this to get the value of the CSRF token in JavaScript. -->
             <meta name="csrf-token" content="{{ csrf_token }}">
             {% if not debug %}
-                <script src="https://browser.sentry-cdn.com/9.30.0/bundle.min.js" integrity="sha384-LmM+A4DydF1AZmOq6WQjgjRJR6kP5cMplsMi5NTXpcIcDvxuXctipgRiB+a6Ih1/" crossorigin="anonymous" nonce="{{ csp_nonce }}"></script>
+                <script src="https://browser.sentry-cdn.com/9.30.0/bundle.min.js"
+                        integrity="sha384-LmM+A4DydF1AZmOq6WQjgjRJR6kP5cMplsMi5NTXpcIcDvxuXctipgRiB+a6Ih1/"
+                        crossorigin="anonymous"
+                        nonce="{{ csp_nonce }}"></script>
             {% endif %}
         {% endblock head %}
         {% block extra_head %}{% endblock %}
@@ -50,7 +55,7 @@
                 Javascript doit être activé pour pouvoir assurer l'affichage correct de la page (recherche géographique par exemple).
             </div>
         </noscript>
-        <nav role="navigation" aria-label="Accès rapide" tabindex="1" class="visually-hidden">
+        <nav role="navigation" aria-label="Accès rapide" tabindex="-1" class="visually-hidden">
             <ul>
                 <li>
                     <a href="#nav-primary">Aller au menu principal</a>
@@ -147,9 +152,9 @@
                     window._paq = window._paq || [];
                     window._paq.push(['setCustomUrl', new URL('{{ matomo_custom_url }}', window.location.origin).href]);
                 </script>
-                <script type="text/javascript" src="{% static 'javascripts/matomo.js' %}" defer></script>
+                <script src="{% static 'javascripts/matomo.js' %}" defer></script>
             {% endif %}
-            <script type="text/javascript" src="{% static 'vendor/htmx-1.9.5/htmx.min.js' %}" defer></script>
+            <script src="{% static 'vendor/htmx-1.9.5/htmx.min.js' %}" defer></script>
         {% endblock %}
     </body>
 </html>
