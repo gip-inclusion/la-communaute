@@ -1,7 +1,6 @@
 from datetime import timedelta
 
 import pytest
-from bs4 import BeautifulSoup
 from django.http import HttpResponse
 from django.template import Context, Template
 from django.template.defaultfilters import date, time
@@ -10,7 +9,7 @@ from django.utils import timezone
 from django.utils.timesince import timesince
 
 from lacommunaute.utils.urls import urlize
-from tests.testing import parse_response_to_soup
+from tests.testing import parse_response
 
 
 class SettingsContextProcessorsTest(TestCase):
@@ -136,11 +135,6 @@ class UtilsTemplateTagsTestCase(TestCase):
 
 
 class UtilsParseResponseToSoupTest(TestCase):
-    def test_parse_wo_selector(self):
-        html = '<html><head></head><body><div id="foo">bar</div></body></html>'
-        response = HttpResponse(html)
-        assert parse_response_to_soup(response) == BeautifulSoup(html, "html.parser")
-
     def test_parse_with_selector(self):
         response = HttpResponse('<html><head></head><body><div id="foo">bar</div></body></html>')
-        assert str(parse_response_to_soup(response, selector="#foo")) == '<div id="foo">bar</div>'
+        assert parse_response(response, selector="#foo") == '<div id="foo">\n    bar\n</div>\n'

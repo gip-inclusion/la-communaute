@@ -3,7 +3,7 @@ from django.test import override_settings
 from django.urls import reverse
 
 from lacommunaute.utils.enums import Environment
-from tests.testing import parse_response_to_soup
+from tests.testing import parse_response
 
 
 @pytest.mark.parametrize(
@@ -20,8 +20,7 @@ def test_prod_environment(client, db, env, expected, snapshot):
         response = client.get("/")
     assert ('id="debug-mode-banner"' in response.content.decode()) == expected
     if expected:
-        content = parse_response_to_soup(response, selector="#debug-mode-banner")
-        assert str(content) == snapshot(name=env.label)
+        assert parse_response(response, selector="#debug-mode-banner") == snapshot(name=env.label)
 
 
 def test_exposed_settings(client, db):
