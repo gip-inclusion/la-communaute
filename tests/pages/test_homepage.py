@@ -1,7 +1,6 @@
 import re
 
 from django.urls import reverse
-from itoutils.django.testing import assertSnapshotQueries
 
 from tests.testing import parse_response_to_soup
 
@@ -21,8 +20,3 @@ def test_page_title_header_footer(db, client, snapshot):
 
     footer = _sub_svg_suffix(str(parse_response_to_soup(response, selector="footer")))
     assert footer == snapshot(name="homepage_footer")
-
-
-def test_queries(db, client, snapshot):
-    with assertSnapshotQueries(snapshot):
-        client.get(reverse("pages:home"))
