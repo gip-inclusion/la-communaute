@@ -412,19 +412,6 @@ wheels = [
 ]
 
 [[package]]
-name = "html5lib"
-version = "1.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "six" },
-    { name = "webencodings" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ac/b6/b55c3f49042f1df3dcd422b7f224f939892ee94f22abcf503a9b7339eaf2/html5lib-1.1.tar.gz", hash = "sha256:b2e5b40261e20f354d198eae92afc10d750afb487ed5e50f9c4eaf07c184146f", size = 272215, upload-time = "2020-06-22T23:32:38.834Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/6c/dd/a834df6482147d48e225a49515aabc28974ad5a4ca3215c18a882565b028/html5lib-1.1-py2.py3-none-any.whl", hash = "sha256:0d78f8fde1c230e99fe37986a60526d7049ed4bf8a9fadbad5f00e22e58e041d", size = 112173, upload-time = "2020-06-22T23:32:36.781Z" },
-]
-
-[[package]]
 name = "httpcore"
 version = "1.0.9"
 source = { registry = "https://pypi.org/simple" }
@@ -496,12 +483,6 @@ django = [
     { name = "jwcrypto" },
     { name = "psycopg", extra = ["binary"] },
 ]
-django-testing = [
-    { name = "django" },
-    { name = "respx" },
-    { name = "sqlparse" },
-    { name = "syrupy" },
-]
 
 [[package]]
 name = "jsbeautifier"
@@ -567,8 +548,6 @@ dependencies = [
 dev = [
     { name = "beautifulsoup4" },
     { name = "djlint" },
-    { name = "html5lib" },
-    { name = "itoutils", extra = ["django-testing"] },
     { name = "pre-commit" },
     { name = "pytest-django" },
     { name = "pytest-xdist" },
@@ -579,30 +558,28 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "django", specifier = "<6.1" },
-    { name = "django-compressor", specifier = ">=4.5" },
-    { name = "django-htmx", specifier = ">=1.21" },
-    { name = "django-libsass", specifier = ">=0.9" },
-    { name = "django-permissions-policy", specifier = ">=4.24" },
-    { name = "django-social-share", specifier = ">=2.3.0" },
-    { name = "itoutils", extras = ["django"], specifier = ">=25.12.22.0" },
-    { name = "markdown", specifier = ">=3.10.2" },
-    { name = "psycopg", specifier = ">=3.2" },
-    { name = "python-dotenv", specifier = ">=1.0" },
-    { name = "python-frontmatter", specifier = ">=1.3.0" },
-    { name = "sentry-sdk", specifier = ">=2.20" },
+    { name = "django-compressor" },
+    { name = "django-htmx" },
+    { name = "django-libsass" },
+    { name = "django-permissions-policy" },
+    { name = "django-social-share" },
+    { name = "itoutils", extras = ["django"] },
+    { name = "markdown" },
+    { name = "psycopg" },
+    { name = "python-dotenv" },
+    { name = "python-frontmatter" },
+    { name = "sentry-sdk" },
 ]
 
 [package.metadata.requires-dev]
 dev = [
-    { name = "beautifulsoup4", specifier = ">=4.12" },
-    { name = "djlint", specifier = ">=1.36" },
-    { name = "html5lib", specifier = "~=1.1" },
-    { name = "itoutils", extras = ["django-testing"], specifier = ">=25.12.22.0" },
-    { name = "pre-commit", specifier = ">=4.0" },
-    { name = "pytest-django", specifier = ">=4.9" },
-    { name = "pytest-xdist", specifier = ">=3.6" },
-    { name = "ruff", specifier = ">=0.9" },
-    { name = "syrupy", specifier = ">=4.8" },
+    { name = "beautifulsoup4" },
+    { name = "djlint" },
+    { name = "pre-commit" },
+    { name = "pytest-django" },
+    { name = "pytest-xdist" },
+    { name = "ruff" },
+    { name = "syrupy" },
 ]
 
 [[package]]
@@ -947,18 +924,6 @@ wheels = [
 ]
 
 [[package]]
-name = "respx"
-version = "0.23.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "httpx" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/43/98/4e55c9c486404ec12373708d015ebce157966965a5ebe7f28ff2c784d41b/respx-0.23.1.tar.gz", hash = "sha256:242dcc6ce6b5b9bf621f5870c82a63997e8e82bc7c947f9ffe272b8f3dd5a780", size = 29243, upload-time = "2026-04-08T14:37:16.008Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/1d/4a/221da6ca167db45693d8d26c7dc79ccfc978a440251bf6721c9aaf251ac0/respx-0.23.1-py2.py3-none-any.whl", hash = "sha256:b18004b029935384bccfa6d7d9d74b4ec9af73a081cc28600fffc0447f4b8c1a", size = 25557, upload-time = "2026-04-08T14:37:14.613Z" },
-]
-
-[[package]]
 name = "rjsmin"
 version = "1.2.5"
 source = { registry = "https://pypi.org/simple" }
@@ -1115,13 +1080,4 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/aa/a3/4d310fa5f00863544e1d0f4de93bddec248499ccf97d4791bc3122c9d4f3/virtualenv-20.36.1.tar.gz", hash = "sha256:8befb5c81842c641f8ee658481e42641c68b5eab3521d8e092d18320902466ba", size = 6032239, upload-time = "2026-01-09T18:21:01.296Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/6a/2a/dc2228b2888f51192c7dc766106cd475f1b768c10caaf9727659726f7391/virtualenv-20.36.1-py3-none-any.whl", hash = "sha256:575a8d6b124ef88f6f51d56d656132389f961062a9177016a50e4f507bbcc19f", size = 6008258, upload-time = "2026-01-09T18:20:59.425Z" },
-]
-
-[[package]]
-name = "webencodings"
-version = "0.5.1"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/0b/02/ae6ceac1baeda530866a85075641cec12989bd8d31af6d5ab4a3e8c92f47/webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923", size = 9721, upload-time = "2017-04-05T20:21:34.189Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/f4/24/2a3e3df732393fed8b3ebf2ec078f05546de641fe1b667ee316ec1dcf3b7/webencodings-0.5.1-py2.py3-none-any.whl", hash = "sha256:a0af1213f3c2226497a97e2b3aa01a7e4bee4f403f95be16fc9acd2947514a78", size = 11774, upload-time = "2017-04-05T20:21:32.581Z" },
 ]
