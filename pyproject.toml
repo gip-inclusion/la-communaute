@@ -24,6 +24,7 @@ dependencies = [
 [dependency-groups]
 dev = [
     "pre-commit",
+    "pytest",
     "pytest-django",
     "pytest-xdist",
     "ruff",
