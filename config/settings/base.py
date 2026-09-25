@@ -65,6 +65,7 @@ DJANGO_MIDDLEWARE = [
     "django.middleware.csp.ContentSecurityPolicyMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "lacommunaute.utils.middleware.ParkingPageMiddleware",
+    "lacommunaute.utils.middleware.RedirectToNewDomainMiddleware",
 ]
 
 THIRD_PARTIES_MIDDLEWARE = [
@@ -329,3 +330,6 @@ PERMISSIONS_POLICY = {
     "sync-xhr": [],
     "usb": [],
 }
+
+REDIRECT_TO_NEW_DOMAIN = os.getenv("REDIRECT_TO_NEW_DOMAIN", "False") == "True"
+NEW_DOMAIN = "communaute.inclusion.gouv.fr"
