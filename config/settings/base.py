@@ -329,3 +329,6 @@ PERMISSIONS_POLICY = {
     "sync-xhr": [],
     "usb": [],
 }
+
+REDIRECT_TO_NEW_DOMAIN = os.getenv("REDIRECT_TO_NEW_DOMAIN", "False") == "True"
+NEW_DOMAIN = "communauté.inclusion.gouv.fr"
