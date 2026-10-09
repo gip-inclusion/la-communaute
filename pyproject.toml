@@ -19,6 +19,7 @@ dependencies = [
     "itoutils[django]",
     "python-frontmatter",
     "markdown",
+    "gunicorn>=26.2.0",
 ]
 
 [dependency-groups]
