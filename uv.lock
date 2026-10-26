@@ -1,5 +1,5 @@
 version = 1
-revision = 3
+revision = 5
 requires-python = ">=3.13"
 
 [[package]]
@@ -617,7 +617,7 @@ requires-dist = [
     { name = "django-libsass" },
     { name = "django-permissions-policy" },
     { name = "django-social-share" },
-    { name = "gunicorn", specifier = ">=26.2.0" },
+    { name = "gunicorn" },
     { name = "itoutils", extras = ["django"] },
     { name = "markdown" },
     { name = "psycopg" },
