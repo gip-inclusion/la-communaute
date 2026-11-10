@@ -42,7 +42,9 @@
                             </div>
                         {% endif %}
                         <div class="col-12 col-sm-auto mt-3">
-                            <article class="textarea_cms_md">{% include "partials/rendered_md.html" with content=card.html only %}</article>
+                            <article class="textarea_cms_md">
+                                {% include "partials/rendered_md.html" with content=card.html only %}
+                            </article>
                         </div>
                         {% if partner %}
                             <div class="col-12 col-sm-auto mt-3" id="partner_area">
