@@ -7,7 +7,7 @@ license = {text = "ETALAB 2.0"}
 requires-python = ">=3.13"
 readme = "README.md"
 dependencies = [
-    "Django<6.1",
+    "Django<6.2",
     "python-dotenv",
     "psycopg",
     "django-compressor",
